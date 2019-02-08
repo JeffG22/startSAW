@@ -53,19 +53,30 @@
         exit();
     }
 
-    $stmt = mysqli_prepare($con, "INSERT INTO proposal (name, description, picture, address, coord_x, coord_y, available_positions, date_inserted, proposer_id) values (?,?,?,?,?,?,?,?,?)");
+    $stmt = mysqli_prepare($con, "INSERT INTO proposal 
+                                    (name, description, picture, address, lat, lon, 
+                                        available_positions, date_inserted, proposer_id) 
+                                    values (?,?,?,?,?,?,?,?,?)");
 
     if (empty($_POST['address'])) {
         $address = NULL;
     } else {
         $address = htmlspecialchars($_POST['address']);
+        $request = "http://nominatim.openstreetmap.org/search.php?q=".urlencode($address)."&email=ktmdy@hi2.in&format=json";
+        $response = file_get_contents($request);
+        $location = json_decode($response, true); // true = return as associative array
+        if ($location != NULL && !empty($location)) {
+            $lat = $location[0]['lat']."\n";
+            $lon = $location[0]['lon'];
+        }
     }
 
     $date = date("Y-m-d");
-    $coord_x = 123.45;
-    $coord_y = -566.1221;
+    $lat = 123.45;
+    $long = -566.1221;
     $id = 112;
-    mysqli_stmt_bind_param($stmt, "ssssddisi", $name, $description, $file, $address, $coord_x, $coord_y, $available_pos, $date, $id);
+    mysqli_stmt_bind_param($stmt, "ssssddisi", $name, $description, $file, $address, $lat, $lon, 
+                                $available_pos, $date, $id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     

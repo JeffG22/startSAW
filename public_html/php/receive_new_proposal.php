@@ -59,7 +59,9 @@
                                     values (?,?,?,?,?,?,?,?,?)");
 
     if (empty($_POST['address'])) {
-        $address = NULL;
+        $address = NULL; 
+        $lat = NULL;
+        $long = NULL;
     } else {
         $address = htmlspecialchars($_POST['address']);
         $request = "http://nominatim.openstreetmap.org/search.php?q=".urlencode($address)."&email=ktmdy@hi2.in&format=json";
@@ -72,8 +74,6 @@
     }
 
     $date = date("Y-m-d");
-    $lat = 123.45;
-    $long = -566.1221;
     $id = 112;
     mysqli_stmt_bind_param($stmt, "ssssddisi", $name, $description, $file, $address, $lat, $lon, 
                                 $available_pos, $date, $id);

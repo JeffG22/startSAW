@@ -12,7 +12,7 @@
     <script src="../js/form_validation.js"></script>
 </head>
 <body>
-    <a href="index.php">^ Home</a>
+    <a href="index_proposals.php">^ Home</a>
     <?php
         if (isset($_SESSION['message'])) {
             echo "<div>".$_SESSION['message']."</div>";
@@ -28,6 +28,10 @@
         <textarea name="description" rows="5" cols="30" required></textarea>
         <br>
         Immagine
+        <!-- This hidden field is used by php to avoid uploading large files.
+        Files lager than 4MB are not blocked by this, but upload stops at 4M
+        and the file is not sent, thus preventing user from waiting for a file
+        that will be rejected server-side.-->
         <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
         <input type="file" name="picture" accept="image/png, image/jpeg, image/bmp">
         <br>
@@ -35,7 +39,7 @@
         <input type="text" name="address">
         <br>
         Numero volontari richiesti
-        <input type="number" name="available_positions" required>
+        <input type="number" name="available_positions" min="1" required>
         <br>
         <input type="submit">
     </form>

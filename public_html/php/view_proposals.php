@@ -1,18 +1,60 @@
 <?php
     include("../../connection.php");
+    include("utilities.php");
     session_start();   
+?>
 
-    $con = dbConnect();
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>View proposals</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="../js/form_validation.js"></script>
+</head>
+<body>
+    <a href="index_proposals.php">^ Home</a>
+    <?php
+        $con = dbConnect();
 
-    if (!$con) {
-        header("location: new_proposal.php");
-        exit();
-    }
+        if (!$con) {
+            echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
+                    Aspetta qualche istante e riprova.";
+        } else {
+            $result = mysqli_query($con, "SELECT *
+                                          FROM proposal
+                                          WHERE available_positions > 0");
+            if (!$result) {
+                echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
+                    Aspetta qualche istante e riprova.";
+            } else if (mysqli_num_rows($result) == 0) {
+                echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";
+            } else {
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo "<div>";
+                    echo "<img src='".$row['picture']."' height='50px'>";
+                    echo "<b>".$row['name']."</b><br>";
+                    echo "<i>Inserito in data: ".$row['date_inserted'];
+                    if ($name = getUserName($con, $row['proposer_id'])) {
+                        echo " da ".$name;
+                    }
+                    echo "</i><br>";
+                    echo "Descrizione: ".$row['description']."<br>";
+                    echo "Numero di volontari richiesti: <b><i>".$row['available_positions']."</b></i><br>";
+                    echo "Indirizzo: ".$row['address']."<br>";
+                    echo "<br></div>";
+                }
+            }
+        }
+    ?>
+</body>
+</html>
 
-    $stmt = mysqli_prepare($con, "INSERT INTO proposal 
-                                    (name, description, picture, address, lat, lon, 
-                                        available_positions, date_inserted, proposer_id) 
-                                    values (?,?,?,?,?,?,?,?,?)");
+    
+<!--
+    
 
     if (empty($_POST['address'])) {
         $address = NULL; 
@@ -37,41 +79,4 @@
     mysqli_stmt_close($stmt);
     
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>View proposals</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="../js/form_validation.js"></script>
-</head>
-<body>
-    <a href="index_proposals.php">^ Home</a>
-    <form enctype="multipart/form-data" action="receive_new_proposal.php" onsubmit="return checkData()" method="POST">
-        <br>
-        Nome
-        <input type="text" name="name" required>
-        <br>
-        Descrizione
-        <textarea name="description" rows="5" cols="30" required></textarea>
-        <br>
-        Immagine
-        <!-- This hidden field is used by php to avoid uploading large files.
-        Files lager than 4MB are not blocked by this, but upload stops at 4M
-        and the file is not sent, thus preventing user from waiting for a file
-        that will be rejected server-side.-->
-        <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
-        <input type="file" name="picture" accept="image/png, image/jpeg, image/bmp">
-        <br>
-        Indirizzo
-        <input type="text" name="address">
-        <br>
-        Numero volontari richiesti
-        <input type="number" naTme="available_positions" min="1" required>
-        <br>
-        <input type="submit">
-    </form>
-</body>
-</html>
+-->

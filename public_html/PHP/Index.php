@@ -88,6 +88,7 @@
 			</div>
 			<!--Carousel-->
 			<div id="continue">
+				<a href="#secondView" class="vs-anchor btn-link"><button id="continueBtn" class="btn-link" type="button" value="Scopri di più">Scopri di più</button></a>
 			</div>
 		</div>
 		<!--First view-->
@@ -95,7 +96,7 @@
 		<!--Second view-->
 		<div vs-anchor="secondView" class="mainview">
     	<!--Description-->
-    	<div id="test"></div>
+    	<div id="desContainer"></div>
 			<!--Description-->	
     </div>
     <!--Second view--> 

@@ -33,12 +33,7 @@ nav a, footer a {
 	color: #2e577d;
 }
 
-.btn-link,
-.btn-link:active,
-.btn-link:hover {
-    outline: none;
-}
-
+/*Removes dotted outlines*/
 button:focus,
 a:focus, a:active,
 button::-moz-focus-inner,

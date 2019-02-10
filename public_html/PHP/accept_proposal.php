@@ -26,16 +26,10 @@
     // Using a dummy user id while sessions are not implemented.
     $user_id = 123;
 
-    // Checks if the current user is a person.
-    
-    $res = mysqli_query($con, "SELECT user_id
-                        FROM user
-                        WHERE user_id = ".$user_id." AND user_id IN (SELECT id FROM person)");
-    
     // Prevents an association from accepting a proposal.
     // This could only happen if someone logged in as an association, copied the session id
     // and used it to construct a custom payload to accept a proposal.
-    if(mysqli_num_rows($res) != 1) {
+    if(!isPerson($con, $user_id)) {
         $_SESSION['message'] = "Impossibile per una associazione accettare una proposta. Effettua il login come persona e riprova.";
         navigateTo($prev_location);
     }  

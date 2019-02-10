@@ -28,4 +28,15 @@
         header("location: ".$location);
         exit();
     }
+
+    // Checks if given user_id is a person.
+    function isPerson($con, $user_id) {
+        $res = mysqli_query($con, "SELECT user_id
+                        FROM user
+                        WHERE user_id = ".$user_id." AND user_id IN (SELECT id FROM person)");
+        if(mysqli_num_rows($res) == 1)
+            return TRUE;
+        else 
+            return FALSE;
+    }
 ?>

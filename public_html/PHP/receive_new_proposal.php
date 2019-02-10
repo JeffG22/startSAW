@@ -1,5 +1,6 @@
 <?php
     include("../../connection.php");
+    include("utilities.php");
     session_start();
 
     $prev_location = "new_proposal.php";

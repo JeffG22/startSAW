@@ -22,7 +22,7 @@
             echo "<div>".$_SESSION['message']."</div>";
             unset($_SESSION['message']);
         }
-        
+
         $con = dbConnect();
 
         if (!$con) {
@@ -38,9 +38,12 @@
             } else if (mysqli_num_rows($result) == 0) {
                 echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";
             } else {
+                
                 while($row = mysqli_fetch_assoc($result)) {
                     echo "<br><div>\n";
-                    echo "<img src='".$row['picture']."' height='50px'>\n";
+                    if (!empty($row['picture'])) {
+                        echo "<img src='".$row['picture']."' height='50px'> ";
+                    }
                     echo "<b>".$row['name']."</b><br>\n";
                     echo "<i>Inserito in data: ".$row['date_inserted'];
                     if ($name = getUserName($con, $row['proposer_id'])) {
@@ -49,7 +52,10 @@
                     echo "</i><br>\n";
                     echo "Descrizione: ".$row['description']."<br>\n";
                     echo "Numero di volontari richiesti: <b><i>".$row['available_positions']."</b></i><br>\n";
-                    echo "Indirizzo: ".$row['address']."<br>\n";
+                    if (!empty($row['address'])) {
+                        echo "Indirizzo: ".$row['address']."<br>\n";
+                    }
+                    
                     echo "<form action='accept_proposal.php' method='post'>
                             <input type='hidden' name='proposal_id' value='".$row['id']."'>
                             <input type='submit' value='Accetta questa proposta'>

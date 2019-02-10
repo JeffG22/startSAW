@@ -1,6 +1,9 @@
 <?php
     include("../../connection.php");
     session_start();
+
+    $prev_location = "new_proposal.php";
+
     function uploadPicture() {
         if(isset($_FILES['picture']) && is_uploaded_file($_FILES['picture']['tmp_name'])) {
             $uploaddir = "../userpics/";
@@ -25,22 +28,19 @@
 
     if (empty($_POST)) {
         $_SESSION['message'] = "Nessun dato ricevuto.";
-        header("location: new_proposal.php");
-        exit();
+        navigateTo($prev_location);
     }
 
     if ( empty($_POST['name']) || empty($_POST['description']) || empty($_POST['available_positions']) ) {
         $_SESSION['message'] = "Errore. Compila tutti i campi richiesti.";
-        header("location: new_proposal.php");
-        exit();
+        navigateTo($prev_location);
     } else {
         $name = htmlspecialchars($_POST['name']);
         $description = htmlspecialchars($_POST['description']);
         $available_pos = intval($_POST['available_positions']);
         if ($available_pos <= 0) {
             $_SESSION['message'] = "Controlla il numero di posizioni disponibili. Deve essere un numero positivo.";
-            header("location: new_proposal.php");
-            exit();
+            navigateTo($prev_location);
         }
     }
 
@@ -49,8 +49,7 @@
     $con = dbConnect();
 
     if (!$con) {
-        header("location: new_proposal.php");
-        exit();
+        navigateTo($prev_location);
     }
 
     $stmt = mysqli_prepare($con, "INSERT INTO proposal 
@@ -78,23 +77,14 @@
     mysqli_stmt_bind_param($stmt, "ssssddisi", $name, $description, $file, $address, $lat, $lon, 
                                 $available_pos, $date, $id);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <title>Login</title>
-</head>
-<body>
-    <img src="
-        <?php
-            echo $file;
-        ?>
-    ">
-</body>
-</html>
+    if(mysqli_affected_rows($con)) {
+        $_SESSION['message'] = "Inserimento completato correttamente.";
+    } else {
+        $_SESSION['message'] = "Errore nell'inserimento. Riprova.";
+    }
+
+    mysqli_stmt_close($stmt);
+
+    navigateTo($prev_location);
+?>

@@ -6,14 +6,14 @@
     $prev_location = "view_proposals.php";
 
     if (empty($_POST) || empty($_POST['proposal_id'])) {
-        $_SESSION['message'] = "Errore nella prenotazione. Riprova.";
+        $_SESSION['message'] = "Si è verificato un errore imprevisto nell'accettare la proposta. Riprova.";
         navigateTo($prev_location);
     }
 
     $proposal_id = intval($_POST['proposal_id']);
 
     if ($proposal_id < 0) {
-        $_SESSION['message'] = "Errore nella prenotazione. Riprova.";
+        $_SESSION['message'] = "Si è verificato un errore nell'accettare la proposta. Riprova.";
         navigateTo($prev_location);
     }
 
@@ -23,6 +23,7 @@
         navigateTo($prev_location);
     }
 
+    // Using a dummy user id while sessions are not implemented.
     $user_id = 123;
 
     // Checks if the current user is a person.
@@ -35,7 +36,7 @@
     // This could only happen if someone logged in as an association, copied the session id
     // and used it to construct a custom payload to accept a proposal.
     if(mysqli_num_rows($res) != 1) {
-        $_SESSION['message'] = "Impossibile per una associazione associare una proposta. Effettua il login come persona e riprova.";
+        $_SESSION['message'] = "Impossibile per una associazione accettare una proposta. Effettua il login come persona e riprova.";
         navigateTo($prev_location);
     }  
 

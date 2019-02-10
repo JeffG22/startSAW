@@ -56,7 +56,7 @@
     $stmt = mysqli_prepare($con, "INSERT INTO proposal 
                                     (name, description, picture, address, lat, lon, 
                                         available_positions, date_inserted, proposer_id) 
-                                    values (?,?,?,?,?,?,?,?,?)");
+                                    VALUES (?,?,?,?,?,?,?,?,?)");
 
     if (empty($_POST['address'])) {
         $address = NULL; 
@@ -74,18 +74,19 @@
     }
 
     $date = date("Y-m-d");
-    $id = 112;
+    $user_id = 112;
     mysqli_stmt_bind_param($stmt, "ssssddisi", $name, $description, $file, $address, $lat, $lon, 
-                                $available_pos, $date, $id);
+                                $available_pos, $date, $user_id);
     mysqli_stmt_execute($stmt);
 
-    if(mysqli_affected_rows($con)) {
+    if(mysqli_affected_rows($con) === 1) {
         $_SESSION['message'] = "Inserimento completato correttamente.";
     } else {
         $_SESSION['message'] = "Errore nell'inserimento. Riprova.";
     }
 
     mysqli_stmt_close($stmt);
+    mysqli_close($con);
 
     navigateTo($prev_location);
 ?>

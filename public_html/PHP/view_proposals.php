@@ -16,7 +16,13 @@
 </head>
 <body>
     <a href="index_proposals.php">^ Home</a>
+    <br>
     <?php
+        if (isset($_SESSION['message'])) {
+            echo "<div>".$_SESSION['message']."</div>";
+            unset($_SESSION['message']);
+        }
+        
         $con = dbConnect();
 
         if (!$con) {
@@ -33,50 +39,26 @@
                 echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";
             } else {
                 while($row = mysqli_fetch_assoc($result)) {
-                    echo "<div>";
-                    echo "<img src='".$row['picture']."' height='50px'>";
-                    echo "<b>".$row['name']."</b><br>";
+                    echo "<br><div>\n";
+                    echo "<img src='".$row['picture']."' height='50px'>\n";
+                    echo "<b>".$row['name']."</b><br>\n";
                     echo "<i>Inserito in data: ".$row['date_inserted'];
                     if ($name = getUserName($con, $row['proposer_id'])) {
                         echo " da ".$name;
                     }
-                    echo "</i><br>";
-                    echo "Descrizione: ".$row['description']."<br>";
-                    echo "Numero di volontari richiesti: <b><i>".$row['available_positions']."</b></i><br>";
-                    echo "Indirizzo: ".$row['address']."<br>";
-                    echo "<br></div>";
+                    echo "</i><br>\n";
+                    echo "Descrizione: ".$row['description']."<br>\n";
+                    echo "Numero di volontari richiesti: <b><i>".$row['available_positions']."</b></i><br>\n";
+                    echo "Indirizzo: ".$row['address']."<br>\n";
+                    echo "<form action='accept_proposal.php' method='post'>
+                            <input type='hidden' name='proposal_id' value='".$row['id']."'>
+                            <input type='submit' value='Accetta questa proposta'>
+                          </form>
+                          <br>";
+                    echo "</div>";
                 }
             }
         }
     ?>
 </body>
 </html>
-
-    
-<!--
-    
-
-    if (empty($_POST['address'])) {
-        $address = NULL; 
-        $lat = NULL;
-        $long = NULL;
-    } else {
-        $address = htmlspecialchars($_POST['address']);
-        $request = "http://nominatim.openstreetmap.org/search.php?q=".urlencode($address)."&email=ktmdy@hi2.in&format=json";
-        $response = file_get_contents($request);
-        $location = json_decode($response, true); // true = return as associative array
-        if ($location != NULL && !empty($location)) {
-            $lat = $location[0]['lat']."\n";
-            $lon = $location[0]['lon'];
-        }
-    }
-
-    $date = date("Y-m-d");
-    $id = 112;
-    mysqli_stmt_bind_param($stmt, "ssssddisi", $name, $description, $file, $address, $lat, $lon, 
-                                $available_pos, $date, $id);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    
-?>
--->

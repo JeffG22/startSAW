@@ -47,6 +47,7 @@
 			<!--Carousel-->
 			<div id="carouselTop" class="carousel slide" data-ride="carousel">
 	  		<div class="carousel-inner">
+	  			<!--First slide-->
   			  <div id="firstSlide" class="carousel-item active">
     		  	<img class="d-block img-fluid" src="" alt="">
     		  	<span class="sr-only">First slide</span>
@@ -55,6 +56,8 @@
     					<p>Placeholder</p>
   					</div>
     			</div>
+    			<!--First slide-->
+    			<!--Second slide-->
     			<div id="secondSlide" class="carousel-item">
     		  	<img class="d-block img-fluid" src="" alt="">
     		  	<span class="sr-only">Second slide</span>
@@ -63,6 +66,8 @@
     					<p>Placeholder</p>
   					</div>
     			</div>
+    			<!--Second slide-->
+    			<!--Third slide-->
     			<div id="thirdSlide" class="carousel-item">
    			  	<img class="d-block img-fluid" src="" alt="">
    			  	<span class="sr-only">Third slide</span>
@@ -71,6 +76,7 @@
     					<p>Placeholder</p>
   					</div>
    			 	</div>
+   			 	<!--Third slide-->
   			</div>
   			<a class="carousel-control-prev" href="#carouselTop" role="button" data-slide="prev">
   			  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -87,9 +93,12 @@
  				</ol>
 			</div>
 			<!--Carousel-->
+			
+			<!--Continue button-->
 			<div id="continue">
-				<a href="#secondView" class="vs-anchor btn-link"><button id="continueBtn" class="btn-link" type="button" value="Scopri di più">Scopri di più</button></a>
+				<a href="#secondView" class="vs-anchor"><button id="continueBtn" type="button" value="Scopri di più">Scopri di più</button></a>
 			</div>
+			<!--Continue button-->
 		</div>
 		<!--First view-->
 	

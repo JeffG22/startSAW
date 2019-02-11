@@ -28,15 +28,11 @@
         if (!$con) {
             echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
                     Aspetta qualche istante e riprova.";
-        } else {
-            if (empty($_GET) || !isset($_GET['filter']) || $_GET['filter'] == "available") {
-                echo "<br><b>PROPOSTE DI VOLONTARIATO DISPONIBILI</b><br>";
-                $result = mysqli_query($con, "SELECT *
+        } 
+            echo "<br><b>PROPOSTE DI VOLONTARIATO DISPONIBILI</b><br>";
+            $result = mysqli_query($con, "SELECT *
                                           FROM proposal
                                           WHERE available_positions > 0");
-            } else { // If payload is invalid redirect to default view
-                navigateTo("view_proposals.php");
-            }
             
             if (!$result) {
                 echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 

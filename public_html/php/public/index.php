@@ -37,7 +37,9 @@
 <body>
 	
 	<!--Header/Navbar-->
-	<div w3-include-html="../navbar.php"></div>
+	<?php
+		include("../navbar.php")
+	?>
 	<!--Header/Navbar-->
 	
 	<div class="mainbag">
@@ -111,7 +113,9 @@
     <!--Second view--> 
 	
 		<!--Footer-->
-		<div w3-include-html="../footer.php"></div>
+		<?php
+			include("../footer.php")
+		?>
 		<!--Footer-->
 
 	</div>

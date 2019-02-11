@@ -56,9 +56,9 @@
         // Set new custome session ID
         session_id($newid);
         // Start with custome session ID
-        ini_set('session.use_strict_mode', 0);
-        session_start();
+        //ini_set('session.use_strict_mode', 0);
         ini_set('session.use_strict_mode', 1);
+        session_start();
         // New session does not need them
         unset($_SESSION['deleted_time']);
         unset($_SESSION['new_session_id']);

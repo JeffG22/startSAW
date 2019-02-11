@@ -1,37 +1,44 @@
-nav, footer {
-	background-color: #37cdff;
-	color: #253e5e;
-	z-index: 9;
+body {
+	margin: 0;
+	padding: 0;
 }
 
-nav {
-	top: 0;
-}
+/*Navbar & footer*/
+	nav, footer {
+		background-color: #37cdff;
+		color: #253e5e;
+		z-index: 9;
+	}
 
-footer {
-	bottom: 0;
-}
+	nav {
+		top: 0;
+	}
 
-.navbar-light .navbar-brand {
-	color: #2e577d;
-}
+	footer {
+		bottom: 0;
+	}
 
-.navbar-light .navbar-brand:hover {
-	color: #2e577d;
-}
+	.navbar-light .navbar-brand {
+		color: #2e577d;
+	}
 
-.navbar-light .navbar-nav > .active {
-	/*background-color: white;
-	It works, but it's ugly.*/
-}
+	.navbar-light .navbar-brand:hover {
+		color: #2e577d;
+	}
 
-.navbar-light .navbar-nav > .active > .nav-link {
-	color: #0b4378;
-}
+	.navbar-light .navbar-nav > .active {
+		/*background-color: white;
+		It works, but it's ugly.*/
+	}
 
-nav a, footer a {
-	color: #2e577d;
-}
+	.navbar-light .navbar-nav > .active > .nav-link {
+		color: #0b4378;
+	}
+
+	nav a, footer a {
+		color: #2e577d;
+	}
+
 
 /*Removes dotted outlines*/
 button:focus,

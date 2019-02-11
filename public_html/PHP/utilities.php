@@ -58,12 +58,5 @@
                     if (!empty($row['address'])) {
                         echo "Indirizzo: ".$row['address']."<br>\n";
                     }
-                    
-                    echo "<form action='accept_proposal.php' method='post'>
-                            <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                            <input type='submit' value='Accetta questa proposta'>
-                          </form>
-                          <br>";
-                    echo "</div>";
     }
 ?>

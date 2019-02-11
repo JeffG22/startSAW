@@ -8,11 +8,8 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>View proposals</title>
+    <title>View available proposals</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="../js/form_validation.js"></script>
 </head>
 <body>
     <a href="index_proposals.php">^ Home</a>
@@ -65,6 +62,13 @@
                 
                 while($row = mysqli_fetch_assoc($result)) {
                     printProposalInfo($con, $row);
+
+                    echo "<form action='accept_proposal.php' method='post'>
+                    <input type='hidden' name='proposal_id' value='".$row['id']."'>
+                    <input type='submit' value='Accetta questa proposta'>
+                    </form>
+                    <br>";
+                    echo "</div>";
                 }
             }
         }

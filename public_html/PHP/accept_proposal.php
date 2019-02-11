@@ -50,7 +50,7 @@
         mysqli_rollback($con);
         navigateTo($prev_location);
     } else if(mysqli_affected_rows($con) == 0) {    // Wrong proposal_id or no available positions
-        $_SESSION['message'] = "Impossibile accettare la proposta specificata. Riprova.";
+        $_SESSION['message'] = "La proposta specificata sembra non esistere o non avere posizioni disponibili. Riprova.";
         mysqli_rollback($con);
         navigateTo($prev_location);
     }

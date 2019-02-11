@@ -46,7 +46,7 @@
 
                 echo "<form action='delete_proposal.php' method='post'>
                         <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                        <input type='submit' value='Ritira questa proposta'>
+                        <input type='submit' name='delete_proposal' value='Ritira proposta'>
                         </form>
                         <br>";
                 echo "</div>";

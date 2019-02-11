@@ -44,7 +44,6 @@
                         SET available_positions = available_positions - 1
                         WHERE id = ".$proposal_id." AND available_positions > 0");
     
-    echo mysqli_affected_rows($con);
     if(mysqli_affected_rows($con) < 0) {    // MySQL error
         $_SESSION['message'] = "Errore nella registrazione della richiesta. Attendi qualche istante e riprova.";
         mysqli_rollback($con);

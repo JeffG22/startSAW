@@ -34,21 +34,6 @@
                 $result = mysqli_query($con, "SELECT *
                                           FROM proposal
                                           WHERE available_positions > 0");
-            } else if ($_GET['filter'] == "accepted") {
-                echo "<br><b>PROPOSTE DI VOLONTARIATO ACCETTATE</b><br>";
-                if (isPerson($con, $user_id)) {
-                    $result = mysqli_query($con, "SELECT *
-                                          FROM proposal, accepted
-                                          WHERE proposal.id = accepted.proposal_id AND acceptor_id = ".$user_id);
-                } else {
-                    echo "Un'associazione non può accettare proposte di volontariato.";
-                    $is_assoc = true;
-                }
-            } else if ($_GET['filter'] == "proposed") {
-                echo "<br><b>LE MIE PROPOSTE DI VOLONTARIATO</b><br>";
-                $result = mysqli_query($con, "SELECT *
-                                          FROM proposal
-                                          WHERE proposer_id = ".$user_id);
             } else { // If payload is invalid redirect to default view
                 navigateTo("view_proposals.php");
             }

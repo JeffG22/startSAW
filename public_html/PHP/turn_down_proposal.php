@@ -35,7 +35,6 @@
                         SET available_positions = available_positions + 1
                         WHERE id = ".$proposal_id);
     
-    echo mysqli_affected_rows($con);
     if(mysqli_affected_rows($con) < 0) {    // MySQL error
         $_SESSION['message'] = "Errore nella registrazione della richiesta. Attendi qualche istante e riprova.";
         mysqli_rollback($con);
@@ -45,7 +44,6 @@
         mysqli_rollback($con);
         navigateTo($prev_location);
     }
-
 
     // If previous query succeeded, we know that proposal_id is valid
     $stmt = "DELETE FROM accepted

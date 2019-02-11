@@ -3,7 +3,7 @@
     include("utilities.php");
     session_start();
 
-    $prev_location = "view_proposals.php";
+    $prev_location = "view_available_proposals.php";
 
     if (empty($_POST) || empty($_POST['proposal_id'])) {
         $_SESSION['message'] = "Si è verificato un errore imprevisto nell'accettare la proposta. Riprova.";

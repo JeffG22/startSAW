@@ -29,28 +29,27 @@
             echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
                     Aspetta qualche istante e riprova.";
         } 
-            echo "<br><b>PROPOSTE DI VOLONTARIATO DISPONIBILI</b><br>";
-            $result = mysqli_query($con, "SELECT *
-                                          FROM proposal
-                                          WHERE available_positions > 0");
+        echo "<br><b>PROPOSTE DI VOLONTARIATO DISPONIBILI</b><br>";
+        $result = mysqli_query($con, "SELECT *
+                                      FROM proposal
+                                      WHERE available_positions > 0");
             
-            if (!$result) {
-                echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
+        if (!$result) {
+            echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
                     Aspetta qualche istante e riprova.";
-            } else if (mysqli_num_rows($result) == 0 && !$is_assoc) {
-                echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";
-            } else {
+        } else if (mysqli_num_rows($result) == 0 && !$is_assoc) {
+            echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";
+        } else {
                 
-                while($row = mysqli_fetch_assoc($result)) {
-                    printProposalInfo($con, $row);
+            while($row = mysqli_fetch_assoc($result)) {
+                printProposalInfo($con, $row);
 
-                    echo "<form action='accept_proposal.php' method='post'>
-                    <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                    <input type='submit' value='Accetta questa proposta'>
-                    </form>
-                    <br>";
-                    echo "</div>";
-                }
+                echo "<form action='accept_proposal.php' method='post'>
+                      <input type='hidden' name='proposal_id' value='".$row['id']."'>
+                      <input type='submit' value='Accetta questa proposta'>
+                      </form>
+                      <br>";
+                echo "</div>";
             }
         }
     ?>

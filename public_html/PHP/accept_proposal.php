@@ -30,7 +30,8 @@
     // This could only happen if someone logged in as an association, copied the session id
     // and used it to construct a custom payload to accept a proposal.
     if(!isPerson($con, $user_id)) {
-        $_SESSION['message'] = "Impossibile per una associazione accettare una proposta. Effettua il login come persona e riprova.";
+        $_SESSION['message'] = "Impossibile per una associazione accettare una proposta. 
+                                Effettua il login come persona e riprova.";
         navigateTo($prev_location);
     }  
 
@@ -51,6 +52,18 @@
     } else if(mysqli_affected_rows($con) == 0) {    // Wrong proposal_id or no available positions
         $_SESSION['message'] = "Impossibile accettare la proposta specificata. Riprova.";
         mysqli_rollback($con);
+        navigateTo($prev_location);
+    }
+
+    // Prevent accepting proposals by the same user which inserted it
+    $res = mysqli_query($con, "SELECT * 
+                        FROM proposal
+                        WHERE id = ".$proposal_id." AND proposer_id = ".$user_id);
+
+    if (mysqli_num_rows($res) != 0) {
+        $_SESSION['message'] = "Errore: impossibile accettare una proposta inserita da te.";
+        mysqli_rollback($con);
+        mysqli_close($con);
         navigateTo($prev_location);
     }
 

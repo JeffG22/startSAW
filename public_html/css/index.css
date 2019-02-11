@@ -28,12 +28,12 @@
 
 		/*This is the hackiest possible solution, but it also is THE ONLY WORKING ONE.*/
 		#firstSlide {
-			background-image: url(../Media/carousel.jpg);
+			background-image: url(../media/carousel.jpg);
 		}
 		
 	
 		#thirdSlide {
-			background-image: url(../Media/HUEG.jpg);
+			background-image: url(../media/HUEG.jpg);
 		}
 	
 		.carousel-caption {

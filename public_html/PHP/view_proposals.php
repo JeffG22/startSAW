@@ -64,28 +64,7 @@
             } else {
                 
                 while($row = mysqli_fetch_assoc($result)) {
-                    echo "<br><div>\n";
-                    if (!empty($row['picture'])) {
-                        echo "<img src='".$row['picture']."' height='50px'> ";
-                    }
-                    echo "<b>".$row['name']."</b><br>\n";
-                    echo "<i>Inserito in data: ".$row['date_inserted'];
-                    if ($name = getUserName($con, $row['proposer_id'])) {
-                        echo " da ".$name;
-                    }
-                    echo "</i><br>\n";
-                    echo "Descrizione: ".$row['description']."<br>\n";
-                    echo "Numero di volontari richiesti: <b><i>".$row['available_positions']."</b></i><br>\n";
-                    if (!empty($row['address'])) {
-                        echo "Indirizzo: ".$row['address']."<br>\n";
-                    }
-                    
-                    echo "<form action='accept_proposal.php' method='post'>
-                            <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                            <input type='submit' value='Accetta questa proposta'>
-                          </form>
-                          <br>";
-                    echo "</div>";
+                    printProposalInfo($con, $row);
                 }
             }
         }

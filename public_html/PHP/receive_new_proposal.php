@@ -74,7 +74,7 @@
     }
 
     $date = date("Y-m-d");
-    $user_id = 112;
+    $user_id = 123;
     mysqli_stmt_bind_param($stmt, "ssssddisi", $name, $description, $file, $address, $lat, $lon, 
                                 $available_pos, $date, $user_id);
     mysqli_stmt_execute($stmt);

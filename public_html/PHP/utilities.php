@@ -39,4 +39,24 @@
         else 
             return FALSE;
     }
+
+    // Prints informations about a specified proposal, passed as an argument in form of a complete
+    // row fetched as an associative array from the "proposal" table in the database
+    function printProposalInfo($con, $row) {
+        echo "<br><div>\n";
+                    if (!empty($row['picture'])) {
+                        echo "<img src='".$row['picture']."' height='50px'> ";
+                    }
+                    echo "<b>".$row['name']."</b><br>\n";
+                    echo "<i>Inserito in data: ".$row['date_inserted'];
+                    if ($name = getUserName($con, $row['proposer_id'])) {
+                        echo " da ".$name;
+                    }
+                    echo "</i><br>\n";
+                    echo "Descrizione: ".$row['description']."<br>\n";
+                    echo "Numero di volontari richiesti: <b><i>".$row['available_positions']."</b></i><br>\n";
+                    if (!empty($row['address'])) {
+                        echo "Indirizzo: ".$row['address']."<br>\n";
+                    }
+    }
 ?>

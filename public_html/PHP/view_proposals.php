@@ -25,17 +25,41 @@
 
         $con = dbConnect();
 
+        // Using a dummy user id while sessions are not implemented.
+        $user_id = 123;
+
         if (!$con) {
             echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
                     Aspetta qualche istante e riprova.";
         } else {
-            $result = mysqli_query($con, "SELECT *
+            if (empty($_GET) || !isset($_GET['filter']) || $_GET['filter'] == "available") {
+                echo "<br><b>PROPOSTE DI VOLONTARIATO DISPONIBILI</b><br>";
+                $result = mysqli_query($con, "SELECT *
                                           FROM proposal
                                           WHERE available_positions > 0");
+            } else if ($_GET['filter'] == "accepted") {
+                echo "<br><b>PROPOSTE DI VOLONTARIATO ACCETTATE</b><br>";
+                if (isPerson($con, $user_id)) {
+                    $result = mysqli_query($con, "SELECT *
+                                          FROM proposal, accepted
+                                          WHERE proposal.id = accepted.proposal_id AND acceptor_id = ".$user_id);
+                } else {
+                    echo "Un'associazione non può accettare proposte di volontariato.";
+                    $is_assoc = true;
+                }
+            } else if ($_GET['filter'] == "proposed") {
+                echo "<br><b>LE MIE PROPOSTE DI VOLONTARIATO</b><br>";
+                $result = mysqli_query($con, "SELECT *
+                                          FROM proposal
+                                          WHERE proposer_id = ".$user_id);
+            } else { // If payload is invalid redirect to default view
+                navigateTo("view_proposals.php");
+            }
+            
             if (!$result) {
                 echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
                     Aspetta qualche istante e riprova.";
-            } else if (mysqli_num_rows($result) == 0) {
+            } else if (mysqli_num_rows($result) == 0 && !$is_assoc) {
                 echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";
             } else {
                 

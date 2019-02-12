@@ -128,7 +128,7 @@
 	  $(document).ready(function() {
 	    // Sets viewScroller
       $('.mainbag').viewScroller({
-	      useScrollbar: false,
+	      useScrollbar: true,
         changeWhenAnim: false
       });
     });

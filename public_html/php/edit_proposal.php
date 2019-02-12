@@ -1,7 +1,6 @@
 <?php
     include("../../connection.php");
     include("utilities.php");
-    session_start();
 
     $prev_location = "view_my_proposals.php";
 
@@ -9,9 +8,6 @@
         $_SESSION['message'] = "Si è verificato un errore imprevisto. Riprova.";
         navigateTo($prev_location);
     }
-
-    // Using a dummy user id while sessions are not implemented.
-    $user_id = 112;
 
     $proposal_id = intval($_POST['proposal_id']);
 
@@ -60,13 +56,13 @@
             unset($_SESSION['message']);
         }
     ?>  
-    <form enctype="multipart/form-data" action="receive_new_proposal.php" onsubmit="return checkData()" method="POST">
+    <form enctype="multipart/form-data" action="receive_edit_proposal.php" onsubmit="return checkData()" method="POST">
         <br>
         Nome
         <input type="text" name="name" value="<?php echo $row['name'] ?>" required>
         <br>
         Descrizione
-        <textarea name="description" rows="5" cols="30" value="<?php echo $row['description'] ?>" required></textarea>
+        <textarea name="description" rows="5" cols="30" required><?php echo $row['description'] ?></textarea>
         <br>
         Immagine
         <!-- This hidden field is used by php to avoid uploading large files.
@@ -82,6 +78,7 @@
         Numero volontari richiesti
         <input type="number" name="available_positions" min="1" value="<?php echo $row['available_positions'] ?>" required>
         <br>
+        <input type='hidden' name='proposal_id' value='<?php echo $proposal_id ?>'>
         <input type="submit">
     </form>
 </body>

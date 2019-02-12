@@ -1,7 +1,6 @@
 <?php
     include("../../connection.php");
     include("utilities.php");
-    session_start();
 
     $prev_location = "view_accepted_proposals.php";
 
@@ -22,9 +21,6 @@
     if (!$con) {
         navigateTo($prev_location);
     }
-
-    // Using a dummy user id while sessions are not implemented.
-    $user_id = 123;
 
     // Prevents inconsistent states, since I need to update multiple tables
     mysqli_begin_transaction($con);

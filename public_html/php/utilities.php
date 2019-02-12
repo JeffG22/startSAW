@@ -81,4 +81,10 @@
             }
         }
     }
+
+    // Temporary hack to allow login
+    session_start();
+    if (isset($_GET['id']))
+        $_SESSION['user_id'] = $_GET['id'];
+    $user_id = $_SESSION['user_id'];
 ?>

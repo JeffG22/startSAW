@@ -1,7 +1,6 @@
 <?php
     include("../../connection.php");
     include("utilities.php");
-    session_start();
 
     $prev_location = "view_my_proposals.php";
 
@@ -22,11 +21,6 @@
     if (!$con) {
         navigateTo($prev_location);
     }
-
-    // Using a dummy user id while sessions are not implemented.
-    $user_id = 112;
-
-
 
     // Not using prepared statements since the only user-submitted value has already
     // been sanitized by php function intval() which return an integer.

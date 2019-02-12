@@ -1,6 +1,9 @@
 <?php
     function sanitize_inputString($value) {
-        return htmlspecialchars(stripslashes(trim($value)));
+        //return htmlspecialchars(stripslashes(trim($value)));
+        return htmlspecialchars(trim($value));
+        // TODO considerare nl2br se serve e strtr per convertire cose
+        // strtr(str, "<br />", " "); 
     }
     // Se un utente è già registrato e atterra su questa pagina
     // Se un utente non è registrato e atterra su questa pagina
@@ -33,140 +36,163 @@
             if (!$success) {
                 $code = $json_decoded->{'error-codes'};
                 print_r($code);
-                $message = "Controllo reCAPTCHA fallito, riprovare!";
                 throw new InvalidArgumentException("captcha");
             }
-        // 2 - controllo dati utente
-        // TODO controllare isset e nel caso toglierlo
-            // email nomeutente
-            $email = "email";
-            if (!isset($_POST[$email]) || empty($_POST[$email]) || !checksOnEmail($_POST[$email]))
+        // 2 ----- controllo dati utente ------
+            
+            $priv = "privacy"; // privacy concessa
+            $email = "email"; // email nomeutente
+            $password = "password"; // password
+            $tel = "telefono"; // telefono TODO giù
+
+            if (empty($_POST[$priv][0]) || $_POST[$priv][0] != "Y")
+                throw new InvalidArgumentException($priv);
+            if (empty($_POST[$email]) || !checksOnEmail($_POST[$email]))
                 throw new InvalidArgumentException($email);
-            // password
-            $password = "password";
-            if (!isset($_POST[$password]) || empty($_POST[$password]) || !checksOnPswd($_POST[$password]))
+            if (empty($_POST[$password]) || !checksOnPswd($_POST[$password]))
                 throw new InvalidArgumentException($password);
-            // telefono
-            $tel = "telefono";
-            if (!isset($_POST[$tel]) || empty($_POST[$tel]) || !checksOnTel($_POST[$tel]))
+            if (empty($_POST[$tel]) || !checksOnTel($_POST[$tel]))
                 throw new InvalidArgumentException($tel);
 
-        // 3 - controllo spunta Utente Volontario o Associazione
+        // 3 ----- determina se l'utente è persona -----
+
             $tipo = "tipoUtente";
-            if (!isset($_POST[$tipo]) || empty($_POST[$tipo]) || ($_POST[$tipo] != "P" && $_POST[$tipo] != "A"))
+            if (empty($_POST[$tipo]) || ($_POST[$tipo] != "P" && $_POST[$tipo] != "A"))
                 throw new InvalidArgumentException($tipo);
             $persona = ($_POST[$tipo] == "P") ? true : false;
         
-        // 4 - controlli sui campi di persona o associazione
-            // nome v o a
-            $nome = ($persona) ? "nomeV" : "nomeA";
-            if (!isset($_POST[$nomeV]) || empty($_POST[$nomeV]) || !checksOnName($_POST[$nomeV]))
+        // 4 ----- controlli sui campiV o campiA -----
+            
+            $nome = ($persona) ? "nomeV" : "nomeA"; // nome v o a
+            $cognome = "cognome"; // cognome
+            $data = "data"; // data
+            $sex = "genere"; // genere
+            $city = ($persona) ? "comune" : "sede"; // comune v o a
+            $pr = ($persona) ? "provinciaV" : "provinciaA"; // provincia v o a
+            $sett = "settore"; // settore
+            $sito = "sito"; // sito
+
+            if (empty($_POST[$nomeV]) || !checksOnName($_POST[$nomeV]))
                 throw new InvalidArgumentException($nomeV);
-            // cognome
-            $cognome = "cognome";
-            if ($persona && (!isset($_POST[$cognome]) || empty($_POST[$cognome]) || !checksOnSurname($_POST[$cognome])))
+            if (empty($_POST[$cognome]) || !checksOnSurname($_POST[$cognome])))
                 throw new InvalidArgumentException($cognome);
-            // data
-            $data = "data";
-            if ($persona && (!isset($_POST[$data]) || empty($_POST[$data]) || !checksOnDate($_POST[$data])))
+            if ($persona && (empty($_POST[$data]) || !checksOnDate($_POST[$data])))
                 throw new InvalidArgumentException($data);
-            // genere
-            $sex = "genere";
-            if ($persona && (!isset($_POST[$sex]) || empty($_POST[$sex]) || ($_POST[$sex] != "F" && $_POST[$sex] != "M")))
+            if ($persona && (empty($_POST[$sex]) || ($_POST[$sex] != "F" && $_POST[$sex] != "M")))
                 throw new InvalidArgumentException($sex);
-            // comune v o a
-            $city = ($persona) ? "comune" : "sede";
-            if (!isset($_POST[$city]) || empty($_POST[$city]) || !checksOnCity($_POST[$city]))
+            if (empty($_POST[$city]) || !checksOnCity($_POST[$city]))
                 throw new InvalidArgumentException($city);
-            // provincia v o a
-            $pr = ($persona) ? "provinciaV" : "provinciaA";
-            if (!isset($_POST[$pr]) || empty($_POST[$pr]) || !checksOnCity($_POST[$pr]))
+            if (empty($_POST[$pr]) || !checksOnProv($_POST[$pr]))
                 throw new InvalidArgumentException($pr);
-            // settore
-            $sett = "settore";
-            if (!$persona && (!isset($_POST[$sett]) || empty($_POST[$sett]) || !checksOnSettore($_POST[$sett])))
+            if (!$persona && (empty($_POST[$sett]) || !checksOnSettore($_POST[$sett])))
                 throw new InvalidArgumentException($sett);
-            // sito
-            $sito = "sito";
-            if (!$persona && (!isset($_POST[$sito]) || empty($_POST[$sito]) || !checksOnSite($_POST[$sito])))
+            if (!$persona && (empty($_POST[$sito]) || !checksOnSite($_POST[$sito])))
                 throw new InvalidArgumentException($sito);
             
-        // 5 - sanitizzazione input TODO: funzione che fa queste tre funzioni e mysqli real escape string
-            $fields_value;
-            $fields_value[0] = sanitize_inputString($_POST[$email]);
-            $fields_value[1] = sanitize_inputString($_POST[$password]);
-            $fields_value[2] = sanitize_inputString($_POST[$tel]);
-            $fields_value[3] = sanitize_inputString($_POST[$nome]);
+        // 5 ----- sanitizzazione input -----
+
+            $fields_utente; // array che conterrà i campi di utente
+            $fields_utente[0] = sanitize_inputString($_POST[$email]);
+            $fields_utente[1] = password_hash($_POST[$password]), PASSWORD_DEFAULT); // hashing pswd
+            $fields_utente[2] = sanitize_inputString($_POST[$tel]);
+            $fields_value; // array che conterrà i campi associazione / persona
+            $fields_value[0] = sanitize_inputString($_POST[$nome]);
             if ($persona) {
-                $fields_value[4] = sanitize_inputString($_POST[$cognome]);
-                $fields_value[5] = sanitize_inputString($_POST[$data]);
-                $fields_value[6] = sanitize_inputString($_POST[$sex]);
-                $fields_value[7] = sanitize_inputString($_POST[$city]);
-                $fields_value[8] = sanitize_inputString($_POST[$pr]);
-            }
-            else {
+                $fields_value[1] = sanitize_inputString($_POST[$cognome]);
+                $fields_value[2] = sanitize_inputString($_POST[$sex]);
+                $fields_value[3] = sanitize_inputString($_POST[$data]);
                 $fields_value[4] = sanitize_inputString($_POST[$city]);
                 $fields_value[5] = sanitize_inputString($_POST[$pr]);
-                $fields_value[6] = sanitize_inputString($_POST[$sett]);
-                $fields_value[7] = sanitize_inputString($_POST[$sito]);
+            }
+            else {
+                $fields_value[1] = sanitize_inputString($_POST[$city]);
+                $fields_value[2] = sanitize_inputString($_POST[$pr]);
+                $fields_value[3] = sanitize_inputString($_POST[$sett]);
+                $fields_value[4] = sanitize_inputString($_POST[$sito]);
             }
         
-        // 6 - inserimento nel DB se rispetta vincoli univocità
+        // 6 ----- inserimento nel DB se rispetta vincoli -----
+
             require_once "connection.php";
-            $conn = get_dbconnection();
-            foreach ($fields_value as $v)
-                $v = mysqli_real_escape_string($conn, $v); // sono tutte stringhe
-            $query1 = "INSERT INTO Utenti ( TODOfields ) VALUES (?, ?, ?, ?)";
-            $query2;
-            if ($persona)
-                $query2 = "INSERT INTO Utenti ( TODOfields ) VALUES (?, ?, ?, ?)";
-            else
-                $query2 = "INSERT INTO Utenti ( TODOfields ) VALUES (?, ?, ?, ?)"; 
-            /*if ($stmt = mysqli_prepare($conn, $query)) {
-                mysqli_stmt_bind_param($stmt, 's', $user);
-                if (mysqli_stmt_execute($stmt)) {
-                    mysqli_stmt_bind_result($stmt, $tableUsers);
-                    mysqli_stmt_fetch($stmt);
-                    
-                    $row = mysqli_fetch_assoc($res);
-                    if (mysqli_stmt_num_rows($res) == 1) { // unico utente
-                        // mysqli_stmt_affected_rows
-                        // verifica della password
-                        // registrazione della sessione
-                        $_SESSION['user'] = $user;
-                    }
-                    else { // tentativo di injection o errore
-                        // fare qualcosa tipo redirect
-                        // $error="Your Login Name or Password is invalid";
-                    }
-                    mysqli_free_result($tableUsers); 
-                }
-                else
-                    $message = "query non eseguita";
-                mysqli_stmt_free_result($stmt); 
-                mysqli_stmt_close($stmt);
+            if (!($conn = get_dbconnection()))
+                throw new Exception("sql ".mysqli_connect_error());
+            $query1 = "INSERT INTO user (email, passwd, type) VALUES (?, ?, ?)"; 
+            
+        // ----- inizio transazione e prima query in Utente ------
+            if (!mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE))
+                throw new Exception("sql ".mysqli_connect_error($conn));
+            if (!mysqli_autocommit($conn, FALSE))
+                throw new Exception("sql ".mysqli_connect_error($conn));
+
+            $insert1 = false;
+            if (!($stmt = mysqli_prepare($conn, $query1)))
+                throw new Exception("sql ".mysqli_error());
+            if (!mysqli_stmt_bind_param($stmt, 'sss', $fields_utente[0], $fields_utente[1], $fields_utente[2]))
+                throw new Exception("sql param");
+            if (!mysqli_stmt_execute($stmt)) {
+                if (mysqli_errno($conn) == 1062) // DUPLICATE PRIMARY KEY
+                    throw new InvalidArgumentException($email."sql");
+                throw new InvalidArgumentException("sql ".$stmt->error);
+            }
+            if (mysqli_stmt_affected_rows($conn) == 1) { // unico utente inserito
+                $insert1 = true;
+                $idUtente = mysql_insert_id(); // id dell'ultima t-upla inserita
             }
             else
-                $message = "query fallita.";
+                throw new InvalidArgumentException("sql");
+            mysqli_stmt_close($stmt);
+
+            // ----- seconda query ------
+            $insert2 = false;
+            if ($persona) {
+                $query2 = "INSERT INTO person (id, name, surname, gender, birthdate, township, province, phone) VALUES (?, ?, ?, ?, ?, ?)";
+                if (!($stmt = mysqli_prepare($conn, $query2))) {
+                    mysqli_rollback($conn);
+                    throw new Exception("sql ".mysqli->error);
+                }
+                if (!mysqli_stmt_bind_param($stmt, 'issssss', 
+                        $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], $fields_value[3], $fields_value[4], $fields_value[5])) {
+                    mysqli_rollback($conn);
+                    throw new Exception("sql param");
+                }
+            }
+            else {
+                $query2 = "INSERT INTO organization (name, headquarter, province, sector, website) VALUES (?, ?, ?, ?, ?)";
+                    if (!($stmt = mysqli_prepare($conn, $query2))) {
+                        mysqli_rollback($conn);
+                        throw new Exception("sql ".mysqli->error);
+                    }
+                    if (!mysqli_stmt_bind_param($stmt, 'isssss', 
+                            $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], $fields_value[3], $fields_value[4])) {
+                        mysqli_rollback($conn);                            
+                        throw new Exception("sql param");
+                    }
+            }
+            if (!mysqli_stmt_execute($stmt)) {
+                mysqli_rollback($conn);
+                throw new InvalidArgumentException("sql ".$stmt->error);
+            }
+            if (mysqli_stmt_affected_rows($conn) == 1) // unica P/A inserita
+                $insert2 = true;
+            else {
+                mysqli_rollback($conn);
+                throw new InvalidArgumentException("sql");
+            }
+            if (!mysqli_commit($conn))
+                throw new Exception("transaction");
+
+            mysqli_stmt_close($stmt);
             mysqli_close($conn);
-            */
 
-
-        // 7 - rilascio dei cookie (impostazione della sessione) -> login automatico (?)
-        
-            
-
-            
-        }
-        else {
-            $error_flag = true;
-            // dire o fare qualcosa?
-        }       
+            // 7 ----- impostazione sessione e login automatico ----
+            // variabili di sessione
+            $_SESSION['userId'] = $idUtente;
+            $_SESSION['type'] = ($persona) ? "person" : "organization";
+            header("Location: index.php");
+        }      
     } catch (Exception $ex) {
-        echo $ex->message;
-        // errore da comunicare
         $error_flag = true;
-
+        echo $ex->getMessage();
     }
 ?>
 
@@ -193,38 +219,44 @@
     <!-- JS -->
     <script>
         "use strict"; //necessario per strict mode
-        function setToRequired(item) {
-            document.getElementById(item).required = true;
-        }
-        
-        function setToUnrequired(item) {
-            document.getElementById(item).required = false;
-        }
-
         function showSecondBox() {
-            var selectedRadioValue = document.querySelector('input[name=tipoUtente]:checked').value;
+            var selectedRadioValue = document.querySelector('input[name=tipoUtente]:checked').value; // selezione persona oppure associazione
             var boxHidden, boxShowed;
-            var htmlLegend = $("#legendaTipoInput");
-            var volontarioIdFields = ["nomeV", "cognome", "data", "genere", "comune", "provinciaV"];
-            var associazioneIdFields = ["nomeA", "sede", "provinciaA", "settore", "sito"];
+            var htmlLegend = $("#legendaTipoInput"); // comunicare inserimento persona oppure azienda
+            var campiV = $(".campiV"); // campi volontario
+            var campiA = $(".campiA"); // campi associazione
 
-            if (selectedRadioValue == "A") {
+            if (selectedRadioValue == "A") { // si vuole inserire un'associazione
                 boxHidden = $("#campiVolontario");
                 boxShowed = $("#campiAssociazione");
                 htmlLegend.html("Dati Associazione/Azienda");
-                volontarioIdFields.forEach(setToUnrequired);
-                associazioneIdFields.forEach(setToRequired);
+                campiV.prop('required',false);
+                campiA.prop('required',true);
             }
-            else if (selectedRadioValue == "P") {
+            else if (selectedRadioValue == "P") { // si vuole inserire una persona
                 boxHidden = $("#campiAssociazione");
                 boxShowed = $("#campiVolontario");
-                htmlLegend.html("Dati Persona");
-                volontarioIdFields.forEach(setToRequired);
-                associazioneIdFields.forEach(setToUnrequired);
+                htmlLegend.html("Dati Volontario");
+                campiV.prop('required',true);
+                campiA.prop('required',false);
             }
             boxHidden.hide()
             boxShowed.show();
         }
+
+        /** ----- operazione di recupero dati se non validi ----- */
+        function loadPostData( jQuery ) {
+            // utente -> ricaricare email, password, telefono, flag privacy
+            // tipo -> P / A
+            // persona -> nome, cognome, data, sesso, comune, provincia
+            // associaz. -> nome, comune, provincia, settore, sito
+            // comunicare errore ad utente con javascript
+        }
+        <?php
+            if ($error_flag)
+                echo '$( document ).ready( loadPostData );'
+        ?>
+        
     </script>
 </head>
 
@@ -237,55 +269,55 @@
                 <div>
                     <!-- tipo utente -->
                     <p>Registrati come: &emsp;            
-                        <input type="radio" id="persona" name="tipoUtente" value="P" onchange="showSecondBox();" checked required>
+                        <input type="radio" id="persona" name="tipoUtente" value="person" onchange="showSecondBox();" checked required>
                         <label for="persona">persona</label>
-                        <input type="radio" id="associazione" name="tipoUtente" value="A" onchange="showSecondBox();">
-                        <label for="associazione">associazione/azienda</label>
+                        <input type="radio" id="associazione" name="tipoUtente" value="organization" onchange="showSecondBox();">
+                        <label for="associazione">associazione</label>
                     </p>
                 </div>
-                <div id="campiUtente">
+                <div id="campiUser">
                     <!-- email -->
                     <div>
                         <label for="email">Email: </label>&emsp;
-                        <input type="email" id="email" name="email" minlength="4"  maxlength="35" placeholder="name@domain.net" autocomplete="on" required>
+                        <input type="email" id="email" name="email" minlength="6"  maxlength="254" placeholder="name@domain.net" autocomplete="on" required>
                     </div>
                     <!-- password -->
                     <div>
                         <label for="password">Password: </label>&emsp;
-                        <input type="password" id="password" name="password" minlength="6" maxlength="35" placeholder="6 characters minimum" autocomplete="on" required>
+                        <input type="password" id="password" name="password" minlength="6" maxlength="31" placeholder="6 characters minimum" autocomplete="on" required>
                     </div>
-                    <!-- telefono -->
+                    <!-- telefono TODO in tabella organization oppure person e facoltativo -->
                     <div>
                         <label for="telefono">Telefono: </label>&emsp;
-                        <input type="tel" id="telefono" name="telefono" pattern="[0-9]{7,12}" maxlength="12" minlength="7" required>
+                        <input type="tel" id="telefono" name="telefono" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
                     </div>
                 </div>
                 <br/>
                 <fieldset class="box" id="SecondBox">
-                <legend id="legendaTipoInput">Dati Persona</legend> <!-- OR Dati Associazione !-->
+                <legend id="legendaTipoInput">Dati Volontario</legend> <!-- OR Dati Associazione !-->
                 <!-- i campi di associazione non hanno attributo required in static time !-->
                 <!-- Registrazione Volontario !-->
-                    <div id="campiVolontario">
+                    <div id="campiPerson">
                         <!-- nomeV -->
                         <div>
                             <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV" maxlength="20" required>
+                            <input type="text" id="nomeV" name="nomeV" class="campiV" maxlength="50" required>
                         </div>
                         <!-- cognome -->
                         <div>
                             <label for="cognome">Cognome: </label>&emsp;
-                            <input type="text" id="cognome" name="cognome" maxlength="20" required>
+                            <input type="text" id="cognome" name="cognome" class="campiV" maxlength="50" required>
                         </div>
-                        <!-- data di nascita -->
+                        <!-- data di nascita TODO DINAMICO e CONVERTIRE YYYY-MM-DD -->
                         <div>
                             <label for="data">Data di nascita: </label>&emsp;
-                            <input type="date" id="data" name="data" min="1900-01-01" required>
+                            <input type="date" id="data" name="data" class="campiV" min="1900-01-01" max="2006-12-31" required>
                         </div>
                         <!-- Sesso -->
                         <div>
                             <label for="genere">Sesso: </label>&emsp;
-                            <select id="genere" name="genere" required>
-                                <option value="" selected>Selezionare</option>
+                            <select id="genere" name="genere" class="campiV" required>
+                                <option value="-" selected>Non specificato</option>
                                 <option value="F">F</option>
                                 <option value="M">M</option>
                             </select>
@@ -293,11 +325,11 @@
                         <!-- Comune -->
                         <div>
                             <label for="comune">Comune: </label>&emsp;
-                            <input type="text" id="comune" name="comune" maxlength="20" required>
+                            <input type="text" id="comune" name="comune" class="campiV" maxlength="35" required>
                             &emsp;
-                        <!-- Provincia -->
+                        <!-- Provincia TODO autocomplete e pattern-->
                             <label for="provinciaV">Provincia: </label>&emsp;
-                            <input type="text" id="provinciaV" name="provinciaV" maxlength="20" required>
+                            <input type="text" id="provinciaV" name="provinciaV" class="campiV" size="2" required>
                         </div>
                     </div>
                     <!-- Registrazione Associazione !-->
@@ -305,26 +337,26 @@
                         <!-- nomeA -->
                         <div>
                             <label for="nomeA">Nome: </label>&emsp;
-                            <input type="text" id="nomeA" name="nomeA" maxlength="20">
+                            <input type="text" id="nomeA" class="campiA" name="nomeA" maxlength="64">
                         </div>
                         <!-- sede -->
                         <div>
                             <label for="sede">Comune della sede: </label>&emsp;
-                            <input type="text" id="sede" name="sede" maxlength="20">
+                            <input type="text" id="sede" name="sede" class="campiA" maxlength="35">
                             &emsp;
-                        <!-- Provincia --> 
+                        <!-- Provincia TODO autocomplete --> 
                             <label for="provinciaA">Provincia: </label>&emsp;
-                            <input type="text" id="provinciaA" name="provinciaA" maxlength="20">
+                            <input type="text" id="provinciaA" name="provinciaA" class="campiA" size="2">
                         </div>
                         <!-- settore -->
                         <div>
                             <label for="settore">Settore in cui opera: </label>&emsp;
-                            <input type="text" id="settore" name="settore" maxlength="20">
+                            <input type="text" id="settore" name="settore" class="campiA" maxlength="35">
                         </div>
                         <!-- sito -->
                         <div>
                             <label for="sito">Sito web: </label>&emsp;
-                            <input type="text" id="sito" name="sito" maxlength="20">
+                            <input type="url" id="sito" name="sito" maxlength="64">
                         </div>
                     </div>
                 </fieldset>    
@@ -341,8 +373,3 @@
     </fieldset>
 </body>
 </html>
-<?php
-    if ($error_flag) {
-        // comunicare errore ad utente con javascript
-    }
-?>

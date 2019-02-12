@@ -59,4 +59,10 @@
                         echo "Indirizzo: ".$row['address']."<br>\n";
                     }
     }
+
+    /** ----- Sanitization utilities ----- */
+    
+    function sanitize_inputString($value) {
+        return htmlspecialchars(trim($value)); 
+    }
 ?>

@@ -23,22 +23,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
   <!--Inclusions-->
-  <!--link rel="stylesheet" href="../CSS/Global.css"-->
-  <script src="../../js/include.js"></script> 
- 	<script src="../../js/jquery-3.1.0.min.js"></script>
-	<script src="../../js/jquery.easing.min.js"></script>
-	<script src="../../js/jquery.mousewheel.min.js"></script>
-	<script src="../../js/viewScroller.js"></script>
+  <script src="js/include.js"></script> 
+ 	<script src="js/jquery-3.1.0.min.js"></script>
+	<script src="js/jquery.easing.min.js"></script>
+	<script src="js/jquery.mousewheel.min.js"></script>
+	<script src="js/viewScroller.js"></script>
 	
-  <link rel="stylesheet" href="../../css/global.css">
-  <link rel="stylesheet" href="../../css/index.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
 	
 	<!--Header/Navbar-->
 	<?php
-		include("../navbar.php")
+		include("php/navbar.php")
 	?>
 	<!--Header/Navbar-->
 	
@@ -114,7 +113,7 @@
 	
 		<!--Footer-->
 		<?php
-			include("../footer.php")
+			include("php/footer.php")
 		?>
 		<!--Footer-->
 

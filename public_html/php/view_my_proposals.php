@@ -44,9 +44,10 @@
             while($row = mysqli_fetch_assoc($result)) {
                 printProposalInfo($con, $row);
 
-                echo "<form action='delete_proposal.php' method='post'>
+                echo "<form method='POST'>
                         <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                        <input type='submit' name='delete_proposal' value='Ritira proposta'>
+                        <input type='submit' value='Modifica proposta' formaction='edit_proposal.php'>
+                        <input type='submit' value='Elimina proposta' formaction='delete_proposal.php'>
                         </form>
                         <br>";
                 echo "</div>";

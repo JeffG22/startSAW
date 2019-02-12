@@ -26,6 +26,9 @@
                     Aspetta qualche istante e riprova.";
         } 
         echo "<br><b>PROPOSTE DI VOLONTARIATO DISPONIBILI</b><br>";
+        if (!isPerson($con, $user_id)) {    // TODO: USE SESSION INSTEAD
+            echo "Nota: non puoi accettare proposte perché hai eseguito il login come associazione.<br>";
+        }
         $result = mysqli_query($con, "SELECT *
                                       FROM proposal
                                       WHERE available_positions > 0");
@@ -38,13 +41,21 @@
         } else {
                 
             while($row = mysqli_fetch_assoc($result)) {
+                echo "<br><div>\n";
                 printProposalInfo($con, $row);
 
-                echo "<form action='accept_proposal.php' method='post'>
-                      <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                      <input type='submit' value='Accetta questa proposta'>
-                      </form>
-                      <br>";
+                if (isPerson($con, $user_id)) {    // TODO: USE SESSION INSTEAD
+                    if($row['proposer_id'] == $user_id) {
+                        echo "<input type=\"button\" disabled value=\"Non puoi accettare una proposta inserita da te\">";
+                    } else {
+                        echo "<form action='accept_proposal.php' method='post'>
+                            <input type='hidden' name='proposal_id' value='".$row['id']."'>
+                            <input type='submit' value='Accetta questa proposta'>
+                            </form>
+                            <br>";
+                    }
+                }
+
                 echo "</div>";
             }
         }

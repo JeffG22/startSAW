@@ -23,21 +23,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
   <!--Inclusions-->
-  <!--link rel="stylesheet" href="../CSS/Global.css"-->
-  <script src="../JS/Include.js"></script> 
- 	<script src="../JS/jquery-3.1.0.min.js"></script>
-	<script src="../JS/jquery.easing.min.js"></script>
-	<script src="../JS/jquery.mousewheel.min.js"></script>
-	<script src="../JS/viewScroller.js"></script>
+  <script src="js/include.js"></script> 
+ 	<script src="js/jquery-3.1.0.min.js"></script>
+	<script src="js/jquery.easing.min.js"></script>
+	<script src="js/jquery.mousewheel.min.js"></script>
+	<script src="js/viewScroller.js"></script>
 	
-  <link rel="stylesheet" href="../CSS/Global.css">
-  <link rel="stylesheet" href="../CSS/Index.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
 	
 	<!--Header/Navbar-->
-	<div w3-include-html="Header.php"></div>
+	<?php
+		include("php/navbar.php")
+	?>
 	<!--Header/Navbar-->
 	
 	<div class="mainbag">
@@ -111,7 +112,9 @@
     <!--Second view--> 
 	
 		<!--Footer-->
-		<div w3-include-html="Footer.php"></div>
+		<?php
+			include("php/footer.php")
+		?>
 		<!--Footer-->
 
 	</div>
@@ -124,7 +127,7 @@
 	  $(document).ready(function() {
 	    // Sets viewScroller
       $('.mainbag').viewScroller({
-	      useScrollbar: false,
+	      useScrollbar: true,
         changeWhenAnim: false
       });
     });

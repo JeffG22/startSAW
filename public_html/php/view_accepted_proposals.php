@@ -1,7 +1,6 @@
 <?php
     include("../../connection.php");
     include("utilities.php");
-    session_start();   
 ?>
 
 <!DOCTYPE html>
@@ -21,9 +20,6 @@
         }
 
         $con = dbConnect();
-
-        // Using a dummy user id while sessions are not implemented.
-        $user_id = 123;
 
         if (!$con) { // Connection error
             echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 

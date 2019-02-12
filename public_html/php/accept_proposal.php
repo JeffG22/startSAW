@@ -1,7 +1,6 @@
 <?php
     include("../../connection.php");
     include("utilities.php");
-    session_start();
 
     $prev_location = "view_available_proposals.php";
 
@@ -22,9 +21,6 @@
     if (!$con) {
         navigateTo($prev_location);
     }
-
-    // Using a dummy user id while sessions are not implemented.
-    $user_id = 123;
 
     // Prevents an association from accepting a proposal.
     // This could only happen if someone logged in as an association, copied the session id

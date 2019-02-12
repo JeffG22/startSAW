@@ -1,0 +1,76 @@
+body {
+  background-color: #191919;
+  font-family: "Arial", Arial, sans-serif;
+	color: #444;
+}
+
+p {
+    white-space: pre-wrap;
+    max-width: 340px;
+    width: 80vh;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+/*Main container. Flexbox.*/
+.container {
+  display: flex;
+  padding: 5vh;
+  margin: 5vh auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start; 
+}
+
+/*Log in/sign up containers.*/
+.form-group {
+  display: flex;
+  background: #fff;
+  padding: 3vh 5vh 5vh 5vh;
+  margin: 5vh;
+  border-radius: 2vh;
+  align-items: center;
+  flex-grow: 0;
+  flex-basis: auto;
+}
+
+form {
+  max-width: 350px;
+  width: 70vmin;
+}
+
+/*Form fields*/
+input[type=text], input[type=password], input[type=email] {
+  display: block;  
+  padding: 10px;
+  margin: 1vh;
+  border: none;
+  border-radius: 10px;
+  background: #eee;
+}
+
+/*Field descriptions*/
+label {
+  font-family: "Arial", Arial, sans-serif;
+}
+
+button {
+	position: relative;
+	left: auto;
+}
+
+
+@media only screen and (max-width: 400px) {
+	body {
+    background-color: #ffffff;
+  }
+  
+  .container {
+    display: flex;
+    padding: 0vh;
+    margin: 0vh auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start; 
+	}
+}

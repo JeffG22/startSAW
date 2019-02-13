@@ -28,7 +28,7 @@ p {
   background: #fff;
   padding: 3vh 5vh 5vh 5vh;
   margin: 5vh;
-  border-radius: 2vh;
+  border-radius: 5%;
   align-items: center;
   flex-grow: 0;
   flex-basis: auto;

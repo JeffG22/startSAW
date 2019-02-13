@@ -74,7 +74,7 @@
 
             if (empty($_POST[$nomeV]) || !checksOnName($_POST[$nomeV]))
                 throw new InvalidArgumentException($nomeV);
-            if (empty($_POST[$cognome]) || !checksOnSurname($_POST[$cognome])))
+            if (empty($_POST[$cognome]) || !checksOnSurname($_POST[$cognome]))
                 throw new InvalidArgumentException($cognome);
             if ($persona && (empty($_POST[$data]) || !checksOnDate($_POST[$data])))
                 throw new InvalidArgumentException($data);
@@ -93,7 +93,7 @@
 
             $fields_utente; // array che conterrà i campi di utente
             $fields_utente[0] = sanitize_inputString($_POST[$email]);
-            $fields_utente[1] = password_hash($_POST[$password]), PASSWORD_DEFAULT); // hashing pswd
+            $fields_utente[1] = password_hash($_POST[$password], PASSWORD_DEFAULT); // hashing pswd
             $fields_utente[2] = sanitize_inputString($_POST[$tel]);
             $fields_value; // array che conterrà i campi associazione / persona
             $fields_value[0] = sanitize_inputString($_POST[$nome]);
@@ -148,7 +148,7 @@
                 $query2 = "INSERT INTO person (id, name, surname, gender, birthdate, township, province, phone) VALUES (?, ?, ?, ?, ?, ?)";
                 if (!($stmt = mysqli_prepare($conn, $query2))) {
                     mysqli_rollback($conn);
-                    throw new Exception("sql ".mysqli->error);
+                    throw new Exception("sql ".$conn->error);
                 }
                 if (!mysqli_stmt_bind_param($stmt, 'issssss', 
                         $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], $fields_value[3], $fields_value[4], $fields_value[5])) {
@@ -160,7 +160,7 @@
                 $query2 = "INSERT INTO organization (name, headquarter, province, sector, website) VALUES (?, ?, ?, ?, ?)";
                     if (!($stmt = mysqli_prepare($conn, $query2))) {
                         mysqli_rollback($conn);
-                        throw new Exception("sql ".mysqli->error);
+                        throw new Exception("sql ".$conn->error);
                     }
                     if (!mysqli_stmt_bind_param($stmt, 'isssss', 
                             $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], $fields_value[3], $fields_value[4])) {

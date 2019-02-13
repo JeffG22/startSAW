@@ -59,6 +59,12 @@
                     }
     }
 
+    /** ----- Sanitization utilities ----- */
+    
+    function sanitize_inputString($value) {
+        return htmlspecialchars(trim($value)); 
+    }
+    
     function uploadPicture() {
         if(isset($_FILES['picture']) && is_uploaded_file($_FILES['picture']['tmp_name'])) {
             $uploaddir = "../userpics/";

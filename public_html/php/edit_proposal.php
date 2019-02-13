@@ -62,7 +62,7 @@
         <input type="text" name="name" value="<?php echo $row['name'] ?>" required>
         <br>
         Descrizione
-        <textarea name="description" rows="5" cols="30" required><?php echo $row['description'] ?></textarea>
+        <textarea name="description" rows="5" cols="30" required><?php echo str_replace("<br />","",$row['description']) ?></textarea>
         <br>
         Immagine
         <!-- This hidden field is used by php to avoid uploading large files.

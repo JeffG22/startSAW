@@ -59,12 +59,6 @@
                     }
     }
 
-    /** ----- Sanitization utilities ----- */
-    
-    function sanitize_inputString($value) {
-        return htmlspecialchars(trim($value)); 
-    }
-    
     function uploadPicture() {
         if(isset($_FILES['picture']) && is_uploaded_file($_FILES['picture']['tmp_name'])) {
             $uploaddir = "../userpics/";
@@ -85,6 +79,12 @@
                 $_SESSION['message'] = "Caricamento fallito.\n";
             }
         }
+    }
+
+    /** ----- Sanitization utility ----- */
+    
+    function sanitize_inputString($value) {
+        return htmlspecialchars(trim($value)); 
     }
 
     // Temporary hack to allow login

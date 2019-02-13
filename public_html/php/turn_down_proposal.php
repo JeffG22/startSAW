@@ -1,7 +1,6 @@
 <?php
     include("../../connection.php");
     include("utilities.php");
-    session_start();
 
     $prev_location = "view_accepted_proposals.php";
 
@@ -23,11 +22,10 @@
         navigateTo($prev_location);
     }
 
-    // Using a dummy user id while sessions are not implemented.
-    $user_id = 123;
-
     // Prevents inconsistent states, since I need to update multiple tables
     mysqli_begin_transaction($con);
+
+    mysqli_autocommit($con, FALSE);
 
     // Not using prepared statements since the only user-submitted value has already
     // been sanitized by php function intval() which return an integer.

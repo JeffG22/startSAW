@@ -43,7 +43,6 @@
     // Prints informations about a specified proposal, passed as an argument in form of a complete
     // row fetched as an associative array from the "proposal" table in the database
     function printProposalInfo($con, $row) {
-        echo "<br><div>\n";
                     if (!empty($row['picture'])) {
                         echo "<img src='".$row['picture']."' height='50px'> ";
                     }
@@ -59,4 +58,38 @@
                         echo "Indirizzo: ".$row['address']."<br>\n";
                     }
     }
+
+    function uploadPicture() {
+        if(isset($_FILES['picture']) && is_uploaded_file($_FILES['picture']['tmp_name'])) {
+            $uploaddir = "../userpics/";
+            $filename = (microtime(true)*10000);
+            $uploadfile = $uploaddir.$filename.".".pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
+
+            $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_BMP);
+            $detectedType = exif_imagetype($_FILES['picture']['tmp_name']);
+
+            if(!in_array($detectedType, $allowedTypes)) {
+                $_SESSION['message'] = "Formato file non ammesso";
+            } else if ($_FILES['picture']['size'] > 4194304) {
+                $_SESSION['message'] = "Dimensione massima superata.\n";
+            } else if (move_uploaded_file($_FILES['picture']['tmp_name'], $uploadfile)) {
+                $_SESSION['message'] = "File caricato con successo.\n";
+                return $uploadfile;
+            } else {
+                $_SESSION['message'] = "Caricamento fallito.\n";
+            }
+        }
+    }
+
+    /** ----- Sanitization utility ----- */
+    
+    function sanitize_inputString($value) {
+        return htmlspecialchars(trim($value)); 
+    }
+
+    // Temporary hack to allow login
+    session_start();
+    if (isset($_GET['id']))
+        $_SESSION['user_id'] = $_GET['id'];
+    $user_id = $_SESSION['user_id'];
 ?>

@@ -1,7 +1,6 @@
 <?php
     include("../../connection.php");
     include("utilities.php");
-    session_start();   
 ?>
 
 <!DOCTYPE html>
@@ -22,9 +21,6 @@
 
         $con = dbConnect();
 
-        // Using a dummy user id while sessions are not implemented.
-        $user_id = 112;
-
         if (!$con) { // Connection error
             echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
                     Aspetta qualche istante e riprova.";
@@ -39,14 +35,15 @@
             echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
                     Aspetta qualche istante e riprova.";
         } else if (mysqli_num_rows($result) == 0) { // Empty result
-            echo "Sembra che tu non abbia ancora accettato alcuna proposta.";
+            echo "Sembra che tu non abbia inserito alcuna proposta.";
         } else { // Result not empty
             while($row = mysqli_fetch_assoc($result)) {
                 printProposalInfo($con, $row);
 
-                echo "<form action='delete_proposal.php' method='post'>
+                echo "<form method='POST'>
                         <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                        <input type='submit' name='delete_proposal' value='Ritira proposta'>
+                        <input type='submit' value='Modifica proposta' formaction='edit_proposal.php'>
+                        <input type='submit' value='Elimina proposta' formaction='delete_proposal.php'>
                         </form>
                         <br>";
                 echo "</div>";

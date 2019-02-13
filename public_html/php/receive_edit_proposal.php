@@ -2,12 +2,14 @@
     include("../../connection.php");
     include("utilities.php");
 
-    $prev_location = "new_proposal.php";
+    $prev_location = "view_my_proposals.php";
 
-    if (empty($_POST)) {
-        $_SESSION['message'] = "Nessun dato ricevuto.";
+    if (empty($_POST) || empty($_POST['proposal_id'])) {
+        $_SESSION['message'] = "Errore nella ricezione dei dati.";
         navigateTo($prev_location);
     }
+
+    $proposal_id = intval($_POST['proposal_id']);
 
     if ( empty($_POST['name']) || empty($_POST['description']) || empty($_POST['available_positions']) ) {
         $_SESSION['message'] = "Errore. Compila tutti i campi richiesti.";
@@ -30,11 +32,12 @@
         navigateTo($prev_location);
     }
 
-    $stmt = mysqli_prepare($con, "INSERT INTO proposal 
-                                    (name, description, picture, address, lat, lon, 
-                                        available_positions, date_inserted, proposer_id) 
-                                    VALUES (?,?,?,?,?,?,?,?,?)");
+    $stmt = mysqli_prepare($con, "UPDATE proposal 
+                                  SET name=?,  description=?, picture=IFNULL(?, picture), address=?, lat=?, lon=?, available_positions=?
+                                  WHERE id = ".$proposal_id." AND proposer_id = ".$user_id);
 
+    // IFNULL(a, b) returns a if a is not null, otherwise it returns b
+    
     if (empty($_POST['address'])) {
         $address = NULL; 
         $lat = NULL;
@@ -52,14 +55,14 @@
 
     $date = date("Y-m-d");
 
-    mysqli_stmt_bind_param($stmt, "ssssddisi", $name, $description, $file, $address, $lat, $lon, 
-                                $available_pos, $date, $user_id);
+    mysqli_stmt_bind_param($stmt, "ssssddi", $name, $description, $file, $address, $lat, $lon, $available_pos);
     mysqli_stmt_execute($stmt);
+
 
     if(mysqli_affected_rows($con) === 1) {
         $_SESSION['message'] = "Inserimento completato correttamente.";
     } else {
-        $_SESSION['message'] = "Errore nell'inserimento. Riprova.";
+        $_SESSION['message'] = "Nessuna modifica effettuata.";
     }
 
     mysqli_stmt_close($stmt);

@@ -65,7 +65,7 @@
             $filename = (microtime(true)*10000);
             $uploadfile = $uploaddir.$filename.".".pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
 
-            $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_BMP);
+            $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_JPG, IMAGETYPE_BMP);
             $detectedType = exif_imagetype($_FILES['picture']['tmp_name']);
 
             if(!in_array($detectedType, $allowedTypes)) {

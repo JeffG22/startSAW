@@ -5,7 +5,7 @@
     if (!empty($_GET['search'])) {
         $search_query = sanitize_inputString($_GET['search']);
     } else if (isset($_GET['search'])) {    // If empty search query, removes "search=" from url
-        header("Location: view_available_proposals.php");
+        navigateTo("view_available_proposals.php");
     } else {
         $search_query = "";
     }

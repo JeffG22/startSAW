@@ -56,13 +56,14 @@
                                 $available_pos, $date, $user_id);
     mysqli_stmt_execute($stmt);
 
-    if(mysqli_affected_rows($con) === 1) {
+    if(mysqli_affected_rows($con) == 1) {
         $_SESSION['message'] = "Inserimento completato correttamente.";
     } else {
         $_SESSION['message'] = "Errore nell'inserimento. Riprova.";
     }
 
     mysqli_stmt_close($stmt);
+    
     mysqli_close($con);
 
     navigateTo($prev_location);

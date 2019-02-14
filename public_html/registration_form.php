@@ -196,8 +196,10 @@
     }
 ?>
 
+
 <!doctype html>
 <html lang="it">
+
 <!-- HEAD -->
 <head>
     <meta charset="UTF-8">
@@ -208,12 +210,27 @@
         2. Do NOT let the content rely on a particular viewport width to render well - Since screen dimensions and width in CSS pixels vary widely between devices, content should not rely on a particular viewport width to render well.
         3. Use CSS media queries to apply different styling for small and large screens - Setting large absolute CSS widths for page elements will cause the element to be too wide for the viewport on a smaller device. Instead, consider using relative width values, such as width: 100%. Also, be careful of using large absolute positioning values. It may cause the element to fall outside the viewport on small devices.
     -->
+
+    <!--Boostrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+	    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+	    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" 
+	    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  
+    <!--Inclusions-->
+        <script src="js/include.js"></script> 
+         <link rel="stylesheet" href="css/global.css">
+         <link rel="stylesheet" type="text/css" href="css/login.css">
+
     <style>
     </style>
     <title>StartSAW - registrazione</title>
+
 <!-- SCRIPT -->
-    <!-- JQuery -->    
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <!-- Google ReCaptcha -->    
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- JS -->
@@ -262,114 +279,140 @@
 
 <!-- BODY con campi per registrazione -->
 <body>
+
+    <!--Navbar-->
+    <?php
+		include("php/navbar.php")
+	?>
+
     <!-- REGISTRAZIONE -->
-	<fieldset class="box" id="FirstBox">
+    <div class="container">
+    <div class="form-group">
+	    <fieldset class="box" id="FirstBox">
             <legend>Registrazione volontario</legend>
             <form name="registration" id="registration" method="POST" action="registration_form.php">
+            <div class="field">
+                <!-- tipo utente -->
+                <p>Registrati come:</p>            
+                    <input type="radio" id="persona" name="tipoUtente" value="person" onchange="showSecondBox();" checked required>
+                    <label for="persona">persona</label>
+                    <input type="radio" id="associazione" name="tipoUtente" value="organization" onchange="showSecondBox();">
+                    <label for="associazione">associazione</label>
+                
+            </div>
+
+            <div id="campiUser" class="field">
+                <!-- email -->
                 <div>
-                    <!-- tipo utente -->
-                    <p>Registrati come: &emsp;            
-                        <input type="radio" id="persona" name="tipoUtente" value="person" onchange="showSecondBox();" checked required>
-                        <label for="persona">persona</label>
-                        <input type="radio" id="associazione" name="tipoUtente" value="organization" onchange="showSecondBox();">
-                        <label for="associazione">associazione</label>
-                    </p>
+                    <label for="email">Email: </label>&emsp;
+                    <input type="email" id="email" name="email" minlength="6"  maxlength="254" placeholder="name@domain.net" autocomplete="on" required>
                 </div>
-                <div id="campiUser">
-                    <!-- email -->
-                    <div>
-                        <label for="email">Email: </label>&emsp;
-                        <input type="email" id="email" name="email" minlength="6"  maxlength="254" placeholder="name@domain.net" autocomplete="on" required>
-                    </div>
-                    <!-- password -->
-                    <div>
-                        <label for="password">Password: </label>&emsp;
-                        <input type="password" id="password" name="password" minlength="6" maxlength="31" placeholder="6 characters minimum" autocomplete="on" required>
-                    </div>
-                    <!-- telefono TODO in tabella organization oppure person e facoltativo -->
-                    <div>
-                        <label for="telefono">Telefono: </label>&emsp;
-                        <input type="tel" id="telefono" name="telefono" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
-                    </div>
+                <!-- password -->
+                <div>
+                    <label for="password">Password: </label>&emsp;
+                    <input type="password" id="password" name="password" minlength="6" maxlength="31" placeholder="6 characters minimum" autocomplete="on" required>
                 </div>
-                <br/>
-                <fieldset class="box" id="SecondBox">
-                <legend id="legendaTipoInput">Dati Volontario</legend> <!-- OR Dati Associazione !-->
-                <!-- i campi di associazione non hanno attributo required in static time !-->
-                <!-- Registrazione Volontario !-->
-                    <div id="campiPerson">
-                        <!-- nomeV -->
-                        <div>
-                            <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV" class="campiV" maxlength="50" required>
-                        </div>
-                        <!-- cognome -->
-                        <div>
-                            <label for="cognome">Cognome: </label>&emsp;
-                            <input type="text" id="cognome" name="cognome" class="campiV" maxlength="50" required>
-                        </div>
-                        <!-- data di nascita TODO DINAMICO e CONVERTIRE YYYY-MM-DD -->
-                        <div>
-                            <label for="data">Data di nascita: </label>&emsp;
-                            <input type="date" id="data" name="data" class="campiV" min="1900-01-01" max="2006-12-31" required>
-                        </div>
-                        <!-- Sesso -->
-                        <div>
-                            <label for="genere">Sesso: </label>&emsp;
-                            <select id="genere" name="genere" class="campiV" required>
-                                <option value="-" selected>Non specificato</option>
-                                <option value="F">F</option>
-                                <option value="M">M</option>
-                            </select>
-                        </div>
-                        <!-- Comune -->
-                        <div>
-                            <label for="comune">Comune: </label>&emsp;
-                            <input type="text" id="comune" name="comune" class="campiV" maxlength="35" required>
-                            &emsp;
-                        <!-- Provincia TODO autocomplete e pattern-->
-                            <label for="provinciaV">Provincia: </label>&emsp;
-                            <input type="text" id="provinciaV" name="provinciaV" class="campiV" size="2" required>
-                        </div>
+                <!-- telefono TODO in tabella organization oppure person e facoltativo -->
+                <div>
+                    <label for="telefono">Telefono: </label>&emsp;
+                    <input type="tel" id="telefono" name="telefono" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
+                </div>
+            </div>
+        </fieldset>
+        <br/>
+          
+        <fieldset class="box" id="SecondBox">
+            <legend id="legendaTipoInput">Dati Volontario</legend> <!-- OR Dati Associazione !-->
+            <!-- i campi di associazione non hanno attributo required in static time !-->
+            <!-- Registrazione Volontario !-->
+            <div id="campiPerson" class="field">
+                <!-- nomeV -->
+                <div>
+                    <label for="nomeV">Nome: </label>&emsp;
+                    <input type="text" id="nomeV" name="nomeV" class="campiV" maxlength="50" required>
+                </div>
+                    
+                <!-- cognome -->
+                <div>
+                    <label for="cognome">Cognome: </label>&emsp;
+                    <input type="text" id="cognome" name="cognome" class="campiV" maxlength="50" required>
+                </div>
+                    
+                <!-- data di nascita TODO DINAMICO e CONVERTIRE YYYY-MM-DD -->
+                <div>
+                    <label for="data">Data di nascita: </label>&emsp;
+                    <input type="date" id="data" name="data" class="campiV" min="1900-01-01" max="2006-12-31" required>
+                </div>
+                    
+                <!-- Sesso -->
+                <div>
+                    <label for="genere">Sesso: </label>&emsp;
+                    <select id="genere" name="genere" class="campiV" required>
+                        <option value="-" selected>Non specificato</option>
+                        <option value="F">F</option>
+                        <option value="M">M</option>
+                    </select>
+                </div>
+                    
+                <!-- Comune -->
+                <div>
+                    <label for="comune">Comune: </label>&emsp;
+                    <input type="text" id="comune" name="comune" class="campiV" maxlength="35" required>
+                    &emsp;
+                    
+                    <!-- Provincia TODO autocomplete e pattern-->
+                        <label for="provinciaV">Provincia: </label>&emsp;
+                        <input type="text" id="provinciaV" name="provinciaV" class="campiV" size="2" required>
+                </div>
+            </div>
+
+            <!-- Registrazione Associazione !-->
+                <div id="campiAssociazione" style="display: none;" class="field">
+            
+                    <!-- nomeA -->
+                    <div>
+                        <label for="nomeA">Nome: </label>&emsp;
+                        <input type="text" id="nomeA" class="campiA" name="nomeA" maxlength="64">
                     </div>
-                    <!-- Registrazione Associazione !-->
-                    <div id="campiAssociazione" style="display: none;">
-                        <!-- nomeA -->
-                        <div>
-                            <label for="nomeA">Nome: </label>&emsp;
-                            <input type="text" id="nomeA" class="campiA" name="nomeA" maxlength="64">
-                        </div>
-                        <!-- sede -->
-                        <div>
-                            <label for="sede">Comune della sede: </label>&emsp;
-                            <input type="text" id="sede" name="sede" class="campiA" maxlength="35">
-                            &emsp;
+            
+                    <!-- sede -->
+                    <div>
+                        <label for="sede">Comune della sede: </label>&emsp;
+                        <input type="text" id="sede" name="sede" class="campiA" maxlength="35">
+                        &emsp;
+                
                         <!-- Provincia TODO autocomplete --> 
                             <label for="provinciaA">Provincia: </label>&emsp;
                             <input type="text" id="provinciaA" name="provinciaA" class="campiA" size="2">
-                        </div>
-                        <!-- settore -->
-                        <div>
-                            <label for="settore">Settore in cui opera: </label>&emsp;
-                            <input type="text" id="settore" name="settore" class="campiA" maxlength="35">
-                        </div>
-                        <!-- sito -->
-                        <div>
-                            <label for="sito">Sito web: </label>&emsp;
-                            <input type="url" id="sito" name="sito" maxlength="64">
-                        </div>
                     </div>
-                </fieldset>    
-                <br/>
-                <!-- CONTROLLI PRIVACY e CAPTCHA -->
-                <div id="controlli">
-                    <input type="checkbox" id="privacy" name="privacy" value="Y" checked required>
-                    <label for="privacy">D&ograve; il consenso al trattamento dei dati nelle modalità conformi al D. Lgs. 30 giugno 2003, n. 196 e successivi aggiornamenti </label>
-                    <div class="g-recaptcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
-                    <br/>
+                
+                    <!-- settore -->
+                    <div>
+                        <label for="settore">Settore in cui opera: </label>&emsp;
+                        <input type="text" id="settore" name="settore" class="campiA" maxlength="35">
+                    </div>
+                
+                    <!-- sito -->
+                    <div>
+                        <label for="sito">Sito web: </label>&emsp;
+                        <input type="url" id="sito" name="sito" maxlength="64">
+                    </div>
                 </div>
-                <input type="submit" value="Registrami!">
-            </form>
+            </fieldset>    
+            <br/>
+            
+            <!-- CONTROLLI PRIVACY e CAPTCHA -->
+            <div id="controlli" class="field">
+                <input type="checkbox" id="privacy" name="privacy" value="Y" checked required>
+                <label for="privacy">Do il consenso al trattamento dei dati nelle modalità conformi al D. Lgs. 30 giugno 2003, n. 196 e successivi aggiornamenti </label>
+                <div class="g-recaptcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
+                <br/>
+            </div>
+            
+            <input type="submit" value="Registrami!">
+        </form>
     </fieldset>
+    </div>
+    </div>
 </body>
 </html>

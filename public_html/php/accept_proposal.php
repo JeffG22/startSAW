@@ -34,6 +34,8 @@
     // Prevents inconsistent states, since I need to update multiple tables
     mysqli_begin_transaction($con);
 
+    mysqli_autocommit($con, FALSE);
+
     // Not using prepared statements since the only user-submitted value has already
     // been sanitized by php function intval() which return an integer.
     mysqli_query($con, "UPDATE proposal 

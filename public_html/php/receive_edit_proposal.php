@@ -15,8 +15,8 @@
         $_SESSION['message'] = "Errore. Compila tutti i campi richiesti.";
         navigateTo($prev_location);
     } else {
-        $name = htmlspecialchars($_POST['name']);
-        $description = htmlspecialchars($_POST['description']);
+        $name = sanitize_inputString($_POST['name']);
+        $description = nl2br(sanitize_inputString($_POST['description']));
         $available_pos = intval($_POST['available_positions']);
         if ($available_pos <= 0) {
             $_SESSION['message'] = "Controlla il numero di posizioni disponibili. Deve essere un numero positivo.";
@@ -43,7 +43,7 @@
         $lat = NULL;
         $long = NULL;
     } else {
-        $address = htmlspecialchars($_POST['address']);
+        $address = sanitize_inputString($_POST['address']);
         $request = "http://nominatim.openstreetmap.org/search.php?q=".urlencode($address)."&email=ktmdy@hi2.in&format=json";
         $response = file_get_contents($request);
         $location = json_decode($response, true); // true = return as associative array

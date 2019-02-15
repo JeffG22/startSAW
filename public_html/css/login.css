@@ -15,14 +15,19 @@ p {
   width: 80vh;
   word-wrap: break-word;
   text-align: left;
-  padding: 10px 0 0 0;
+  padding: 1vh 0 0 0;
+}
+
+div {
+  display: block;
+  box-sizing: content-box;
 }
 
 /*Main container. Flexbox.*/
 .container {
   display: flex;
-  padding: 5vh;
-  margin: 5vh auto;
+  padding: 0vh;
+  margin: 3vh auto;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start; 
@@ -32,7 +37,7 @@ p {
 .form-group {
   display: block;
   background: #fff;
-  padding: 3vh 5vh 5vh 5vh;
+  padding: 3vh;
   margin: 5vh;
   border-radius: 10px;
   align-items: center;
@@ -40,7 +45,13 @@ p {
   flex-basis: auto;
 }
 
+.field {
+  margin: 1vh;
+  box-sizing: content-box;
+}
+
 fieldset {
+  box-sizing: content-box;
 	display: block;
 	align-items: center;
 }
@@ -58,7 +69,7 @@ form {
 input, select {
   display: block;  
   padding: 5px;
-  margin: 1vh 1vh 5vh 1vh;
+  margin: 0vh 0vh 2vh 0vh;
   border: none;
   border-radius: 5px;
   background: #eee;
@@ -75,9 +86,7 @@ input[type=radio] {
 /*Field descriptions*/
 label {
   font-family: "Arial", Arial, sans-serif;
-  margin: 10px 0 0 0;
-  max-width: 340px;
-  width: 80vh;
+  margin: 10px 10px 0 0;
   word-wrap: break-word;
 }
 

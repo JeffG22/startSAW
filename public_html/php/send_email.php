@@ -1,7 +1,7 @@
 <?php
     include("../../connection.php");
-    
     include("utilities.php");
+    setlocale(LC_ALL, "it_IT"); // Required to print birth month in italian
 
     // Import PHPMailer classes into the global namespace
     // These must be at the top of your script, not inside a function
@@ -43,8 +43,8 @@
     $proposal_res = mysqli_query($con, $query);
 
     $query = "SELECT *
-              FROM accepted, person
-              WHERE person.id = acceptor_id";
+              FROM accepted, person, user
+              WHERE person.id = acceptor_id AND acceptor_id = user_id";
 
     $acceptor_res = mysqli_query($con, $query);
 
@@ -64,23 +64,50 @@
 
             //Recipients
             $mail->setFrom('federico.cassissa@libero.it', 'La tua piattaforma per il volontariato');
-            $mail->addAddress($proposal['email'], $proposal['display_name']);     // Add a recipient
-    
+            //$mail->addAddress($proposal['email'], $proposal['display_name']);     // Add a recipient
+
             //Attachments
-            //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-    
+            if(!empty($acceptor['picture'])) {
+                $mail->AddEmbeddedImage("../userpics/".$acceptor['picture'], 'profile_pic');
+            }
+                
             //Content
-
             $body = "Buone notizie, ".$proposal['display_name']."!!<br>
+                    <b>".$acceptor['name']." ".$acceptor['surname']."</b> 
+                    ha accettato la tua proposta di volontariato <b>".$proposal['name']."</b>.<br>
                     <br>
-                    L'utente <b>".$acceptor['name']." ".$acceptor['surname']."</b> ha accettato la tua proposta di volontariato <b>".$proposal['name']."</b>.";
+                    Ecco qualche altre informazione sul volontario che ha accettato la proposta:<br><br>";
+                
+            if(!empty($acceptor['picture'])) {
+                $body = $body."<img src=\"cid:profile_pic\" height=\"100px\"><br>"; // src content id defined before with addEmbeddedImage
+            }
+            $body = $body."Sesso";
+            if($acceptor['gender'] == "-") {
+                $body = $body." non specificato<br>";
+            } else {
+                $body = $body.": ".$acceptor['gender']."<br>";
+            }
+            $body = $body."Data di nascita: ".strftime("%e %b %Y", strtotime($acceptor['birthdate']))."<br>";
+            $body = $body."Abita a ".$acceptor['township']." (".$acceptor['province'].")<br>";
+            if(!empty($acceptor['description'])) {
+                $body = $body."Il volontario si descrive così: ".$acceptor['description']."<br>";
+            } else {
+                $body = $body."Il volontario non ha fornito una descrizione di sé.<br>";
+            }
+            $body = $body."Puoi contattare il volontario all'indirizzo email <b><a href=\"mailto:".$acceptor['email']."\">".$acceptor['email']."</a></b>";
+            if(!empty($acceptor['phone'])) {
+                $body = $body." o al numero <b><a href=\"tel:".$acceptor['phone']."\">".$acceptor['phone']."</a></b>";
+            }
+            $body = $body.".<br>";
+            // strftime requires a timestamp, so we use strtotime to convert from string to a timestamp
+            // %e = 1-digit day of the month, %b = abridged month name, %Y = 4digits year
 
+            echo $body;
             $mail->isHTML(true);                                  // Set email format to HTML
 
             // Since subject is not rendered as HTML, I need to decode special characters such as accents
             $mail->Subject = "Buone notizie, ".html_entity_decode($proposal['display_name'])."! La tua proposta è stata accettata!";
             $mail->Body    = $body;
-            //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
             $mail->send();
             echo 'Message has been sent';

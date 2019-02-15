@@ -45,8 +45,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="../js/form_validation.js"></script>
+    <script src="../js/inputChecks.js"></script>
 </head>
 <body>
     <a href="index_proposals.php">^ Home</a>
@@ -62,7 +61,7 @@
         <input type="text" name="name" value="<?php echo $row['name'] ?>" required>
         <br>
         Descrizione
-        <textarea name="description" rows="5" cols="30" required><?php echo $row['description'] ?></textarea>
+        <textarea name="description" rows="5" cols="30" required><?php echo str_replace("<br />","",$row['description']) ?></textarea>
         <br>
         Immagine
         <!-- This hidden field is used by php to avoid uploading large files.
@@ -70,7 +69,7 @@
         and the file is not sent, thus preventing user from waiting for a file
         that will be rejected server-side.-->
         <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
-        <input type="file" name="picture" accept="image/png, image/jpeg, image/bmp">
+        <input type="file" name="picture" id="upload_picture" accept="image/png, image/jpeg, image/jpg, image/bmp" onchange="checkPicture()">
         <br>
         Indirizzo
         <input type="text" name="address" value="<?php echo $row['address'] ?>">

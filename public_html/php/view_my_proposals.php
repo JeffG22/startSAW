@@ -35,7 +35,7 @@
             echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
                     Aspetta qualche istante e riprova.";
         } else if (mysqli_num_rows($result) == 0) { // Empty result
-            echo "Sembra che tu non abbia ancora accettato alcuna proposta.";
+            echo "Sembra che tu non abbia inserito alcuna proposta.";
         } else { // Result not empty
             while($row = mysqli_fetch_assoc($result)) {
                 printProposalInfo($con, $row);

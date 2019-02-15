@@ -39,9 +39,12 @@
               <label for="pwd">Password:</label>
               <input type="password" name="pwd" id="pwd" class="form-control" required>
               <!--Submit button-->
-              <button type="submit" class="btn btn-primary">Log In</button>
+              <div class="btn-container">
+                <button type="submit" class="btn btn-primary">Log In</button>
+              </div>
           </form>
       </div>
+      <!--Login-->
   </div>
     
 </body>

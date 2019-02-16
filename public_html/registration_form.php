@@ -43,10 +43,11 @@
                 throw new InvalidArgumentException($privacy);
             if (empty($_POST[$email]) || !checksOnEmail($_POST[$email]))
                 throw new InvalidArgumentException($email);
-            if (empty($_POST[$password]) || !checksOnPswd($_POST[$password]))
-                throw new InvalidArgumentException($password);
             if (!isset($_POST[$telefono] || (!empty($_POST[$telefono]) && !checksOnTel($_POST[$telefono]))) // due opzioni perchè non required
                 throw new InvalidArgumentException($telefono);
+            if (empty($_POST[$password]) || !checksOnPswd($_POST[$password]))
+                throw new InvalidArgumentException($password);
+            
         // 3 ----- determina se l'utente è persona -----
             $tipoUtente = "tipoUtente";
             if (empty($_POST[$tipoUtente]) || !checksOnTipoUtente($_POST[$tipoUtente]))

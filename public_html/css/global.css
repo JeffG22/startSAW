@@ -26,10 +26,10 @@ body {
 		color: #2e577d;
 	}
 
-	.navbar-light .navbar-nav > .active {
-		/*background-color: white;
-		It works, but it's ugly.*/
-	}
+	/*.navbar-light .navbar-nav > .active {
+		background-color: white;
+		It works, but it's ugly.
+	}*/
 
 	.navbar-light .navbar-nav > .active > .nav-link {
 		color: #0b4378;

@@ -1,7 +1,7 @@
 <?php
-    include_once("domain_constraints.php");
-    include_once("utilities.php");
-    include_once("handlesession.php");
+    include_once("php/domain_constraints.php");
+    include_once("php/utilities.php");
+    include_once("php/handlesession.php");
     my_session_start();
     my_session_is_valid(); // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
                            // Se un utente non è registrato e atterra su questa pagina --> ok
@@ -43,7 +43,7 @@
                 throw new InvalidArgumentException($privacy);
             if (empty($_POST[$email]) || !checksOnEmail($_POST[$email]))
                 throw new InvalidArgumentException($email);
-            if (!isset($_POST[$telefono] || (!empty($_POST[$telefono]) && !checksOnTel($_POST[$telefono]))) // due opzioni perchè non required
+            if (null == ($_POST[$telefono] || (!empty($_POST[$telefono]) && !checksOnTel($_POST[$telefono])))) // due opzioni perchè non required
                 throw new InvalidArgumentException($telefono);
             if (empty($_POST[$password]) || !checksOnPswd($_POST[$password]))
                 throw new InvalidArgumentException($password);

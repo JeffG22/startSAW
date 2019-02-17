@@ -49,7 +49,7 @@
 
     function checksOnProv($str) {
         $provLength = 2;
-        return strlen($provLength) == 2 && preg_match("/^[a-z]{2}$/",$str, ) == 1;
+        return strlen($provLength) == 2 && preg_match("/^[a-z]{2}$/",$str)  == 1;
     }
 
     function checksOnSettore($str) {

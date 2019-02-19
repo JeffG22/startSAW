@@ -3,7 +3,9 @@
     include_once("php/utilities.php");
     include_once("php/handlesession.php");
     my_session_start();
-    my_session_is_valid(); // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
+
+    //T: removed this because it's not supposed to be a protected area.
+    //my_session_is_valid(); // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
                            // Se un utente non è registrato e atterra su questa pagina --> ok
     // ----- CONTROLLI LATO SERVER su INPUT RICEVUTI -----
     $error_flag = false;
@@ -191,7 +193,7 @@
             // variabili di sessione
             $_SESSION['userId'] = $idUtente;
             $_SESSION['type'] = ($persona) ? "person" : "organization";
-            header("Location: index.php");
+            header("Location: index.php"); //TODO change to personal page
         }      
     } catch (Exception $ex) {
         $error_flag = true;
@@ -257,7 +259,7 @@
                 'telefono' : 'telefono inserito non valido',
                 'nomeV' : 'nome non valido',
                 'nomeA' : 'nome non valido',
-                'cognome' : 'cognome non valido'
+                'cognome' : 'cognome non valido',
                 'data' : 'data non valida',
                 'genere' : 'selezionare il genere',
                 'comune' : 'comune non valido',
@@ -339,7 +341,7 @@
                         <!-- nomeV -->
                         <div>
                             <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV" class="campiV" minlength="4" maxlength="50" required>
+                            <input type="text" id="nomeV" name="nomeV" class="campiV" minlength="3" maxlength="50" required>
                         </div>
                         <!-- cognome -->
                         <div>

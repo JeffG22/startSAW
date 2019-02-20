@@ -1,6 +1,6 @@
 <?php
     // ------ vincoli sui dati in input -----
-
+    // see: http://php.net/manual/en/filter.filters.validate.php
     function checksOnEmail($str) {
         $emailMinLength = 6;
         $emailMaxLength = 254;
@@ -40,12 +40,6 @@
         return preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$str) == 1;
     }
 
-    function checksOnCity($str) {
-        $cityMinLength = 4;
-        $cityMaxLength = 35;
-        return strlen($str) >= $cityMinLength && strlen($str) < $cityMaxLength;
-    }
-
     function checksOnProv($str) {
         return strlen($str) == 2 && preg_match("/^[a-z]{2}$/",$str);
     }
@@ -58,6 +52,6 @@
 
     function checksOnSite($str) {
         $siteMaxLength = 63;
-        return strlen($str) < $siteMaxLength;
+        return strlen($str) < $siteMaxLength && filter_var($str, FILTER_VALIDATE_URL);
     }
 ?>

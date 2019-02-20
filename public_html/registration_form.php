@@ -4,7 +4,7 @@
     require_once("php/handlesession.php");
     require_once("php/data.php");
     require_once("../confidential_info.php");
-
+    echo phpinfo();
     my_session_start();
 
     if (my_session_is_valid()) // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
@@ -29,7 +29,6 @@
         $cognome = "cognome"; // cognome
         $data = "data"; // data
         $sex = "genere"; // genere
-        $city = ($person) ? "comune" : "sede"; // comune v o a
         $pr = ($person) ? "provinciaV" : "provinciaA"; // provincia v o a
         $sett = "settore"; // settore
         $sito = "sito"; // sito
@@ -77,8 +76,6 @@
                 throw new InvalidArgumentException($data);
             if ($person && (empty($_POST[$sex]) || ($_POST[$sex] != "F" && $_POST[$sex] != "M" && $_POST[$sex] != "-")))
                 throw new InvalidArgumentException($sex);
-            if (empty($_POST[$city]) || !checksOnCity($_POST[$city]))
-                throw new InvalidArgumentException($city);
             if (empty($_POST[$pr]) || !checksOnProv($_POST[$pr]))
                 throw new InvalidArgumentException($pr);
             if (!$person && (empty($_POST[$sett]) || !checksOnSettore($_POST[$sett])))
@@ -88,7 +85,7 @@
             
         // 5 ----- sanitizzazione input -----
             $fields_utente; // array che conterrà i campi di utente
-            $fields_utente[0] = sanitize_inputString($_POST[$email]);
+            $fields_utente[0] = sanitize_email($_POST[$email]);
             $fields_utente[1] = password_hash($_POST[$password], PASSWORD_DEFAULT); // hashing pswd
             $fields_utente[2] = ($person) ? "person" : "organization";
            
@@ -99,27 +96,25 @@
                 $fields_value[1] = sanitize_inputString($_POST[$cognome]);
                 $fields_value[2] = sanitize_inputString($_POST[$sex]);
                 $fields_value[3] = sanitize_inputString($_POST[$data]);
-                $fields_value[4] = sanitize_inputString($_POST[$city]);
-                $fields_value[5] = sanitize_inputString($_POST[$pr]);
-                if (!empty($_POST[$telefono]))
-                    $fields_value[6] = sanitize_inputString($_POST[$telefono]);
-                else
-                    $fields_value[6] = null;
-            }
-            else {
-            // organization: (name, headquarter, province, sector, website, phone)
-                $fields_value[0] = sanitize_inputString($_POST[$nome]);
-                $fields_value[1] = sanitize_inputString($_POST[$city]);
-                $fields_value[2] = sanitize_inputString($_POST[$pr]);
-                $fields_value[3] = sanitize_inputString($_POST[$sett]);
-                if (!empty($_POST[$sito]))
-                    $fields_value[4] = sanitize_inputString($_POST[$sito]);
-                else
-                    $fields_value[4] = null;
+                $fields_value[4] = sanitize_inputString($_POST[$pr]);
                 if (!empty($_POST[$telefono]))
                     $fields_value[5] = sanitize_inputString($_POST[$telefono]);
                 else
                     $fields_value[5] = null;
+            }
+            else {
+            // organization: (name, headquarter, province, sector, website, phone)
+                $fields_value[0] = sanitize_inputString($_POST[$nome]);
+                $fields_value[1] = sanitize_inputString($_POST[$pr]);
+                $fields_value[2] = sanitize_inputString($_POST[$sett]);
+                if (!empty($_POST[$sito]))
+                    $fields_value[3] = sanitize_url($_POST[$sito]);
+                else
+                    $fields_value[3] = null;
+                if (!empty($_POST[$telefono]))
+                    $fields_value[4] = sanitize_inputString($_POST[$telefono]);
+                else
+                    $fields_value[4] = null;
             }
         
         // 6 ----- inserimento nel DB se rispetta vincoli -----
@@ -153,27 +148,27 @@
             // ----- seconda query ------
             $insert2 = false;
             if ($person) {
-                $query2 = "INSERT INTO person (id, name, surname, gender, birthdate, township, province, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                $query2 = "INSERT INTO person (id, name, surname, gender, birthdate, province, phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 if (!($stmt = mysqli_prepare($conn, $query2))) {
                     mysqli_rollback($conn);
                     throw new Exception("mysqli prepare".$conn->error);
                 }
-                if (!mysqli_stmt_bind_param($stmt, 'isssssss', 
+                if (!mysqli_stmt_bind_param($stmt, 'issssss', 
                         $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], $fields_value[3], 
-                        $fields_value[4], $fields_value[5], $fields_value[6])) {
+                        $fields_value[4], $fields_value[5])) {
                     mysqli_rollback($conn);
                     throw new Exception("mysqli bind param");
                 }
             }
             else {
-                $query2 = "INSERT INTO organization (id, name, headquarter, province, sector, website, phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $query2 = "INSERT INTO organization (id, name, province, sector, website, phone) VALUES (?, ?, ?, ?, ?, ?)";
                     if (!($stmt = mysqli_prepare($conn, $query2))) {
                         mysqli_rollback($conn);
                         throw new Exception("mysqli prepare ".$conn->error);
                     }
-                    if (!mysqli_stmt_bind_param($stmt, 'issssss', 
+                    if (!mysqli_stmt_bind_param($stmt, 'isssss', 
                             $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], 
-                            $fields_value[3], $fields_value[4], $fields_value[5])) {
+                            $fields_value[3], $fields_value[4])) {
                         mysqli_rollback($conn);                            
                         throw new Exception("mysqli param");
                     }
@@ -193,9 +188,7 @@
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
             // 7 ----- impostazione sessione e login automatico ----
-            // variabili di sessione
-            $_SESSION['userId'] = $idUtente;
-            $_SESSION['type'] = ($person) ? "person" : "organization";
+            my_session_login($idUtente, $person);
             header("Location: index.php"); //TODO change to personal page
         }      
     } catch (Exception $ex) {
@@ -280,8 +273,6 @@
                 'cognome' : 'Cognome non valido.',
                 'data' : 'Data non valida.',
                 'genere' : 'Selezionare un genere..',
-                'comune' : 'Comune non valido.',
-                'sede' : 'Sede non valida.',
                 'provinciaV' : 'Provincia scelta non valida.',
                 'provinciaA' : 'Provincia scelta non valida.',
                 'settore' : 'Settore non valido.',
@@ -303,7 +294,6 @@
                     echo 'document.getElementById("'.$cognome.'").value="'.$_POST[$cognome].'";';
                     echo 'document.getElementById("'.$data.'").value="'.$_POST[$data].'";';
                     echo 'document.getElementById("'.$sex.'").value="'.$_POST[$sex].'";';
-                    echo 'document.getElementById("'.$city.'").value="'.$_POST[$city].'";';
                     echo 'document.getElementById("'.$pr.'").value="'.$_POST[$pr].'";';
                     echo 'document.getElementById("'.$sett.'").value="'.$_POST[$sett].'";';
                     echo 'document.getElementById("'.$sito.'").value="'.$_POST[$sito].'";';
@@ -412,11 +402,7 @@
                                 <option value="M">M</option>
                             </select>
                         </div>
-                        <!-- Comune -->
                         <div>
-                            <label for="comune">Comune: </label>&emsp;
-                            <input type="text" id="comune" name="comune" class="campiV form-control" minlength="4" maxlength="35" required>
-                            &emsp;
                         <!-- Provincia --> 
                             <label for="provinciaV">Provincia: </label>&emsp;
                             <select id="provinciaV" name="provinciaV" class="campiV form-control" required>
@@ -432,13 +418,9 @@
                             <label for="nomeA">Nome: </label>&emsp;
                             <input type="text" id="nomeA" class="campiA form-control" name="nomeA" minlength="3" maxlength="50">
                         </div>
-                        <!-- sede -->
                         <div>
-                            <label for="sede">Comune della sede: </label>&emsp;
-                            <input type="text" id="sede" name="sede" class="campiA form-control" minlength="4" maxlength="35">
-                            &emsp;
                         <!-- Provincia --> 
-                            <label for="provinciaA">Provincia: </label>&emsp;
+                            <label for="provinciaA">Provincia delle sede: </label>&emsp;
                             <select id="provinciaA" name="provinciaA" class="campiA form-control">
                             <option value="" selected>--</option>
                             <?php show_province(); ?>

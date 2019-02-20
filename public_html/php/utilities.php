@@ -82,9 +82,17 @@
     }
 
     /** ----- Sanitization utility ----- */
-    
+    // see: http://php.net/manual/en/filter.filters.sanitize.php
     function sanitize_inputString($value) {
         return htmlspecialchars(trim($value)); 
+    }
+
+    function sanitize_url($value) {
+        return filter_var(trim($value), FILTER_SANITIZE_URL);
+    }
+
+    function sanitize_email($value) {
+        return filter_var(trim($value), FILTER_SANITIZE_EMAIL);
     }
 
     // Temporary hack to allow login

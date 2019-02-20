@@ -3,7 +3,7 @@
     require_once("php/utilities.php");
     require_once("php/handlesession.php");
     require_once("php/data.php");
-    require_once("../confidential_info.php")
+    require_once("../confidential_info.php");
 
     my_session_start();
 
@@ -42,7 +42,7 @@
             //----- preparazione richiesta API in POST tramite CURL -----
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_POST, 1); // set post data to true
-            curl_setopt($curl, CURLOPT_POSTFIELDS, "secret=".$secret."&response=".$client_response);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, "secret=".$secretToken."&response=".$client_response);
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             $json_token = curl_exec($curl);
@@ -135,7 +135,7 @@
                 throw new Exception("sql transaction".mysqli_connect_error($conn));
             $insert1 = false;
             if (!($stmt = mysqli_prepare($conn, $query1)))
-                throw new Exception("mysqli prepare".mysqli_error());
+                throw new Exception("mysqli prepare".mysqli_error($conn));
             if (!mysqli_stmt_bind_param($stmt, 'sss', $fields_utente[0], $fields_utente[1], $fields_utente[2]))
                 throw new Exception("mysqli bind param");
             if (!mysqli_stmt_execute($stmt)) {

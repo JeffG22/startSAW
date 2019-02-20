@@ -4,9 +4,9 @@
     include_once("php/handlesession.php");
     my_session_start();
 
-    //T: removed this because it's not supposed to be a protected area.
+        //T: removed this because it's not supposed to be a protected area.
     //my_session_is_valid(); // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
-                           // Se un utente non è registrato e atterra su questa pagina --> ok
+                             // Se un utente non è registrato e atterra su questa pagina --> ok
     // ----- CONTROLLI LATO SERVER su INPUT RICEVUTI -----
     $error_flag = false;
     try {
@@ -36,7 +36,7 @@
                 throw new InvalidArgumentException("captcha");
             }
         // 2 ----- controllo dati utente ------
-            
+
             $privacy = "privacy"; // privacy concessa
             $email = "email"; // email nomeutente
             $password = "password"; // password
@@ -45,7 +45,7 @@
                 throw new InvalidArgumentException($privacy);
             if (empty($_POST[$email]) || !checksOnEmail($_POST[$email]))
                 throw new InvalidArgumentException($email);
-            if (null == ($_POST[$telefono] || (!empty($_POST[$telefono]) && !checksOnTel($_POST[$telefono])))) // due opzioni perchè non required
+            if ((!empty($_POST[$telefono]) && !checksOnTel($_POST[$telefono]))) // due opzioni perchè non required
                 throw new InvalidArgumentException($telefono);
             if (empty($_POST[$password]) || !checksOnPswd($_POST[$password]))
                 throw new InvalidArgumentException($password);

@@ -88,7 +88,8 @@
         }
         // verifica dati da sessione utente
         // 1 - non loggato
-        if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
+        if (empty($_SESSION['user'])) {
+            echo "This case";
             header("Location: index.php");
         }
 

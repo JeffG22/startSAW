@@ -60,23 +60,26 @@
     }
 
     function uploadPicture() {
-        if(isset($_FILES['picture']) && is_uploaded_file($_FILES['picture']['tmp_name'])) {
+        if(isset($_FILES[$upload_picture]) && is_uploaded_file($_FILES[$upload_picture]['tmp_name'])) {
             $uploaddir = "../userpics/";
             $filename = (microtime(true)*10000);
-            $uploadfile = $uploaddir.$filename.".".pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
+            $uploadfile = $uploaddir.$filename.".".pathinfo($_FILES[$upload_picture]['name'], PATHINFO_EXTENSION);
 
             $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_JPG, IMAGETYPE_BMP);
-            $detectedType = exif_imagetype($_FILES['picture']['tmp_name']);
+            $detectedType = exif_imagetype($_FILES[$upload_picture]['tmp_name']);
 
             if(!in_array($detectedType, $allowedTypes)) {
                 $_SESSION['message'] = "Formato file non ammesso";
-            } else if ($_FILES['picture']['size'] > 4194304) {
+                return false;
+            } else if ($_FILES[$upload_picture]['size'] > 4194304) {
                 $_SESSION['message'] = "Dimensione massima superata.\n";
-            } else if (move_uploaded_file($_FILES['picture']['tmp_name'], $uploadfile)) {
+                return false;
+            } else if (move_uploaded_file($_FILES[$upload_picture]['tmp_name'], $uploadfile)) {
                 $_SESSION['message'] = "File caricato con successo.\n";
                 return $uploadfile;
             } else {
                 $_SESSION['message'] = "Caricamento fallito.\n";
+                return false;
             }
         }
     }
@@ -88,13 +91,18 @@
     }
 
     // Temporary hack to allow login
-    session_start();
-    if(isset($_SESSION['user_id'])){
-        $user_id = $_SESSION['user_id'];
-    } else {
+    function debug_session_start() {
+        session_start();
         if (isset($_GET['id'])) {
             $_SESSION['user_id'] = $_GET['id'];
+        }
+        if(isset($_SESSION['user_id'])){
             $user_id = $_SESSION['user_id'];
+            echo $user_id;
+        } else {
+            echo "NO ID";
+            exit();
         }
     }
+    
 ?>

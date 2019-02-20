@@ -65,8 +65,13 @@ form {
   width: 70vmin;
 }
 
+#input_proposal {
+  max-width: 700px;
+  width: 70vw;
+}
+
 /*Form fields*/
-input, select {
+input, select, textarea {
   display: block;  
   padding: 5px;
   margin: 0vh 0vh 2vh 0vh;
@@ -77,7 +82,14 @@ input, select {
 }
 
 input[type=radio] {
-	display: inline;
+  display: inline;
+  padding: 0 0 0 10px;
+	margin: 0;
+	border: none;
+}
+
+input[type=file] {
+  display: inline;
 	padding: 0 0 0 10px;
 	margin: 0;
 	border: none;
@@ -96,7 +108,6 @@ button {
   margin-top: 20px;
   border-radius: 10px;
 }
-
 
 @media only screen and (max-width: 400px) {
 	body {

@@ -62,4 +62,30 @@
         $siteMaxLength = 63;
         return strlen($str) < $siteMaxLength;
     }
+
+    // ------ specific constraints for proposals -----
+    function checksOnProposalName($str) {
+        $nameMinLength = 3;
+        $nameMaxLength = 100;
+        return strlen($str) >= $nameMinLength && strlen($str) <= $nameMaxLength;
+    }
+
+    function checksOnDescription($str) {
+        $descriptionMinLength = 10;
+        $descriptionMaxLength = 50000;
+        return strlen($str) >= $descriptionMinLength && strlen($str) <= $descriptionMaxLength;
+    }
+
+    function checksOnAvailablePos($str) {
+        $value = intval($str);
+        $minAvailablePos = 1;
+        $maxAvailablePos = 2000;
+        return $value >= $minAvailablePos && $value <= $maxAvailablePos;
+    }
+
+    function checksOnAddress($str) {
+        $addressMinLength = 3;
+        $addressMaxLength = 100;
+        return strlen($str) >= $addressMinLength && strlen($str) <= $addressMaxLength;
+    }
 ?>

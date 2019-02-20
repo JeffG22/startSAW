@@ -2,7 +2,7 @@
     include("../../connection.php");
     include("utilities.php");
 
-    $prev_location = "new_proposal.php";
+    $prev_location = "../new_proposal.php";
 
     if (empty($_POST)) {
         $_SESSION['message'] = "Nessun dato ricevuto.";

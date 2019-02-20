@@ -34,14 +34,14 @@
   <div class="container">
       <!--Login-->
       <div id="logcon" class="form-group">
-          <form name="login" id="login" method="post" action="">
+          <form name="login" id="login" class="form-in" method="post" action="">
               <legend>Log In</legend>
               <!--Username box-->
               <label for="usr">Username:</label>
-              <input type="text" name="usr" id="usr" class="form-control" required>
+              <input type="text" name="usr" id="usr" class="form-control input-in" required>
               <!--Pwd box-->
               <label for="pwd">Password:</label>
-              <input type="password" name="pwd" id="pwd" class="form-control" required>
+              <input type="password" name="pwd" id="pwd" class="form-control input-in" required>
               <!--Submit button-->
               <div class="btn-container">
                 <button type="submit" class="btn btn-primary">Log In</button>

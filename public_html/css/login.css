@@ -60,13 +60,13 @@ fieldset {
   text-align: center;
 }
 
-form {
+.form-in {
   max-width: 350px;
   width: 70vmin;
 }
 
 /*Form fields*/
-input, select {
+.input-in, .select-in {
   display: block;  
   padding: 5px;
   margin: 0vh 0vh 2vh 0vh;
@@ -76,7 +76,7 @@ input, select {
   color: #333;
 }
 
-input[type=radio] {
+.input-in[type=radio] {
 	display: inline;
 	padding: 0 0 0 10px;
 	margin: 0;

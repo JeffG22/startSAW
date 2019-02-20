@@ -86,12 +86,10 @@
             ini_set('session.use_strict_mode', 1);
             session_start();
         }
-        // verifica dati da sessione utente
-        // 1 - non loggato
-        if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
-            header("Location: index.php");
-        }
-
+        // 1 - verifica dati da sessione utente, non loggato
+        if (!empty($_SESSION['userId']) && ($_SESSION['type'] == "person" || $_SESSION['type'] == "organization"))
+            return true;
         // 2 - loggato, esistente e sessione valida
+        return false;
     }
 ?>

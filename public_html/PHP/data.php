@@ -1,6 +1,6 @@
 <?php
     function show_province() {
-        echo' 
+        echo '
             <option value="ag">Agrigento</option>
             <option value="al">Alessandria</option>
             <option value="an">Ancona</option>

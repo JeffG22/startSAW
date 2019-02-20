@@ -1,12 +1,12 @@
 <?php
-    include_once("domain_constraints.php");
-    include_once("utilities.php");
-    include_once("handlesession.php");
-
+    include_once("php/domain_constraints.php");
+    include_once("php/utilities.php");
+    include_once("php/handlesession.php");
     my_session_start();
-    my_session_is_valid(); // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
-                           // Se un utente non è registrato e atterra su questa pagina --> ok
 
+    //T: removed this because it's not supposed to be a protected area.
+    //my_session_is_valid(); // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
+                           // Se un utente non è registrato e atterra su questa pagina --> ok
     // ----- CONTROLLI LATO SERVER su INPUT RICEVUTI -----
     $error_flag = false;
     try {
@@ -16,7 +16,6 @@
             $client_response = $_POST['g-recaptcha-response'];
             $secret="6LdTc5AUAAAAAPVFH6LfqZMlxDR_TwYOYt-YtjEj";
             $url = "https://www.google.com/recaptcha/api/siteverify";
-
             //----- preparazione richiesta API in POST tramite CURL -----
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_POST, 1); // set post data to true
@@ -42,18 +41,16 @@
             $email = "email"; // email nomeutente
             $password = "password"; // password
             $telefono = "telefono"; // telefono
-
             if (empty($_POST[$privacy][0]) || $_POST[$privacy][0] != "Y")
                 throw new InvalidArgumentException($privacy);
             if (empty($_POST[$email]) || !checksOnEmail($_POST[$email]))
                 throw new InvalidArgumentException($email);
+            if (null == ($_POST[$telefono] || (!empty($_POST[$telefono]) && !checksOnTel($_POST[$telefono])))) // due opzioni perchè non required
+                throw new InvalidArgumentException($telefono);
             if (empty($_POST[$password]) || !checksOnPswd($_POST[$password]))
                 throw new InvalidArgumentException($password);
-            if (!isset($_POST[$telefono] || (!empty($_POST[$telefono]) && !checksOnTel($_POST[$telefono]))) // due opzioni perchè non required
-                throw new InvalidArgumentException($telefono);
-
+            
         // 3 ----- determina se l'utente è persona -----
-
             $tipoUtente = "tipoUtente";
             if (empty($_POST[$tipoUtente]) || !checksOnTipoUtente($_POST[$tipoUtente]))
                 throw new InvalidArgumentException($tipoUtente);
@@ -69,7 +66,6 @@
             $pr = ($persona) ? "provinciaV" : "provinciaA"; // provincia v o a
             $sett = "settore"; // settore
             $sito = "sito"; // sito
-
             if (empty($_POST[$nomeV]) || !checksOnName($_POST[$nomeV]))
                 throw new InvalidArgumentException($nomeV);
             if (empty($_POST[$cognome]) || !checksOnSurname($_POST[$cognome]))
@@ -88,7 +84,6 @@
                 throw new InvalidArgumentException($sito);
             
         // 5 ----- sanitizzazione input -----
-
             $fields_utente; // array che conterrà i campi di utente
             $fields_utente[0] = sanitize_inputString($_POST[$email]);
             $fields_utente[1] = password_hash($_POST[$password], PASSWORD_DEFAULT); // hashing pswd
@@ -125,7 +120,6 @@
             }
         
         // 6 ----- inserimento nel DB se rispetta vincoli -----
-
             require_once "connection.php";
             if (!($conn = get_dbconnection()))
                 throw new Exception("sql ".mysqli_connect_error());
@@ -136,7 +130,6 @@
                 throw new Exception("sql transaction".mysqli_connect_error($conn));
             if (!mysqli_autocommit($conn, FALSE))
                 throw new Exception("sql transaction".mysqli_connect_error($conn));
-
             $insert1 = false;
             if (!($stmt = mysqli_prepare($conn, $query1)))
                 throw new Exception("mysqli prepare".mysqli_error());
@@ -154,7 +147,6 @@
             else
                 throw new InvalidArgumentException("sql insert");
             mysqli_stmt_close($stmt);
-
             // ----- seconda query ------
             $insert2 = false;
             if ($persona) {
@@ -195,15 +187,13 @@
             }
             if (!mysqli_commit($conn))
                 throw new Exception("transaction failed");
-
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
-
             // 7 ----- impostazione sessione e login automatico ----
             // variabili di sessione
             $_SESSION['userId'] = $idUtente;
             $_SESSION['type'] = ($persona) ? "person" : "organization";
-            header("Location: index.php");
+            header("Location: index.php"); //TODO change to personal page
         }      
     } catch (Exception $ex) {
         $error_flag = true;
@@ -241,7 +231,6 @@
             var htmlLegend = $("#legendaTipoInput"); // comunicare inserimento persona oppure azienda
             var campiV = $(".campiV"); // campi volontario
             var campiA = $(".campiA"); // campi associazione
-
             if (selectedRadioValue == "organization") { // si vuole inserire un'associazione
                 boxHidden = $("#campiPerson");
                 boxShowed = $("#campiOrganization");
@@ -259,7 +248,6 @@
             boxHidden.hide()
             boxShowed.show();
         }
-
         /** ----- operazione di recupero dati se non validi ----- */
         function loadPostData( jQuery ) {
             // creare un'array associativo messaggio -> errore            
@@ -271,7 +259,7 @@
                 'telefono' : 'telefono inserito non valido',
                 'nomeV' : 'nome non valido',
                 'nomeA' : 'nome non valido',
-                'cognome' : 'cognome non valido'
+                'cognome' : 'cognome non valido',
                 'data' : 'data non valida',
                 'genere' : 'selezionare il genere',
                 'comune' : 'comune non valido',
@@ -353,7 +341,7 @@
                         <!-- nomeV -->
                         <div>
                             <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV" class="campiV" minlength="4" maxlength="50" required>
+                            <input type="text" id="nomeV" name="nomeV" class="campiV" minlength="3" maxlength="50" required>
                         </div>
                         <!-- cognome -->
                         <div>

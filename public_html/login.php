@@ -27,11 +27,15 @@
 
 <body>
 
+  <?php
+		include("php/navbar.php")
+	?>
+
   <div class="container">
       <!--Login-->
       <div id="logcon" class="form-group">
           <form name="login" id="login" method="post" action="">
-              <h1>Log In</h1>
+              <legend>Log In</legend>
               <!--Username box-->
               <label for="usr">Username:</label>
               <input type="text" name="usr" id="usr" class="form-control" required>

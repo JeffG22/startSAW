@@ -4,19 +4,30 @@ body {
 	color: #444;
 }
 
+legend {
+	display: block;
+	position: relative;
+}
+
 p {
-    white-space: pre-wrap;
-    max-width: 340px;
-    width: 80vh;
-    word-wrap: break-word;
-    text-align: center;
+  white-space: pre-wrap;
+  max-width: 340px;
+  width: 80vh;
+  word-wrap: break-word;
+  text-align: left;
+  padding: 1vh 0 0 0;
+}
+
+div {
+  display: block;
+  box-sizing: content-box;
 }
 
 /*Main container. Flexbox.*/
 .container {
   display: flex;
-  padding: 5vh;
-  margin: 5vh auto;
+  padding: 0vh;
+  margin: 3vh auto;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start; 
@@ -24,14 +35,25 @@ p {
 
 /*Log in/sign up containers.*/
 .form-group {
-  display: flex;
+  display: block;
   background: #fff;
-  padding: 3vh 5vh 5vh 5vh;
+  padding: 3vh;
   margin: 5vh;
-  border-radius: 5%;
+  border-radius: 10px;
   align-items: center;
   flex-grow: 0;
   flex-basis: auto;
+}
+
+.field {
+  margin: 1vh;
+  box-sizing: content-box;
+}
+
+fieldset {
+  box-sizing: content-box;
+	display: block;
+	align-items: center;
 }
 
 .btn-container {
@@ -44,18 +66,28 @@ form {
 }
 
 /*Form fields*/
-input[type=text], input[type=password], input[type=email] {
+input, select {
   display: block;  
-  padding: 10px;
-  margin: 1vh;
+  padding: 5px;
+  margin: 0vh 0vh 2vh 0vh;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   background: #eee;
+  color: #333;
+}
+
+input[type=radio] {
+	display: inline;
+	padding: 0 0 0 10px;
+	margin: 0;
+	border: none;
 }
 
 /*Field descriptions*/
 label {
   font-family: "Arial", Arial, sans-serif;
+  margin: 10px 10px 0 0;
+  word-wrap: break-word;
 }
 
 button {

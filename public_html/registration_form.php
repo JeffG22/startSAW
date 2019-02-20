@@ -1,20 +1,21 @@
 <?php
-    include_once("php/domain_constraints.php");
-    include_once("php/utilities.php");
-    include_once("php/handlesession.php");
-    include_once("php/data.php");
+    require_once("php/domain_constraints.php");
+    require_once("php/utilities.php");
+    require_once("php/handlesession.php");
+    require_once("php/data.php");
+    require_once("../confidential_info.php")
 
     my_session_start();
 
     if (my_session_is_valid()) // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
-        header("Location: index.php"); // TODO farlo puntare alla pagina personale
+        header("Location: index.php");
     // Se un utente non è registrato e atterra su questa pagina --> ok
 
     // ----- CONTROLLI LATO SERVER su INPUT RICEVUTI -----
     $error_flag = false;
     try {
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['g-recaptcha-response'])) {
-        print_r($_POST);
+        //print_r($_POST);
         // 3 ----- determina se l'utente è persona -----
         $tipoUtente = "tipoUtente";
         if (empty($_POST[$tipoUtente]) || !checksOnTipoUtente($_POST[$tipoUtente]))
@@ -36,7 +37,7 @@
         // 1 ----- controllo captcha -----
             //----- dati per richiesta -----
             $client_response = $_POST['g-recaptcha-response'];
-            $secret="6LdTc5AUAAAAAPVFH6LfqZMlxDR_TwYOYt-YtjEj";
+            $secretToken=$storedSecretToken;
             $url = "https://www.google.com/recaptcha/api/siteverify";
             //----- preparazione richiesta API in POST tramite CURL -----
             $curl = curl_init();
@@ -46,7 +47,7 @@
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             $json_token = curl_exec($curl);
             curl_close($curl);
-            echo $json_token;
+            //echo $json_token;
             $json_decoded = json_decode($json_token);
             
             //----- decodifica del pacchetto json ricevuto -----
@@ -54,7 +55,7 @@
             $success = $json_decoded->{'success'};
             if (!$success) {
                 $code = $json_decoded->{'error-codes'};
-                //throw new InvalidArgumentException("captcha");
+                throw new InvalidArgumentException("captcha");
             }
         // 2 ----- controllo dati utente ------
             
@@ -67,7 +68,6 @@
             if (!empty($_POST[$telefono]) && !checksOnTel($_POST[$telefono])) // due opzioni perchè non required
                 throw new InvalidArgumentException($telefono);            
 
-        
         // 4 ----- controlli sui campiV o campiA -----
             if (empty($_POST[$nome]) || !checksOnName($_POST[$nome]))
                 throw new InvalidArgumentException($nome);
@@ -123,7 +123,7 @@
             }
         
         // 6 ----- inserimento nel DB se rispetta vincoli -----
-            require_once "../connection.php";
+            require_once("../connection.php");
             if (!($conn = dbConnect()))
                 throw new Exception("sql ".mysqli_connect_error());
             $query1 = "INSERT INTO user (email, passwd, type) VALUES (?, ?, ?)"; 
@@ -201,7 +201,8 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-        echo $ex->getMessage();
+        //echo $ex->getMessage();
+        //echo $error_flag;
     }
 ?>
 
@@ -267,25 +268,25 @@
             boxShowed.show();
         }
         
-        // creare un'array associativo messaggio -> errore            
+        // creare un'array associativo "messaggio -> errore"           
         var err_array = {
-                'captcha' : 'Selezionare correttamente captcha',
-                'privacy' : 'Selezionare correttamente la casella',
-                'email' : 'email non valida',
-                'password' : 'password non valida, lunghezza richiesta 6 caratteri',
-                'telefono' : 'telefono inserito non valido',
-                'nomeV' : 'nome non valido',
-                'nomeA' : 'nome non valido',
-                'cognome' : 'cognome non valido',
-                'data' : 'data non valida',
-                'genere' : 'selezionare il genere',
-                'comune' : 'comune non valido',
-                'sede' : 'sede non valida',
-                'provinciaV' : 'provincia inserita non valida',
-                'provinciaA' : 'provincia inserita non valida',
-                'settore' : 'settore inserito non valido',
-                'sito' : 'sito inserito non valido',
-                'emailsql' : 'l\'email inserita risulta gi&agrave registrata'
+                'captcha' : 'Captcha non verificato, riprovare per cortesia.',
+                'privacy' : 'Selezionare la casella per il consenso alla privacy.',
+                'email' : 'Email non valida, riprovare per cortesia.',
+                'password' : 'Password non valida, lunghezza minima 6 caratteri.',
+                'telefono' : 'Telefono inserito non valido.',
+                'nomeV' : 'Nome non valido.',
+                'nomeA' : 'Nome non valido.',
+                'cognome' : 'Cognome non valido.',
+                'data' : 'Data non valida.',
+                'genere' : 'Selezionare un genere..',
+                'comune' : 'Comune non valido.',
+                'sede' : 'Sede non valida.',
+                'provinciaV' : 'Provincia scelta non valida.',
+                'provinciaA' : 'Provincia scelta non valida.',
+                'settore' : 'Settore non valido.',
+                'sito' : 'Sito inserito non valido.',
+                'emailsql' : 'L\'email inserita è già registrata!'
         };
         <?php
             $tempError = ($error_flag) ? $error_message : "";
@@ -293,23 +294,6 @@
         ?>
         /** ----- operazione di recupero dati se non validi ----- */
         function loadPostData( jQuery ) {
-            for (var key in err_array) {
-                if (key == id_errore) {
-                    if (key == "emailsql") 
-                        var field = document.getElementById("email");
-                    else 
-                        var field = document.getElementById(key);
-                    if (key == "captcha") {
-                        field.insertAdjacentHTML( 'beforeend', "<p style='color: red'> Captcha non valido! </p>");
-                    }
-                    else {
-                        alert(key);                   
-                        //field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
-                        field.focus();                        
-                    }
-                    break;
-                }
-            }
             // ----- ricaricare dati inviati non validi -----
             <?php
                 if ($error_flag && $error_message != "TipoUtente") {
@@ -323,8 +307,34 @@
                     echo 'document.getElementById("'.$pr.'").value="'.$_POST[$pr].'";';
                     echo 'document.getElementById("'.$sett.'").value="'.$_POST[$sett].'";';
                     echo 'document.getElementById("'.$sito.'").value="'.$_POST[$sito].'";';
+                    if (isset($person) && $person)
+                        echo 'document.getElementById("persona").checked = true;';
+                    else
+                        echo 'document.getElementById("associazione").checked = true;';
+                    echo 'showSecondBox();';
                 }
             ?>
+
+            for (var key in err_array) {
+                if (key == id_errore) {
+                    if (key == "emailsql") 
+                        var field = document.getElementById("email");
+                    else 
+                        var field = document.getElementById(key);
+                    if (key == "captcha") {
+                        field.insertAdjacentHTML( 'beforeend', "<p style='color: red'> Captcha non valido! </p>");
+                    }
+                    else {
+                        alert(key);
+                        field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
+                        field.setAttribute("isvalid", "false");
+                        field.setAttribute("onchange", "this.setCustomValidity(''); this.focus();");         
+                        field.style.color = "red";
+                        field.focus();                        
+                    }
+                    break;
+                }
+            }
         
         }
         <?php
@@ -343,7 +353,7 @@
     <!-- REGISTRAZIONE -->
 	<div class="box" id="FirstBox" class="container">
 	<div id="sigcon" class="form-group">
-            <legend>Registrazione volontario</legend>
+            <legend>Registrazione</legend>
             <form name="registration" id="registration" method="POST" action="registration_form.php">
                 <div>
                     <!-- tipo utente -->
@@ -380,7 +390,7 @@
                         <!-- nomeV -->
                         <div>
                             <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV form-control" class="campiV" minlength="3" maxlength="50" required>
+                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control" minlength="3" maxlength="50" required>
                         </div>
                         <!-- cognome -->
                         <div>

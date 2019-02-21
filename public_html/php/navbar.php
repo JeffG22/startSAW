@@ -28,16 +28,8 @@
       </li>
     </ul>
     <!---Links-->
-
-    <div id="search-contain" class="ml-auto">
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-        <button id="src-btn" class="btn btn-outline-dark my-2 my-sm-0" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
-      </form>
-    </div>
-
+    
+    <!--Login/profile-->
     <ul class="navbar-nav">
       <?php
         require_once("php/handlesession.php");
@@ -49,6 +41,18 @@
         }
       ?>
     </ul>
+    <!--Login/profile-->
+    
+    <div id="search-contain" class="ml-auto">
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+        <button id="src-btn" class="btn btn-outline-dark my-2 my-sm-0" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+
+    
   </div>
 	<!--Collapsible-->
 	

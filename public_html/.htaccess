@@ -1,0 +1,4 @@
+RedirectMatch 301 /php(.*) /StartSaw/public_html/index.php
+RedirectMatch 301 /Media(.*) /StartSaw/public_html/index.php
+RedirectMatch 301 /JS(.*) /StartSaw/public_html/index.php
+RedirectMatch 301 /CSS(.*) /StartSaw/public_html/index.php

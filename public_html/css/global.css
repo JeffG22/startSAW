@@ -48,6 +48,14 @@ body {
 		margin: 0 3px 0 3px;
 	}
 
+	#bar-id-pic {
+		width: 30px;
+		height: 30px;
+	}
+
+	.bar-link {
+		margin: 0 1vh;
+	}
 
 /*Removes dotted outlines*/
 button:focus,

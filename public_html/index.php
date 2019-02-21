@@ -24,7 +24,6 @@
   <script src="js/include.js"></script> 
  	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src="js/jquery.easing.min.js"></script>
-	<!--script src="js/viewScroller.js"></script-->
 	
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/index.css">

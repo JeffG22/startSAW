@@ -4,9 +4,8 @@
     require_once("php/handlesession.php");
     require_once("php/data.php");
     require_once("../confidential_info.php");
-    echo phpinfo();
-    my_session_start();
 
+    my_session_start();
     if (my_session_is_valid()) // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
         header("Location: index.php");
     // Se un utente non è registrato e atterra su questa pagina --> ok

@@ -13,8 +13,9 @@
   </button>
   <!--Button for collapsed version-->
 
-  <!--Links-->
+  <!--Collapsible-->
   <div class="collapse navbar-collapse" id="navbarNav">
+    <!--Links-->  
     <ul class="navbar-nav">
       <li class="nav-item active">
         <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
@@ -26,6 +27,7 @@
         <a class="nav-link" href="#">Placeholder2</a>
       </li>
     </ul>
+    <!---Links-->
 
     <div id="search-contain" class="ml-auto">
       <form class="form-inline my-2 my-lg-0">
@@ -36,8 +38,20 @@
       </form>
     </div>
 
+    <div>
+      <?php
+        require_once("php/handlesession.php");
+        if(my_session_is_valid()){
+          echo "<img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\">";
+        } else {
+          echo "<a class=\"bar-link\" href=\"login.php\">Log in</a>";
+          echo "<a class=\"bar-link\" href=\"registration_form.php\">Sign up</a>";
+        }
+      ?>
+
+
   </div>
-	<!---Links-->
+	<!--Collapsible-->
 	
   <!--See https://getbootstrap.com/docs/4.1/components/navbar/#color-schemes for other options.-->
 </nav>	

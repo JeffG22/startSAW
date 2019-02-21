@@ -97,7 +97,11 @@
     function my_session_is_valid() {
         // Collect this information on every request
         $aip = $_SERVER['REMOTE_ADDR'];
-        $bip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $bip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $bip = $aip;
+        }
         $agent = $_SERVER['HTTP_USER_AGENT'];
         $ident = hash("sha256", $aip . $bip . $agent); // Do this every time the client makes a request to the server, after authenticating
         

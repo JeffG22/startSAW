@@ -38,18 +38,17 @@
       </form>
     </div>
 
-    <div>
+    <ul class="navbar-nav">
       <?php
         require_once("php/handlesession.php");
         if(my_session_is_valid()){
-          echo "<img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\">";
+          echo "<li class=\"nav-item\"><img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></li>";
         } else {
-          echo "<a class=\"bar-link\" href=\"login.php\">Log in</a>";
-          echo "<a class=\"bar-link\" href=\"registration_form.php\">Sign up</a>";
+          echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"login.php\">Log in</a></li>";
+          echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"registration_form.php\">Sign up</a></li>";
         }
       ?>
-
-
+    </ul>
   </div>
 	<!--Collapsible-->
 	

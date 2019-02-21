@@ -53,10 +53,6 @@ body {
 		height: 30px;
 	}
 
-	.bar-link {
-		margin: 0 1vh;
-	}
-
 /*Removes dotted outlines*/
 button:focus,
 a:focus, a:active,

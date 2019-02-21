@@ -9,18 +9,13 @@ legend {
 	position: relative;
 }
 
-p {
+p, #blurb {
   white-space: pre-wrap;
-  max-width: 340px;
+  max-width: 360px;
   width: 80vh;
   word-wrap: break-word;
   text-align: left;
   padding: 1vh 0 0 0;
-}
-
-div {
-  display: block;
-  box-sizing: content-box;
 }
 
 /*Main container. Flexbox.*/
@@ -58,16 +53,17 @@ fieldset {
 
 .btn-container {
   text-align: center;
+  margin-top: 20px;
 }
 
 .form-in {
-  max-width: 350px;
+  max-width: 400px;
   width: 70vmin;
 }
 
 /*Form fields*/
 .input-in, .select-in {
-  display: block;  
+  display: inline;  
   padding: 5px;
   margin: 0vh 0vh 2vh 0vh;
   border: none;
@@ -90,23 +86,25 @@ label {
   word-wrap: break-word;
 }
 
-button {
-	position: relative;
-  left: auto;
-  margin-top: 20px;
-  border-radius: 10px;
+#privacy-label {
+  align-items: center;
+  border: 1px #191919;
+}
+
+#blurb {
+  margin: 0 2vw;
 }
 
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 420px) {
 	body {
     background-color: #ffffff;
   }
   
   .container {
     display: flex;
-    padding: 0vh;
-    margin: 0vh auto;
+    padding: 0vmin;
+    margin: 0vmin auto;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start; 

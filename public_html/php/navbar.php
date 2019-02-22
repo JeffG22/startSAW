@@ -28,7 +28,21 @@
       </li>
     </ul>
     <!---Links-->
-
+    
+    <!--Login/profile-->
+    <ul class="navbar-nav">
+      <?php
+        require_once("php/handlesession.php");
+        if(my_session_is_valid()){
+          echo "<li class=\"nav-item\"><img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></li>";
+        } else {
+          echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"login.php\">Log in</a></li>";
+          echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"registration_form.php\">Sign up</a></li>";
+        }
+      ?>
+    </ul>
+    <!--Login/profile-->
+    
     <div id="search-contain" class="ml-auto">
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
@@ -38,18 +52,7 @@
       </form>
     </div>
 
-    <div>
-      <?php
-        require_once("php/handlesession.php");
-        if(my_session_is_valid()){
-          echo "<img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\">";
-        } else {
-          echo "<a class=\"bar-link\" href=\"login.php\">Log in</a>";
-          echo "<a class=\"bar-link\" href=\"registration_form.php\">Sign up</a>";
-        }
-      ?>
-
-
+    
   </div>
 	<!--Collapsible-->
 	

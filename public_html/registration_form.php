@@ -210,24 +210,27 @@
         2. Do NOT let the content rely on a particular viewport width to render well - Since screen dimensions and width in CSS pixels vary widely between devices, content should not rely on a particular viewport width to render well.
         3. Use CSS media queries to apply different styling for small and large screens - Setting large absolute CSS widths for page elements will cause the element to be too wide for the viewport on a smaller device. Instead, consider using relative width values, such as width: 100%. Also, be careful of using large absolute positioning values. It may cause the element to fall outside the viewport on small devices.
     -->
-    <style>
-    </style>
     <title>Sign up</title>
-<!--Boostrap-->
+    
+    <!--Boostrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
-	 integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
-     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
-	 integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" 
-	 integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
 	
-	<!--Inclusions-->
-	<script src="js/include.js"></script> 
+	<!--CSS-->
 	<link rel="stylesheet" href="css/global.css">
-	<link rel="stylesheet" type="text/css" href="css/login.css">
-<!-- SCRIPT -->
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    
+    
+    <!-- SCRIPT -->
     <!-- JQuery -->    
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <!-- Google ReCaptcha -->    
@@ -340,34 +343,35 @@
     <?php include("php/navbar.php") ?>
 
     <!-- REGISTRAZIONE -->
-	<div class="box" id="FirstBox" class="container">
+	<div id="FirstBox" class="container">
 	<div id="sigcon" class="form-group">
             <legend>Registrazione</legend>
-            <form name="registration" id="registration" method="POST" action="registration_form.php">
+            <form name="registration" id="registration" class="form-in" method="POST" action="registration_form.php">
                 <div>
                     <!-- tipo utente -->
-                    <p>Registrati come: &emsp;            
-                        <input type="radio" id="persona" class="form-control" name="tipoUtente" value="person" onchange="showSecondBox();" checked required>
-                        <label for="persona">persona</label>
-                        <input type="radio" id="associazione" class="form-control" name="tipoUtente" value="organization" onchange="showSecondBox();">
-                        <label for="associazione">associazione</label>
-                    </p>
+                    <p>Registrati come:</p>
+                        <label class="radio-inline" for="persona">Persona
+                            <input type="radio" id="persona" class="form-control input-in" name="tipoUtente" value="person" onchange="showSecondBox();" checked required>
+                        </label>
+                        <label class="radio-inline" for="associazione">Associazione
+                            <input type="radio" id="associazione" class="form-control input-in" name="tipoUtente" value="organization" onchange="showSecondBox();">
+                        </label>
                 </div>
                 <div id="campiUser">
                     <!-- email -->
                     <div>
                         <label for="email">Email: </label>&emsp;
-                        <input type="email" id="email" class="form-control" name="email" minlength="6"  maxlength="254" placeholder="name@domain.net" autocomplete="on" required>
+                        <input type="email" id="email" class="form-control input-in" name="email" minlength="6"  maxlength="254" placeholder="name@domain.net" autocomplete="on" required>
                     </div>
                     <!-- password -->
                     <div>
                         <label for="password">Password: </label>&emsp;
-                        <input autofocus type="password" id="password" class="form-control" name="password" minlength="6" maxlength="31" placeholder="6 characters minimum" autocomplete="on" required>
+                        <input autofocus type="password" id="password" class="form-control input-in" name="password" minlength="6" maxlength="31" placeholder="6 characters minimum" autocomplete="on" required>
                     </div>
                     <!-- telefono -->
                     <div>
                         <label for="telefono">Telefono: </label>&emsp;
-                        <input type="tel" id="telefono" class="form-control" name="telefono" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
+                        <input type="tel" id="telefono" class="form-control input-in" name="telefono" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
                     </div>
                 </div>
                 <br/>
@@ -379,22 +383,22 @@
                         <!-- nomeV -->
                         <div>
                             <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control" minlength="3" maxlength="50" required>
+                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control input-in" minlength="3" maxlength="50" required>
                         </div>
                         <!-- cognome -->
                         <div>
                             <label for="cognome">Cognome: </label>&emsp;
-                            <input type="text" id="cognome" name="cognome" class="campiV form-control" maxlength="50" required>
+                            <input type="text" id="cognome" name="cognome" class="campiV form-control input-in" maxlength="50" required>
                         </div>
                         <!-- data di nascita -->
                         <div>
                             <label for="data">Data di nascita: </label>&emsp;
-                            <input type="date" id="data" name="data" class="campiV form-control" min="1900-01-01" max="2006-12-31" required>
+                            <input type="date" id="data" name="data" class="campiV form-control input-in" min="1900-01-01" max="2006-12-31" required>
                         </div>
                         <!-- Sesso -->
                         <div>
                             <label for="genere">Sesso: </label>&emsp;
-                            <select id="genere" name="genere" class="campiV form-control" required>
+                            <select id="genere" name="genere" class="campiV form-control input-in" required>
                                 <option value="" selected>Selezionare</option>
                                 <option value="-">Non specificato</option>
                                 <option value="F">F</option>
@@ -404,7 +408,7 @@
                         <div>
                         <!-- Provincia --> 
                             <label for="provinciaV">Provincia: </label>&emsp;
-                            <select id="provinciaV" name="provinciaV" class="campiV form-control" required>
+                            <select id="provinciaV" name="provinciaV" class="campiV form-control input-in" required>
                             <option value="" selected>--</option>
                             <?php show_province(); ?>
                             </select>
@@ -415,12 +419,12 @@
                         <!-- nomeA -->
                         <div>
                             <label for="nomeA">Nome: </label>&emsp;
-                            <input type="text" id="nomeA" class="campiA form-control" name="nomeA" minlength="3" maxlength="50">
+                            <input type="text" id="nomeA" class="campiA form-control input-in" name="nomeA" minlength="3" maxlength="50">
                         </div>
                         <div>
                         <!-- Provincia --> 
                             <label for="provinciaA">Provincia delle sede: </label>&emsp;
-                            <select id="provinciaA" name="provinciaA" class="campiA form-control">
+                            <select id="provinciaA" name="provinciaA" class="campiA form-control input-in">
                             <option value="" selected>--</option>
                             <?php show_province(); ?>
                             </select>
@@ -428,25 +432,30 @@
                         <!-- settore -->
                         <div>
                             <label for="settore">Settore in cui opera: </label>&emsp;
-                            <input type="text" id="settore" name="settore" class="campiA form-control" maxlength="35">
+                            <input type="text" id="settore" name="settore" class="campiA form-control input-in" maxlength="35">
                         </div>
                         <!-- sito, non è required -->
                         <div>
                             <label for="sito">Sito web: </label>&emsp;
-                            <input type="url" id="sito" class="form-control" name="sito" maxlength="63">
+                            <input type="url" id="sito" class="form-control input-in" name="sito" maxlength="63">
                         </div>
                     </div>
                 </fieldset>    
                 <br/>
                 <!-- CONTROLLI PRIVACY e CAPTCHA -->
                 <div id="controlli">
-                    <input type="checkbox" id="privacy" name="privacy" value="Y" required>
-                    <label for="privacy">Do il consenso al trattamento dei dati nelle modalità conformi al D. Lgs. 30 giugno 2003, n. 196 e successivi aggiornamenti </label>
+                    
+                    <label id="privacy-label" class="container" for="privacy">
+                        <input type="checkbox" id="privacy" name="privacy" value="Y" required>
+                        <div id="blurb">Do il consenso al trattamento dei dati nelle modalità conformi al D. Lgs. 30 giugno 2003, n. 196 e successivi aggiornamenti.</div>
+                    </label>
                     <div class="g-recaptcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
                     <p id="captcha" style="color:red"></p>
                     <br/>
                 </div>
-                <input type="submit" value="Registrami!">
+                <div class="btn-container">
+                    <input type="submit" class="btn btn-primary" value="Registrami!">
+                </div>
             </form>
     </fieldset>
 </body>

@@ -279,7 +279,8 @@
                 'provinciaA' : 'Provincia scelta non valida.',
                 'settore' : 'Settore non valido.',
                 'sito' : 'Sito inserito non valido.',
-                'emailsql' : 'L\'email inserita è già registrata!'
+                'emailsql' : 'L\'email inserita è già registrata!',
+                'altro' : 'Registrazione non riuscita, si prega di riprovare'
         };
         <?php
             $tempError = ($error_flag) ? $error_message : "";
@@ -317,15 +318,17 @@
                         field.insertAdjacentHTML( 'beforeend', "<p style='color: red'> Captcha non valido! </p>");
                     }
                     else {
-                        alert(key);
                         field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
-                        field.setAttribute("isvalid", "false");
-                        field.setAttribute("onchange", "this.setCustomValidity(''); this.focus();");         
+                        field.setAttribute("onkeydown", "this.setCustomValidity('');");         
                         field.style.color = "red";
-                        field.focus();                        
+                        field.style.border = "2px solid red";
+                        field.style.borderRadius = "4px";
+                        document.getElementById("submit").click(); // show the validity box                    
                     }
                     break;
                 }
+                if (key == "altro") // problemi con db o altro
+                    document.getElementById("userMessage").insertAdjacentHTML( 'beforeend', "<p style='color: red'>"+err_array[key]+"</p>");
             }
         
         }
@@ -347,6 +350,9 @@
 	<div id="sigcon" class="form-group">
             <legend>Registrazione</legend>
             <form name="registration" id="registration" class="form-in" method="POST" action="registration_form.php">
+                <!-- div to show error message -->                
+                <div id="userMessage">
+                </div>
                 <div>
                     <!-- tipo utente -->
                     <p>Registrati come:</p>
@@ -366,7 +372,7 @@
                     <!-- password -->
                     <div>
                         <label for="password">Password: </label>&emsp;
-                        <input autofocus type="password" id="password" class="form-control input-in" name="password" minlength="6" maxlength="31" placeholder="6 characters minimum" autocomplete="on" required>
+                        <input type="password" id="password" class="form-control input-in" name="password" minlength="6" maxlength="31" placeholder="6 characters minimum" autocomplete="on" required>
                     </div>
                     <!-- telefono -->
                     <div>
@@ -454,7 +460,7 @@
                     <br/>
                 </div>
                 <div class="btn-container">
-                    <input type="submit" class="btn btn-primary" value="Registrami!">
+                    <input type="submit" id="submit" class="btn btn-primary" value="Registrami!">
                 </div>
             </form>
     </fieldset>

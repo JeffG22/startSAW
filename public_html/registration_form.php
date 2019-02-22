@@ -389,7 +389,7 @@
                         <!-- nomeV -->
                         <div>
                             <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control input-in" minlength="3" maxlength="50" required>
+                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control input-in" minlength="2" maxlength="50" required>
                         </div>
                         <!-- cognome -->
                         <div>
@@ -460,11 +460,7 @@
                     </div>
                 </div>
                 <div class="btn-container">
-<<<<<<< HEAD
-                    <input type="submit" class="btn btn-primary" value="Registrami">
-=======
-                    <input type="submit" id="submit" class="btn btn-primary" value="Registrami!">
->>>>>>> 7c59afcdba60799a71055ca568c1571e324b665c
+                    <input type="submit" id="submit" class="btn btn-primary" value="Registrami">
                 </div>
             </form>
     </fieldset>

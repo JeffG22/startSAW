@@ -141,23 +141,13 @@
 
 <body>
 
-
-  <?php
-    session_start();
-    if (isset($_SESSION['user_id'])) {
-      header("location: user.php");
-      exit();
-    }
-  ?>
-
   <?php
 		include("php/navbar.php")
 	?>
 
   <div class="container">
       <div id="logcon" class="form-group">
-          <form name="login" id="login" class="form-in" method="post" 
-                action="authentication.php">
+          <form name="login" id="login" class="form-in" method="post" action="login.php">
               <legend>Log In</legend>
               <!-- div to show error message -->
               <div id="userMessage">

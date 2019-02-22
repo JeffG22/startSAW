@@ -30,7 +30,7 @@
     <!---Links-->
     
     <!--Login/profile-->
-    <ul class="navbar-nav">
+    <ul class="navbar-nav ml-auto">
       <?php
         require_once("php/handlesession.php");
         if(my_session_is_valid()){
@@ -43,7 +43,7 @@
     </ul>
     <!--Login/profile-->
     
-    <div id="search-contain" class="ml-auto">
+    <div id="search-contain">
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
         <button id="src-btn" class="btn btn-outline-dark my-2 my-sm-0" type="submit">

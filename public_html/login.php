@@ -31,6 +31,15 @@
 
 <body>
 
+
+  <?php
+    session_start();
+    if (isset($_SESSION['user_id']){
+      header("location: user.php");
+      exit();
+    }
+  ?>
+
   <?php
 		include("php/navbar.php")
 	?>
@@ -38,7 +47,8 @@
   <div class="container">
       <!--Login-->
       <div id="logcon" class="form-group">
-          <form name="login" id="login" class="form-in" method="post" action="">
+          <form name="login" id="login" class="form-in" method="post" 
+                action="authentication.php">
               <legend>Log In</legend>
               <!--Username box-->
               <label for="usr">Username:</label>
@@ -54,6 +64,6 @@
       </div>
       <!--Login-->
   </div>
-    
+
 </body>
 </html>

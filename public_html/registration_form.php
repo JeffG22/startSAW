@@ -449,12 +449,12 @@
                         <input type="checkbox" id="privacy" name="privacy" value="Y" required>
                         <div id="blurb">Do il consenso al trattamento dei dati nelle modalità conformi al D. Lgs. 30 giugno 2003, n. 196 e successivi aggiornamenti.</div>
                     </label>
-                    <div class="g-recaptcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
-                    <p id="captcha" style="color:red"></p>
-                    <br/>
+                    <div class=captcha-box>
+                        <div class="g-recaptcha" role="captcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
+                    </div>
                 </div>
                 <div class="btn-container">
-                    <input type="submit" class="btn btn-primary" value="Registrami!">
+                    <input type="submit" class="btn btn-primary" value="Registrami">
                 </div>
             </form>
     </fieldset>

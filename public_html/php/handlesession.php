@@ -70,14 +70,15 @@
         header("Location: index.php");
     }
 
-    function my_session_login($idUtente, $person) {
+    function my_session_login($idUtente, $person, $name) {
         // ----- renewing the sid -----
         // It is a best practice when the user changes its privileges
         my_session_regenerate_id();
-
+        
         // ----- User session variables -----
         $_SESSION['userId'] = $idUtente;
         $_SESSION['type'] = ($person) ? "person" : "organization";
+        $_SESSION['name'] = $name;
 
         // ----- Security session variables (agent and ip) -----
         $_SESSION['identity'] =  security_variables();        

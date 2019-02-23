@@ -29,7 +29,7 @@
       $fields_utente = sanitize_email($_POST[$email]);
         
       // 3 ----- inserimento nel DB se rispetta vincoli -----
-      $query1 = "SELECT user_id, passwd, type FROM user WHERE email = ?"; 
+      $query1 = "SELECT user_id, passwd, type, display_name FROM user WHERE email = ?"; 
       require_once("../connection.php");
       if (!($conn = dbConnect()))
         throw new Exception("sql ".mysqli_connect_error());
@@ -42,13 +42,13 @@
       mysqli_stmt_store_result($stmt);
       if (mysqli_stmt_num_rows($stmt) != 1) // not match
           throw new InvalidArgumentException("Fail");
-      if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type))
+      if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type, $name))
         throw new Exception("mysqli bind result".$stmt->error);
       if (mysqli_stmt_fetch($stmt)) {
         if(password_verify($_POST[$password], $pswd)) {
         // ----- 4 impostazione sessione ----
           $person = ($type == "person");
-          my_session_login($id, $person);
+          my_session_login($id, $person, $name);
           header("Location: index.php"); //TODO change to personal page - login avvenuto con successo
         }
         else

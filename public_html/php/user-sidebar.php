@@ -40,8 +40,7 @@
         <div class="profile-usertitle">
             <div class="profile-usertitle-name">
                 <?php
-                    $userid = $_SESSION['user_id'];
-                    echo $userid;
+                    echo $name;
                 ?>
             </div>
             <!--div class="profile-usertitle-job">

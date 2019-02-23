@@ -274,13 +274,13 @@
                 'nomeA' : 'Nome non valido.',
                 'cognome' : 'Cognome non valido.',
                 'data' : 'Data non valida.',
-                'genere' : 'Selezionare un genere..',
+                'genere' : 'Selezionare un genere.',
                 'provinciaV' : 'Provincia scelta non valida.',
                 'provinciaA' : 'Provincia scelta non valida.',
                 'settore' : 'Settore non valido.',
                 'sito' : 'Sito inserito non valido.',
                 'emailsql' : 'L\'email inserita è già registrata!',
-                'altro' : 'Registrazione non riuscita, si prega di riprovare'
+                'altro' : 'Registrazione non riuscita, si prega di riprovare.'
         };
         <?php
             $tempError = ($error_flag) ? $error_message : "";
@@ -290,7 +290,7 @@
         function loadPostData( jQuery ) {
             // ----- ricaricare dati inviati non validi -----
             <?php
-                if ($error_flag && $error_message != "TipoUtente") {
+                if ($error_flag && $error_message != "tipoUtente") {
                     echo 'document.getElementById("'.$email.'").value="'.$_POST[$email].'";';
                     echo 'document.getElementById("'.$telefono.'").value="'.$_POST[$telefono].'";';
                     echo 'document.getElementById("'.$nome.'").value="'.$_POST[$nome].'";';

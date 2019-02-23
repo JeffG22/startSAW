@@ -186,7 +186,7 @@
                 'genere' : 'Selezionare un genere..',
                 'provincia' : 'Provincia scelta non valida.',
                 'settore' : 'Settore non valido.',
-                'sito' : 'Sito inserito non valido.',
+                'sito' : 'Sito inserito non valido.'
         };
         <?php
             $tempError = ($error_flag) ? $error_message : "";

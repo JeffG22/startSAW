@@ -97,7 +97,7 @@
     var err_array = {
       'usr' : 'Email non valida, riprovare per cortesia.',
       'pwd' : 'Password non valida, lunghezza minima 6 caratteri.',
-      'mysql' : 'Login non riuscito, riprovare per favore.',
+      'mysql' : 'Login non riuscito, riprovare per favore.'
     };
     <?php
       $tempError = ($error_flag) ? $error_message : "";
@@ -127,7 +127,7 @@
     }
     <?php
       if ($error_flag) // se errore allora comunica all'utente ciò quando la pagina è ricaricata (funzione jquery)
-        echo '$(document).ready(loadPostData);'
+        echo '$(document).ready(loadPostData);';
     ?>
   </script>
 </head>

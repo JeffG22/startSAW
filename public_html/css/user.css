@@ -1,6 +1,10 @@
   body {
     background: #F1F3FA;
   }
+
+  .container {
+    width: 100%;
+  }
   
   /* Profile container */
   .profile {
@@ -15,8 +19,11 @@
   }
   
   .profile-userpic img {
+    text-align: center;
+    display: block;
     float: none;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     width: 50%;
     height: 50%;
     -webkit-border-radius: 50% !important;
@@ -44,6 +51,8 @@
     margin-bottom: 15px;
   }
   
+
+  /*Not used right now*/
   .profile-userbuttons {
     text-align: center;
     margin-top: 10px;
@@ -62,14 +71,15 @@
   }
       
   .profile-usermenu {
-    margin-top: 30px;
-    box-sizing: content-box;
+    margin: 30px 2px 2px 2px;
   }
   
   .profile-usermenu ul li {
-    margin: 2px 2px 2px 0;
+    display: block;
+    margin: 10px;
     white-space: nowrap;
-    box-sizing: content-box;
+    box-sizing: border-box;
+    flex: 1 0 50%;
   }
   
   .profile-usermenu ul li:last-child {
@@ -78,7 +88,7 @@
   
   .profile-usermenu ul li a {
     color: #93a3b5;
-    font-size: 14px;
+    font-size: 3vmin;
     font-weight: 400;
   }
   
@@ -100,7 +110,8 @@
     color: #5b9bd1;
     background-color: #f6f9fb;
     border-left: 2px solid #5b9bd1;
-    margin-left: -2px;
+    margin-left: -12px;
+    padding-left: 8px;
   }
   
   /* Profile Content */

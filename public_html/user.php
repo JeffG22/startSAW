@@ -44,7 +44,7 @@
 
     <div class="container">
         <div class="row profile">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="profile-sidebar">
                     <!-- SIDEBAR USERPIC -->
                     <div class="profile-userpic">
@@ -73,19 +73,24 @@
                             <li>
                                 <a href="#">
                                 <i class="fas fa-user"></i>
-                                Impostazioni Account</a>
+                                Impostazioni</a>
                             </li>
                             <li>
                                 <a href="#" target="_blank">
                                 <i class="fas fa-list-alt"></i>
                                 Le Mie Proposte </a>
                             </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                <i class="fas fa-list-alt"></i>
+                                Proposte Accettate </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- END MENU -->
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="profile-content">
                     <main role="main">
                         <div class="album py-5 bg-light">
@@ -116,4 +121,6 @@
             </div>
         </div>
     </div>
+</body>
 
+</html>

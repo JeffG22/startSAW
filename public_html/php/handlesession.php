@@ -73,7 +73,7 @@
     function my_session_login($idUtente, $person) {
         // ----- renewing the sid -----
         // It is a best practice when the user changes its privileges
-        my_session_regenerate_id();
+        //my_session_regenerate_id();   // TODO: Fix this function?
 
         // ----- User session variables -----
         $_SESSION['userId'] = $idUtente;
@@ -86,23 +86,28 @@
     // "go away" for protected area
     function my_session_is_valid() {       
         // ----- checks on renewing, user data and security variables -----
+        
         // too old session
         if (isDeletedOrInactive()) {
             my_session_regenerate_id(); // regenerate the session
             return false;
         }
+
         // not signed up
         if (!isset($_SESSION['identity']))
             return false;
+
         // signed up but with a different ip or agent
         if (security_variables() != $_SESSION['identity']) {
             $_SESSION = array(); // removed all flags
             my_session_regenerate_id(); // regenerate the session
             return false;
         }
+
         // user signed up
         if (!empty($_SESSION['userId']) && ($_SESSION['type'] == "person" || $_SESSION['type'] == "organization"))
             return true;
+
         // something went wrong...
         return false;
     }

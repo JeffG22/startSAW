@@ -30,6 +30,7 @@
         
       // 3 ----- inserimento nel DB se rispetta vincoli -----
       $query1 = "SELECT user_id, passwd, type FROM user WHERE email = ?"; 
+
       require_once("../connection.php");
       if (!($conn = dbConnect()))
         throw new Exception("sql ".mysqli_connect_error());
@@ -40,6 +41,7 @@
       if (!mysqli_stmt_execute($stmt))
         throw new InvalidArgumentException("mysqli execute".$stmt->error);
       mysqli_stmt_store_result($stmt);
+
       if (mysqli_stmt_num_rows($stmt) != 1) // not match
           throw new InvalidArgumentException("Fail");
       if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type))

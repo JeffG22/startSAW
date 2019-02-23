@@ -53,7 +53,6 @@
     // My session regenerate id function
     function my_session_regenerate_id() {
         safe_session_start();
-        isDeletedOrInactive(); // If this session has already been renewed
         // -- renewing -- using a timestamp to avoid error with multiple requests (e.g. Ajax)
         $_SESSION['deleted_time'] = time() + 120; // Set deleted timestamp. Session data must not be deleted immediately.
         session_regenerate_id(); // Create new session without destroying the old one

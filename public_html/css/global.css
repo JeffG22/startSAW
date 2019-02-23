@@ -4,7 +4,7 @@ body {
 }
 
 /*Navbar & footer*/
-	#header, #footer {
+	#header, footer {
 		background-color: #37cdff;
 		color: #253e5e;
 		z-index: 9;
@@ -12,10 +12,9 @@ body {
 
 	#header {
 		top: 0;
-		flex-
 	}
 
-	#footer {
+	footer {
 		bottom: 0;
 	}
 
@@ -36,7 +35,7 @@ body {
 		color: #0b4378;
 	}
 
-	#nav a, #footer a {
+	nav a, footer a {
 		color: #2e577d;
 	}
 

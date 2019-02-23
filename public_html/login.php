@@ -30,7 +30,6 @@
         
       // 3 ----- inserimento nel DB se rispetta vincoli -----
       $query1 = "SELECT user_id, passwd, type FROM user WHERE email = ?"; 
-
       require_once("../connection.php");
       if (!($conn = dbConnect()))
         throw new Exception("sql ".mysqli_connect_error());
@@ -41,25 +40,20 @@
       if (!mysqli_stmt_execute($stmt))
         throw new InvalidArgumentException("mysqli execute".$stmt->error);
       mysqli_stmt_store_result($stmt);
-
       if (mysqli_stmt_num_rows($stmt) != 1) // not match
           throw new InvalidArgumentException("Fail");
       if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type))
         throw new Exception("mysqli bind result".$stmt->error);
       if (mysqli_stmt_fetch($stmt)) {
         if(password_verify($_POST[$password], $pswd)) {
-
         // ----- 4 impostazione sessione ----
           $person = ($type == "person");
           my_session_login($id, $person);
           header("Location: index.php"); //TODO change to personal page - login avvenuto con successo
-          //print_r($_SESSION);
         }
-
         else
           throw new InvalidArgumentException("Fail");
       }
-        
       else
         throw new Exception("mysqli fetch");
       mysqli_stmt_close($stmt);
@@ -79,7 +73,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <!--Boostrap-->
+  <!--Bootstrap-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -90,9 +84,6 @@
           integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
 				integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  
-  <!--Inclusions
-  <script src="js/include.js"></script> -->
 
   <!--CSS-->
   <link rel="stylesheet" href="css/global.css">

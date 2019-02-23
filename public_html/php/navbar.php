@@ -21,7 +21,7 @@
         <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="dummy.php">Placeholder1</a>
+        <a class="nav-link" href="browse_proposals.php">Vedi proposte</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Placeholder2</a>

@@ -1,3 +1,8 @@
+<?php
+	require_once("php/handlesession.php");
+	my_session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

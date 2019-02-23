@@ -32,8 +32,6 @@
     <!--Login/profile-->
     <ul class="navbar-nav ml-auto">
       <?php
-        require_once("php/handlesession.php");
-        my_session_start();
         if(my_session_is_valid()){
           echo "<li class=\"nav-item\"><img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></li>";
         } else {

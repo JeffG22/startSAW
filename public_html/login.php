@@ -48,11 +48,14 @@
         throw new Exception("mysqli bind result".$stmt->error);
       if (mysqli_stmt_fetch($stmt)) {
         if(password_verify($_POST[$password], $pswd)) {
+
         // ----- 4 impostazione sessione ----
           $person = ($type == "person");
           my_session_login($id, $person);
           header("Location: index.php"); //TODO change to personal page - login avvenuto con successo
+          //print_r($_SESSION);
         }
+
         else
           throw new InvalidArgumentException("Fail");
       }

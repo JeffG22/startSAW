@@ -45,8 +45,8 @@
     <!--Login/profile-->
     
     <div id="search-contain">
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+      <form class="form-inline my-2 my-lg-0" action = "browse_proposals.php" method="GET">
+        <input class="form-control" type="search" name="search" placeholder="Cerca una proposta" aria-label="Search">
         <button id="src-btn" class="btn btn-outline-dark my-2 my-sm-0" type="submit">
           <i class="fas fa-search"></i>
         </button>

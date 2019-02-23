@@ -55,7 +55,7 @@
     <h4>Proposte di volontariato disponibili</h4>
 
     <form action = "browse_proposals.php" method="GET">
-        <input type="text" name="search" id="searchbox" value="<?php echo $search_query ?>">
+        <input type="search" name="search" id="searchbox" value="<?php echo $search_query ?>">
         <input type="submit" value="Cerca">
         <input type="submit" value="Vedi tutte" onclick="document.getElementById('searchbox').value = '';">
     </form>

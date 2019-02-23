@@ -25,7 +25,7 @@
 
     // Simple function to stop current script and navigate to a specified location
     function navigateTo($location) {
-        header("location: ".$location);
+        header("Location: ".$location);
         exit();
     }
 

@@ -14,7 +14,7 @@ ServerSignature Off
 Options -FollowSymLinks
 
 # Redirecting to index from non public folders #
-RedirectMatch 301 /php(.*) /StartSAW/public_html/index.php
-RedirectMatch 301 /Media(.*) /StartSAW/public_html/index.php
-RedirectMatch 301 /JS(.*) /StartSAW/public_html/index.php
-RedirectMatch 301 /CSS(.*) /StartSAW/public_html/index.php
+#RedirectMatch 301 /php(.*) /StartSAW/public_html/index.php
+#RedirectMatch 301 /Media(.*) /StartSAW/public_html/index.php
+#RedirectMatch 301 /JS(.*) /StartSAW/public_html/index.php
+#RedirectMatch 301 /CSS(.*) /StartSAW/public_html/index.php

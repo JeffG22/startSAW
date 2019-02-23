@@ -73,7 +73,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-  <!--Boostrap-->
+  <!--Bootstrap-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -84,9 +84,6 @@
           integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
 				integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  
-  <!--Inclusions
-  <script src="js/include.js"></script> -->
 
   <!--CSS-->
   <link rel="stylesheet" href="css/global.css">
@@ -139,10 +136,11 @@
 </head>
 
 <body>
-  <!-- Navbar -->
-  <?php include("php/navbar.php") ?>
-  
-  <!-- Login -->
+
+  <?php
+		include("php/navbar.php")
+	?>
+
   <div class="container">
       <div id="logcon" class="form-group">
           <form name="login" id="login" class="form-in" method="post" action="login.php">
@@ -163,6 +161,6 @@
           </form>
       </div>
   </div>
-    
+
 </body>
 </html>

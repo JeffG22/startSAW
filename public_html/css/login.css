@@ -6,7 +6,8 @@ body {
 
 legend {
 	display: block;
-	position: relative;
+  position: relative;
+  margin: 0 0 4vh 0;
 }
 
 p, #blurb {
@@ -16,6 +17,7 @@ p, #blurb {
   word-wrap: break-word;
   text-align: left;
   padding: 1vh 0 0 0;
+  margin-bottom: 1vh;
 }
 
 /*Main container. Flexbox.*/
@@ -32,7 +34,7 @@ p, #blurb {
 .form-group {
   display: block;
   background: #fff;
-  padding: 3vh;
+  padding: 5vh;
   margin: 5vh;
   border-radius: 10px;
   align-items: center;
@@ -57,8 +59,8 @@ fieldset {
 }
 
 .form-in {
-  max-width: 400px;
-  width: 70vmin;
+  max-width: 450px;
+  width: 70vw;
 }
 
 /*Form fields*/
@@ -82,7 +84,7 @@ fieldset {
 /*Field descriptions*/
 label {
   font-family: "Arial", Arial, sans-serif;
-  margin: 10px 10px 0 0;
+  margin: 5px 10px 0 0;
   word-wrap: break-word;
 }
 
@@ -95,8 +97,14 @@ label {
   margin: 0 2vw;
 }
 
+.captcha-box {
+  display: flex;
+  justify-content: center;
+  margin: 3vh;
+}
 
-@media only screen and (max-width: 420px) {
+
+@media only screen and (max-width: 500px) {
 	body {
     background-color: #ffffff;
   }

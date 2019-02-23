@@ -212,7 +212,7 @@
     -->
     <title>Sign up</title>
     
-    <!--Boostrap-->
+    <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
 	      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -389,7 +389,7 @@
                         <!-- nomeV -->
                         <div>
                             <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control input-in" minlength="3" maxlength="50" required>
+                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control input-in" minlength="2" maxlength="50" required>
                         </div>
                         <!-- cognome -->
                         <div>
@@ -455,12 +455,12 @@
                         <input type="checkbox" id="privacy" name="privacy" value="Y" required>
                         <div id="blurb">Do il consenso al trattamento dei dati nelle modalità conformi al D. Lgs. 30 giugno 2003, n. 196 e successivi aggiornamenti.</div>
                     </label>
-                    <div class="g-recaptcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
-                    <p id="captcha" style="color:red"></p>
-                    <br/>
+                    <div class=captcha-box>
+                        <div class="g-recaptcha" role="captcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
+                    </div>
                 </div>
                 <div class="btn-container">
-                    <input type="submit" id="submit" class="btn btn-primary" value="Registrami!">
+                    <input type="submit" id="submit" class="btn btn-primary" value="Registrami">
                 </div>
             </form>
     </fieldset>

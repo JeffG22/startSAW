@@ -1,8 +1,19 @@
 <?php
-    include("../../connection.php");
-    include("utilities.php");
+    include_once("utilities.php");
+    include_once("handlesession.php");
+    include_once("../../connection.php");
+    
+    my_session_start();
+    // If a user is not logged in and lands on this page, redirect to login
+    if (!my_session_is_valid()) {
+        navigateTo("../login.php");
+    } else if ($_SESSION['type'] == "organization") {   // An organization can't have accepted proposals
+        navigateTo("../user.php");
+    }
 
-    $prev_location = "view_accepted_proposals.php";
+    $user_id = $_SESSION['userId'];
+
+    $prev_location = "../accepted_proposals.php";
 
     if (empty($_POST) || empty($_POST['proposal_id'])) {
         $_SESSION['message'] = "Si è verificato un errore imprevisto nel rinunciare alla proposta. Riprova.";

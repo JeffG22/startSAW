@@ -73,13 +73,31 @@
             if (!my_session_is_valid()) {
                 echo "<div>Esplora liberamente le proposte disponibili. Per accettare una proposta, <a href=\"login.php\">effettua il login</a>!</div>";
             } else if ($_SESSION['type'] = 'organization') {
-                echo "<div>Non puoi accettare proposte perché hai eseguito il login come associazione. Per accettare una proposta, <a href=\"login.php\">effettua il login come utente</a>!</div>";
+                echo "<div>Non puoi accettare proposte perché hai eseguito il login come associazione. Per accettare una proposta, <a href=\"php/logout_then_in.php\">effettua il login come utente</a>!</div>";
             }
         
-            $query = "SELECT * FROM proposal WHERE proposer_id = ".$user_id;
+            $query = "SELECT * FROM proposal WHERE available_positions > 0";
 
-            if(!($result = mysqli_query($conn, $query))) 
-                throw new Exception("sql ".mysqli_error());
+            if (empty($_GET['search'])) {
+                $result = mysqli_query($conn, $query);
+            } else {
+                $search_query = "%".$search_query."%";
+                $query = $query." AND (name LIKE ? OR description LIKE ?)";
+                
+                if(!($stmt = mysqli_prepare($conn, $query))) 
+                    throw new Exception("mysqli prepare".mysqli_errno($conn));
+
+                if(!mysqli_stmt_bind_param($stmt, "ss", $search_query, $search_query))
+                    throw new Exception("mysqli bind param");
+                
+                if(!mysqli_stmt_execute($stmt))
+                    throw new Exception("mysqli execute ".mysqli_errno($conn));
+
+                $result = mysqli_stmt_get_result($stmt);
+            }
+
+            if(!($result)) 
+                throw new Exception("sql ".mysqli_errno());
 
         } catch (Exception $ex) {
             $error_flag = true;
@@ -89,68 +107,17 @@
         }
             
         if (mysqli_num_rows($result) == 0) { // Empty result
-            echo "Sembra che tu non abbia inserito alcuna proposta.";  
+            echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";  
         } else { // Result not empty
             while($row = mysqli_fetch_assoc($result)) {
+                echo "<br><div>\n";
                 printProposalInfo($conn, $row);
 
-                echo "<form method='POST'>
-                        <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                        <input type='submit' value='Modifica proposta' formaction='php/edit_proposal.php'>
-                        <input type='submit' value='Elimina proposta' formaction='php/delete_proposal.php'>
-                        </form>
-                        <br>";
-                echo "</div>";
-            }                                
-        }         
-        
-    ?>
-
-    <br>
-    <?php
-
-        if (!isPerson($con, $user_id)) {    // TODO: USE SESSION INSTEAD
-            echo "Nota: non puoi accettare proposte perché hai eseguito il login come associazione.<br>";
-        }
-
-        $query = "SELECT *
-                  FROM proposal
-                  WHERE available_positions > 0";
-
-        if (empty($_GET['search'])) {
-            $result = mysqli_query($con, $query);
-        }
-               
-        if (!empty($_GET['search'])) {
-        
-            $search_query = "%".$search_query."%";
-            
-            $query = $query." AND (name LIKE ? OR description LIKE ?)";
-
-            $stmt = mysqli_prepare($con, $query);
-
-            mysqli_stmt_bind_param($stmt, "ss", $search_query, $search_query);
-            
-            mysqli_stmt_execute($stmt);
-
-            $result = mysqli_stmt_get_result($stmt);
-        }
-
-        if (!$result) {
-            echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
-                    Aspetta qualche istante e riprova.";
-        } else if (mysqli_num_rows($result) == 0) {
-            echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";
-        } else {
-            while($row = mysqli_fetch_assoc($result)) {
-                echo "<br><div>\n";
-                printProposalInfo($con, $row);
-
-                if (isPerson($con, $user_id)) {    // TODO: USE SESSION INSTEAD
-                    if($row['proposer_id'] == $user_id) {
+                if (my_session_is_valid() && $_SESSION['type'] == 'person') {   
+                    if($row['proposer_id'] == $_SESSION['userId']) {
                         echo "<input type=\"button\" disabled value=\"Non puoi accettare una proposta inserita da te\">";
                     } else {
-                        echo "<form action='accept_proposal.php' method='post'>
+                        echo "<form action='php/accept_proposal.php' method='post'>
                             <input type='hidden' name='proposal_id' value='".$row['id']."'>
                             <input type='submit' value='Accetta questa proposta'>
                             </form>
@@ -159,8 +126,9 @@
                 }
 
                 echo "</div>";
-            }
-        }
+            }                                
+        }         
+        
     ?>
 </body>
 </html>

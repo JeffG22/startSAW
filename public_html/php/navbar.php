@@ -21,7 +21,7 @@
         <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="dummy.php">Placeholder1</a>
+        <a class="nav-link" href="browse_proposals.php">Vedi proposte</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Placeholder2</a>
@@ -33,6 +33,7 @@
     <ul class="navbar-nav ml-auto">
       <?php
         require_once("php/handlesession.php");
+        my_session_start();
         if(my_session_is_valid()){
           echo "<li class=\"nav-item\"><img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></li>";
         } else {
@@ -44,8 +45,8 @@
     <!--Login/profile-->
     
     <div id="search-contain">
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+      <form class="form-inline my-2 my-lg-0" action = "browse_proposals.php" method="GET">
+        <input class="form-control" type="search" name="search" placeholder="Cerca una proposta" aria-label="Search">
         <button id="src-btn" class="btn btn-outline-dark my-2 my-sm-0" type="submit">
           <i class="fas fa-search"></i>
         </button>

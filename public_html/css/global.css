@@ -5,7 +5,7 @@ body {
 
 /*Navbar & footer*/
 	#header, footer {
-		background-color: #37cdff;
+		background-color: #fff;
 		color: #253e5e;
 		z-index: 9;
 	}

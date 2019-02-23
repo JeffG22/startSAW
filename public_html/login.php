@@ -41,26 +41,15 @@
         throw new InvalidArgumentException("mysql execute".$stmt->error);
       mysqli_stmt_store_result($stmt);
       if (mysqli_stmt_num_rows($stmt) != 1) // not match
-<<<<<<< HEAD
           throw new InvalidArgumentException("Username o password errati, riprovare per favore.");
-      if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type))
-        throw new Exception("mysql bind result".$stmt->error);
-=======
-          throw new InvalidArgumentException("Fail");
       if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type, $name))
         throw new Exception("mysqli bind result".$stmt->error);
->>>>>>> f0f638f7acaa4c99760dbdc0cb5124fa85c8f6c7
       if (mysqli_stmt_fetch($stmt)) {
         if(password_verify($_POST[$password], $pswd)) {
         // ----- 4 impostazione sessione ----
           $person = ($type == "person");
-<<<<<<< HEAD
-          my_session_login($id, $person);
-          navigateTo("user.php");
-=======
           my_session_login($id, $person, $name);
           header("Location: index.php"); //TODO change to personal page - login avvenuto con successo
->>>>>>> f0f638f7acaa4c99760dbdc0cb5124fa85c8f6c7
         }
         else
           throw new InvalidArgumentException("Username o password errati, riprovare per favore.");

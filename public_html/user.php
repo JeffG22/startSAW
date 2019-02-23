@@ -9,7 +9,7 @@
 <head>
   <title>Profilo</title>
     
-  <!--Boostrap-->
+  <!--Bootstrap-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
   			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -20,7 +20,7 @@
 					integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
 				integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-	<!--Boostrap-->
+	<!--Bootstrap-->
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,7 +30,7 @@
   <script src="js/jquery-3.1.0.min.js"></script>
   <script src="js/jquery.easing.min.js"></script>
 	
-  <link rel="stylesheet" href="css/global.css">
+  <!--link rel="stylesheet" href="css/global.css"-->
   <link rel="stylesheet" href="css/user.css">
 </head>
 
@@ -48,7 +48,7 @@
                 <div class="profile-sidebar">
                     <!-- SIDEBAR USERPIC -->
                     <div class="profile-userpic">
-                        <img src="" class="img-responsive" alt="">
+                        <img src="media/profile-placeholder.png" class="img-responsive" alt="">
                     </div>
                     <!-- END SIDEBAR USERPIC -->
                     <!-- SIDEBAR USER TITLE -->
@@ -61,34 +61,24 @@
                         </div>
                     </div>
                     <!-- END SIDEBAR USER TITLE -->
-                    <!-- SIDEBAR BUTTONS -->
-                    <div class="profile-userbuttons">
-                        <button type="button" class="btn btn-success btn-sm">Follow</button>
-                        <button type="button" class="btn btn-danger btn-sm">Message</button>
-                    </div>
-                    <!-- END SIDEBAR BUTTONS -->
+
                     <!-- SIDEBAR MENU -->
                     <div class="profile-usermenu">
                         <ul class="nav">
                             <li class="active">
                                 <a href="#">
-                                <i class="glyphicon glyphicon-home"></i>
-                                Overview </a>
+                                <i class="fas fa-home"></i>
+                                Profilo </a>
                             </li>
                             <li>
                                 <a href="#">
-                                <i class="glyphicon glyphicon-user"></i>
-                                Account Settings </a>
+                                <i class="fas fa-user"></i>
+                                Impostazioni Account</a>
                             </li>
                             <li>
                                 <a href="#" target="_blank">
-                                <i class="glyphicon glyphicon-ok"></i>
-                                Tasks </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                <i class="glyphicon glyphicon-flag"></i>
-                                Help </a>
+                                <i class="fas fa-list-alt"></i>
+                                Le Mie Proposte </a>
                             </li>
                         </ul>
                     </div>
@@ -97,7 +87,31 @@
             </div>
             <div class="col-md-9">
                 <div class="profile-content">
-                Some user related content goes here...
+                    <main role="main">
+                        <div class="album py-5 bg-light">
+                            <div class="container">
+                                <div class="row">
+                                    <!-- UNIT
+                                    <div class="col-md-4">
+                                    <div class="card mb-4 box-shadow">
+                                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                                        <div class="card-body">
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                            </div>
+                                            <small class="text-muted">9 mins</small>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                    </main>
                 </div>
             </div>
         </div>

@@ -34,8 +34,11 @@
 	<!--Header/Navbar-->
 	<?php
 		include("php/navbar.php");
+
+		print_r($_SESSION);
 	?>
 	<!--Header/Navbar-->
+
 
 	<div id="mainContainer">
 		

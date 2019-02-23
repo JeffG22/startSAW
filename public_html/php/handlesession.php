@@ -73,7 +73,7 @@
     function my_session_login($idUtente, $person) {
         // ----- renewing the sid -----
         // It is a best practice when the user changes its privileges
-        //my_session_regenerate_id();   // TODO: Fix this function?
+        my_session_regenerate_id();   // TODO: Fix this function?
 
         // ----- User session variables -----
         $_SESSION['userId'] = $idUtente;

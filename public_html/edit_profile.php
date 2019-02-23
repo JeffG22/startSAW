@@ -13,7 +13,6 @@
 
     // ----- CONTROLLI LATO SERVER su INPUT RICEVUTI -----
     $error_flag = false;
-    $error_sql = false;
     $updated = false;
     try {
         // ----- recupero dati utente -----
@@ -29,7 +28,7 @@
           throw new InvalidArgumentException("mysql");
         mysqli_close($conn);
         
-        print_r($row);
+        //print_r($row);
         // if person row(id, name, surname, birthdate, gender, phone, province)
         if ($person) {
             $surname_value = $row["surname"];
@@ -104,7 +103,7 @@
                 if (!($stmt = mysqli_prepare($conn, $query2)))
                     throw new Exception("mysql ".$conn->error);
                 if (!mysqli_stmt_bind_param($stmt, 'ssssss', 
-                        $_POST[$name], $_POST[$cognome], $_POST[$sex], $_POST[$data], $_POST[$pr], $_POST[$tel]))
+                        $_POST[$nome], $_POST[$cognome], $_POST[$sex], $_POST[$data], $_POST[$pr], $_POST[$tel]))
                     throw new Exception("mysql bind param");
             }
             else {
@@ -112,7 +111,7 @@
                     if (!($stmt = mysqli_prepare($conn, $query2)))
                         throw new Exception("mysql prepare ".$conn->error);
                     if (!mysqli_stmt_bind_param($stmt, 'sssss', 
-                            $_POST[$name], $_POST[$pr], $_POST[$sett], $_POST[$sito], $_POST[$tel]))                           
+                            $_POST[$nome], $_POST[$pr], $_POST[$sett], $_POST[$sito], $_POST[$tel]))                           
                         throw new Exception("mysql param");
             }
             if (!mysqli_stmt_execute($stmt))
@@ -130,7 +129,7 @@
                 $sector_value = $_POST[$sett];
                 $website_value = $_POST[$sito];
             }
-            $name_value = $_POST[$name];
+            $name_value = $_POST[$nome];
             $phone_value = $_POST[$tel];
             $province_value = $_POST[$pr];
             
@@ -139,7 +138,8 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-        $error_sql = strlen($error_message >= 5) && substr($error_message, 0, 5) == "mysql";
+        if (strlen($error_message >= 5) && substr($error_message, 0, 5) == "mysql")
+            $error_message = "mysql";
     }
 ?>
 
@@ -196,7 +196,7 @@
         function loadData( jQuery ) {
             <?php
             // ----- caricare dati utente -----
-            if ($error_sql)
+            if ($tempError == "mysql")
                 echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Non sono riuscito a caricare i dati del profilo, si prega di riprovare.</p>"';
             else {
                 if ($_SESSION["type"] == "person") {
@@ -212,20 +212,20 @@
                 echo 'document.getElementById("'.$pr.'").value="'.$province_value.'";';
                 echo 'document.getElementById("'.$tel.'").value="'.$phone_value.'";';
             }
-            if ($error_flag && !$error_sql) {
+            if ($error_flag && $tempError != "mysql") {
                 echo '
                     for (var key in err_array) {
                         if (key == id_errore) {
                             var field = document.getElementById(key);
-                    else {
-                        field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
-                        field.setAttribute("onkeydown", "this.setCustomValidity(\'\');");         
-                        field.style.color = "red";
-                        field.style.border = "2px solid red";
-                        field.style.borderRadius = "4px";
-                        document.getElementById("submit").click(); // show the validity box                    
+                            field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
+                            field.setAttribute("onclick", "this.setCustomValidity(\'\');");
+                            field.setAttribute("onchange", "this.setCustomValidity(\'\');");         
+                            field.style.color = "red";
+                            field.style.border = "2px solid red";
+                            field.style.borderRadius = "4px";
+                            document.getElementById("submit").click(); // show the validity box
+                            break;              
                     }
-                    break;
                 }
                 ';
             }
@@ -254,7 +254,7 @@
             </div>
             <fieldset>
             <?php
-                if ($_SESSION["type"] == "person" && !$error_sql) {
+                if ($_SESSION["type"] == "person" && $tempError != "mysql") {
                     echo '
                         <div id="campiPerson">
                             <!-- nome -->
@@ -300,7 +300,7 @@
                         </div>
                     ';
                 }
-                else if (!$error_sql) {
+                else if ($tempError != "mysql") {
                     echo '
                         <div id="campiOrganization">
                             <!-- nome -->

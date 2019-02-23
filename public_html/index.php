@@ -1,5 +1,10 @@
+<?php
+	include_once("php/handlesession.php");
+	my_session_start();
+	print_r($_SESSION);
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
   <title>Placeholder</title>
@@ -32,9 +37,7 @@
 <body>
 	
 	<!--Header/Navbar-->
-	<?php
-		include("php/navbar.php");
-	?>
+	<?php include("php/navbar.php"); ?>
 	<!--Header/Navbar-->
 
 	<div id="mainContainer">

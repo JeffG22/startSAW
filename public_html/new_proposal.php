@@ -22,10 +22,22 @@
                 throw new InvalidArgumentException($descriptio);
             if (empty($_POST[$available_pos]) || !checksOnAvailablePos($_POST[$available_pos]))
                 throw new InvalidArgumentException($available_pos);
-            if (!empty($_POST[$upload_picture]) && !uploadPicture())
+            if (!empty($_POST[$upload_picture]) && !($file = uploadPicture()))
                 throw new InvalidArgumentException($upload_picture);
             if (!empty($_POST[$address]) && !checksOnAddress($_POST[$address]))
                 throw new InvalidArgumentException($address);
+
+            $name_value = sanitize_inputString($_POST[$name]);
+            $description_value = nl2br(sanitize_inputString($_POST[$description]));
+            $available_pos_value = intval($_POST[$available_pos]);
+
+            if (!($conn = get_dbconnection()))
+                throw new Exception("sql ".mysqli_connect_error());
+
+            $stmt = mysqli_prepare($con, "INSERT INTO proposal 
+                (name, description, picture, address, lat, lon, 
+                    available_positions, date_inserted, proposer_id) 
+                VALUES (?,?,?,?,?,?,?,?,?)");
         }
     } catch (Exception $ex) {
         $error_flag = true;

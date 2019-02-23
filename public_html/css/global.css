@@ -12,6 +12,7 @@ body {
 
 	nav {
 		top: 0;
+		flex-
 	}
 
 	footer {
@@ -39,6 +40,19 @@ body {
 		color: #2e577d;
 	}
 
+	#search-contain {
+		white-space: nowrap;
+		display: inline-block;
+	}
+
+	#src-btn{
+		margin: 0 3px 0 3px;
+	}
+
+	#bar-id-pic {
+		width: 30px;
+		height: 30px;
+	}
 
 /*Removes dotted outlines*/
 button:focus,

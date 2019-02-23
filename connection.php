@@ -1,6 +1,7 @@
 <?php
     function dbConnect() {
-        $con = mysqli_connect("localhost", "S4328810", "TiganiForever", "S4328810");
+        require("confidential_info.php");
+        $con = mysqli_connect($server, $user, $pswd, $db_name);
         if (mysqli_connect_errno($con)) {
             return false;
         } else {

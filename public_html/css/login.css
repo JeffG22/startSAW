@@ -6,21 +6,18 @@ body {
 
 legend {
 	display: block;
-	position: relative;
+  position: relative;
+  margin: 0 0 4vh 0;
 }
 
-p {
+p, #blurb {
   white-space: pre-wrap;
-  max-width: 340px;
+  max-width: 360px;
   width: 80vh;
   word-wrap: break-word;
   text-align: left;
   padding: 1vh 0 0 0;
-}
-
-div {
-  display: block;
-  box-sizing: content-box;
+  margin-bottom: 1vh;
 }
 
 /*Main container. Flexbox.*/
@@ -37,7 +34,7 @@ div {
 .form-group {
   display: block;
   background: #fff;
-  padding: 3vh;
+  padding: 5vh;
   margin: 5vh;
   border-radius: 10px;
   align-items: center;
@@ -58,11 +55,12 @@ fieldset {
 
 .btn-container {
   text-align: center;
+  margin-top: 20px;
 }
 
-form {
-  max-width: 350px;
-  width: 70vmin;
+.form-in {
+  max-width: 450px;
+  width: 70vw;
 }
 
 #input_proposal {
@@ -71,8 +69,8 @@ form {
 }
 
 /*Form fields*/
-input, select, textarea {
-  display: block;  
+.input-in, .select-in {
+  display: inline;  
   padding: 5px;
   margin: 0vh 0vh 2vh 0vh;
   border: none;
@@ -81,15 +79,8 @@ input, select, textarea {
   color: #333;
 }
 
-input[type=radio] {
-  display: inline;
-  padding: 0 0 0 10px;
-	margin: 0;
-	border: none;
-}
-
-input[type=file] {
-  display: inline;
+.input-in[type=radio], .input-in[type=file] {
+	display: inline;
 	padding: 0 0 0 10px;
 	margin: 0;
 	border: none;
@@ -98,26 +89,35 @@ input[type=file] {
 /*Field descriptions*/
 label {
   font-family: "Arial", Arial, sans-serif;
-  margin: 10px 10px 0 0;
+  margin: 5px 10px 0 0;
   word-wrap: break-word;
 }
 
-button {
-	position: relative;
-  left: auto;
-  margin-top: 20px;
-  border-radius: 10px;
+#privacy-label {
+  align-items: center;
+  border: 1px #191919;
 }
 
-@media only screen and (max-width: 400px) {
+#blurb {
+  margin: 0 2vw;
+}
+
+.captcha-box {
+  display: flex;
+  justify-content: center;
+  margin: 3vh;
+}
+
+
+@media only screen and (max-width: 500px) {
 	body {
     background-color: #ffffff;
   }
   
   .container {
     display: flex;
-    padding: 0vh;
-    margin: 0vh auto;
+    padding: 0vmin;
+    margin: 0vmin auto;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start; 

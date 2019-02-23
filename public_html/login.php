@@ -54,7 +54,6 @@
         else
           throw new InvalidArgumentException("Fail");
       }
-        
       else
         throw new Exception("mysqli fetch");
       mysqli_stmt_close($stmt);

@@ -7,7 +7,7 @@
 
     my_session_start();
     if (my_session_is_valid()) // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
-        header("Location: index.php");
+        navigateTo("index.php");
     // Se un utente non è registrato e atterra su questa pagina --> ok
 
     // ----- CONTROLLI LATO SERVER su INPUT RICEVUTI -----

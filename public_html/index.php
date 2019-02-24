@@ -1,13 +1,13 @@
 <?php
-	include_once("php/handlesession.php");
+	require_once("php/handlesession.php");
 	my_session_start();
-	print_r($_SESSION);
+	//print_r($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="it">
 
 <head>
-  <title>Placeholder</title>
+  <title>Volontari per caso</title>
     
   <!--Bootstrap-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
@@ -52,8 +52,8 @@
     		  	<img class="d-block img-fluid" src="" alt="">
     		  	<span class="sr-only">First slide</span>
     		    <div class="carousel-caption d-none d-md-block">
-    					<h5>Test caption</h5>
-    					<p>Placeholder</p>
+    					<h5>Cerca tra decine di proposte quella adatta a te!</h5>
+    					<p>Puoi essere volontario per un giorno, volontario per la vita!</p>
   					</div>
     			</div>
     			<!--First slide-->
@@ -61,9 +61,9 @@
     			<div id="secondSlide" class="carousel-item">
     		  	<img class="d-block img-fluid" src="" alt="">
     		  	<span class="sr-only">Second slide</span>
-    		  	<div class="carousel-caption d-none d-md-block">
-    					<h5>Test caption</h5>
-    					<p>Placeholder</p>
+    		  	<div class="carousel-caption d-none d-md-block" style="display: flex; height: 120px; color: #dedede; background: #222; background: rgba(0,0,0,0.7); left: 0px; width: 100%;">
+							<h5 style="font-size: 30px; word-spacing: 4px; color: #ffffff; margin-top: -20px;">Ciò che abbiamo fatto solo per noi stessi muore con noi. Ciò che abbiamo fatto per gli altri e per il mondo resta ed è immortale.</h5>
+    					<p style="font-size: 15px; word-spacing: 4px; color: #ffffff; ">Harvey B. Mackay</p>
   					</div>
     			</div>
     			<!--Second slide-->
@@ -71,9 +71,9 @@
     			<div id="thirdSlide" class="carousel-item">
    			  	<img class="d-block img-fluid" src="" alt="">
    			  	<span class="sr-only">Third slide</span>
-   			  	<div class="carousel-caption d-none d-md-block">
-    					<h5>Test caption</h5>
-    					<p>Placeholder</p>
+   			  	<div class="carousel-caption d-none d-md-block" style="display: flex; height: 80px; color: #dedede; background: #222; background: rgba(0,0,0,0.7); left: 0px; width: 100%; ">
+    					<h5 style="font-size: 30px; word-spacing: 4px; color: #ff8c00; margin-top: -20px;">Prendere riempie le mani, dare riempie il cuore</h5>
+    					<p style="font-size: 15px; word-spacing: 4px; color: #ff8c00; ">M. Seeman</p>
   					</div>
    			 	</div>
    			 	<!--Third slide-->

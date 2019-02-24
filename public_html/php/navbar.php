@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="header">
 	<!--Logo-->
-	<a class="navbar-brand" href="#">
+	<a class="navbar-brand" href="index.php">
 		<!--TODO CAMBIARE (fare in modo che il logo si raggiunga globalmente-->
 		<img src="media/Ph.png" width="40" height="40" alt="Logo">
-		Placeholder
+		Volontari per caso
   </a>
   <!--Logo-->
   
@@ -24,7 +24,7 @@
         <a class="nav-link" href="browse_proposals.php">Vedi proposte</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Placeholder2</a>
+        <a class="nav-link" href="#">Aggiungi proposte</a>
       </li>
     </ul>
     <!---Links-->
@@ -32,10 +32,8 @@
     <!--Login/profile-->
     <ul class="navbar-nav ml-auto">
       <?php
-        require_once("php/handlesession.php");
-        my_session_start();
         if(my_session_is_valid()){
-          echo "<li class=\"nav-item\"><img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></li>";
+          echo "<li class=\"nav-item\"><a href=\"#\" class=\"nav-link\"><img style=\"margin-right: 10px;\"id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></a></li>";
         } else {
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"login.php\">Log in</a></li>";
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"registration_form.php\">Sign up</a></li>";

@@ -45,7 +45,7 @@
             mysqli_close($conn);
 
             if(!password_verify($_POST[$pswdOld], $row['passwd']))
-                throw new InvalidArgumentException($pswOld);
+                throw new InvalidArgumentException($pswdOld);
 
         // ----- aggiornamento DB se rispetta vincoli -----
             if (!($conn = dbConnect()))
@@ -59,6 +59,7 @@
                 throw new InvalidArgumentException("mysql execute ".$stmt->error);
             if (mysqli_stmt_affected_rows($stmt) != 1)
                 throw new InvalidArgumentException("mysql insert");
+            $updated = true;
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
         } catch (Exception $ex) {
@@ -106,8 +107,8 @@
         
         // creare un'array associativo "messaggio -> errore"           
         var err_array = {
-                'pswdOld' : 'Password precedente non valida',
-                'pswdNew1' : 'Password nuova non valida o non corrispondente'
+                'pswdOld' : 'Password attuale errata.',
+                'pswdNew1' : 'Password nuova non valida o non corrispondente.'
         };
         <?php
             $tempError = ($error_flag) ? $error_message : "";
@@ -120,6 +121,7 @@
             if ($tempError == "mysql")
                 echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Non sono riuscito a caricare i dati del profilo, si prega di riprovare.</p>"';
             else if ($error_flag) {
+                echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Password non modificata.</p>"';
                 echo '
                     for (var key in err_array) {
                         if (key == id_errore) {
@@ -137,13 +139,10 @@
                 ';
             }
             else if ($updated)
-                echo 'document.getElementById("userMessage").insertAdjacentHTML(\'afterbegin\', "<p style=\'color: green\'>Aggiornamento della password avvenuto correttamente!</p>")';
+                echo 'document.getElementById("userMessage").insertAdjacentHTML(\'afterbegin\', "<p style=\'color: green\'>Password modificata con successo!</p>")';
             ?>
         }
-        <?php
-            if ($error_flag) // se errore allora comunica all'utente ciò quando la pagina è ricaricata (funzione jquery)
-              echo '$(document).ready(loadData)';
-        ?>
+        <?php echo '$(document).ready(loadData)'; ?>
         
     </script>
 </head>

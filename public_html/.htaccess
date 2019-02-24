@@ -23,8 +23,8 @@ Options -FollowSymLinks
 # To disable automatically generated directory listings
 Options -Indexes
 
-ErrorDocument 400 /errors/bad-request.html
-ErrorDocument 401 /errors/auth-reqd.html
-ErrorDocument 403 /errors/forbid.html
-ErrorDocument 404 /errors/not-found.html
-ErrorDocument 500 /errors/server-err.html
+ErrorDocument 400 http://localhost/StartSaw/public_html/error.php?code=400
+ErrorDocument 401 http://localhost/StartSaw/public_html/error.php?code=401
+ErrorDocument 403 http://localhost/StartSaw/public_html/error.php?code=403
+ErrorDocument 404 http://localhost/StartSaw/public_html/error.php?code=404
+ErrorDocument 500 http://localhost/StartSaw/public_html/error.php?code=500

@@ -16,3 +16,11 @@
 .proposal-card p {
   white-space: pre-wrap;
 }
+
+.row {
+  justify-content: center;
+}
+
+#proposal-container {
+  margin-top: 20px;
+}

@@ -33,7 +33,11 @@
     <ul class="navbar-nav ml-auto">
       <?php
         if(my_session_is_valid()){
+<<<<<<< HEAD
           echo "<li class=\"nav-item\"><a href=\"#\" class=\"nav-link\"><img style=\"margin-right: 10px;\"id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></a></li>";
+=======
+          echo "<li class=\"nav-item\"><a href=\"profile.php\"><img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></a></li>";
+>>>>>>> 393a3289c5310b35ff626e7ca00b50336dbde39f
         } else {
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"login.php\">Log in</a></li>";
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"registration_form.php\">Sign up</a></li>";

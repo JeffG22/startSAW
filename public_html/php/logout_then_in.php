@@ -1,6 +1,5 @@
 <?php
-    //require_once("handlesession.php");
-    echo "ohyes";
-    //my_session_logout();
-    //header("Location: ../login.php");
+    require_once("handlesession.php");
+    my_session_logout();
+    navigateTo("../login.php");
 ?>

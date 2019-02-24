@@ -6,8 +6,8 @@
   require_once("../confidential_info.php");
 
   my_session_start();
-  if (my_session_is_valid()) // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
-    header("Location: index.php");
+  if (my_session_is_valid()) // Se un utente è già loggato e atterra su questa pagina --> redirect to index.php
+    navigateTo("index.php");
   // Se un utente non è registrato e atterra su questa pagina --> ok
 
   // ----- CONTROLLI LATO SERVER su INPUT RICEVUTI -----
@@ -49,7 +49,7 @@
         // ----- 4 impostazione sessione ----
           $person = ($type == "person");
           my_session_login($id, $person, $name);
-          header("Location: index.php"); //TODO change to personal page - login avvenuto con successo
+          navigateTo("user.php");
         }
         else
           throw new InvalidArgumentException("Username o password errati, riprovare per favore.");

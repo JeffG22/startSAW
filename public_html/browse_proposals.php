@@ -10,7 +10,7 @@
         $user_id = $_SESSION['userId'];
 
     if (!empty($_GET['search'])) {
-        $search_query = sanitize_inputString($_GET['search']);
+        $search_query = sanitize_inputString(strip_tags($_GET['search']));
     } else if (isset($_GET['search'])) {    // If empty search query, removes "search=" from url
         navigateTo("browse_proposals.php");
     } else {

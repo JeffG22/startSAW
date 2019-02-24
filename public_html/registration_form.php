@@ -7,7 +7,7 @@
 
     my_session_start();
     if (my_session_is_valid()) // Se un utente è già registrato e atterra su questa pagina --> redirect to index.php
-        header("Location: index.php");
+        navigateTo("index.php");
     // Se un utente non è registrato e atterra su questa pagina --> ok
 
     // ----- CONTROLLI LATO SERVER su INPUT RICEVUTI -----
@@ -189,7 +189,7 @@
             // 7 ----- impostazione sessione e login automatico ----
             $display_name = ($person) ? $fields_value[0]." ".$fields_value[1] : $fields_value[1];
             my_session_login($idUtente, $person, $display_name);
-            navigateTo("user.php");
+            navigateTo("profile.php");
         }      
     } catch (Exception $ex) {
         $error_flag = true;

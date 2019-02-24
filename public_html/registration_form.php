@@ -189,7 +189,7 @@
             // 7 ----- impostazione sessione e login automatico ----
             $display_name = ($person) ? $fields_value[0]." ".$fields_value[1] : $fields_value[1];
             my_session_login($idUtente, $person, $display_name);
-            navigateTo("user.php");
+            navigateTo("profile.php");
         }      
     } catch (Exception $ex) {
         $error_flag = true;

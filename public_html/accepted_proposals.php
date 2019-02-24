@@ -21,7 +21,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!--Boostrap-->
+    <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
                 integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -32,7 +32,7 @@
                       integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
                   integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <!--Boostrap-->
+    <!--Bootstrap-->
     
     <!--Inclusions-->
     <script src="js/jquery-3.1.0.min.js"></script>
@@ -50,52 +50,10 @@
 
     <div class="container">
         <div class="row profile">
-            <div class="col-md-4">
-                <div class="profile-sidebar">
-                    <!-- SIDEBAR USERPIC -->
-                    <div class="profile-userpic">
-                        <img src="media/profile-placeholder.png" class="img-responsive" alt="">
-                    </div>
-                    <!-- END SIDEBAR USERPIC -->
-                    <!-- SIDEBAR USER TITLE -->
-                    <div class="profile-usertitle">
-                        <div class="profile-usertitle-name">
-                            Placeholder
-                        </div>
-                        <div class="profile-usertitle-job">
-                            Placeholder
-                        </div>
-                    </div>
-                    <!-- END SIDEBAR USER TITLE -->
-
-                    <!-- SIDEBAR MENU -->
-                    <div class="profile-usermenu">
-                        <ul class="nav">
-                            <li class="active">
-                                <a href="#">
-                                <i class="fas fa-home"></i>
-                                Profilo </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                <i class="fas fa-user"></i>
-                                Impostazioni</a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                <i class="fas fa-list-alt"></i>
-                                Le Mie Proposte </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                <i class="fas fa-list-alt"></i>
-                                Proposte Accettate </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- END MENU -->
-                </div>
-            </div>
+            <?php
+                include("php/user-sidebar.php")
+            ?>
+            
             <div class="col-md-8">
                 <div class="profile-content">
                     <main role="main">

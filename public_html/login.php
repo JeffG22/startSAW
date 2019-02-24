@@ -29,39 +29,41 @@
       $fields_utente = sanitize_email($_POST[$email]);
         
       // 3 ----- inserimento nel DB se rispetta vincoli -----
-      $query1 = "SELECT user_id, passwd, type FROM user WHERE email = ?"; 
+      $query1 = "SELECT user_id, passwd, type, display_name FROM user WHERE email = ?"; 
       require_once("../connection.php");
       if (!($conn = dbConnect()))
-        throw new Exception("sql ".mysqli_connect_error());
+        throw new Exception("mysql ".mysqli_connect_error());
       if (!($stmt = mysqli_prepare($conn, $query1)))
-        throw new Exception("mysqli prepare".mysqli_error($conn));
+        throw new Exception("mysql prepare".mysqli_error($conn));
       if (!mysqli_stmt_bind_param($stmt, 's', $fields_utente))
-        throw new Exception("mysqli bind param");
+        throw new Exception("mysql bind param");
       if (!mysqli_stmt_execute($stmt))
-        throw new InvalidArgumentException("mysqli execute".$stmt->error);
+        throw new InvalidArgumentException("mysql execute".$stmt->error);
       mysqli_stmt_store_result($stmt);
       if (mysqli_stmt_num_rows($stmt) != 1) // not match
-          throw new InvalidArgumentException("Fail");
-      if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type))
+          throw new InvalidArgumentException("Username o password errati, riprovare per favore.");
+      if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type, $name))
         throw new Exception("mysqli bind result".$stmt->error);
       if (mysqli_stmt_fetch($stmt)) {
         if(password_verify($_POST[$password], $pswd)) {
         // ----- 4 impostazione sessione ----
           $person = ($type == "person");
-          my_session_login($id, $person);
+          my_session_login($id, $person, $name);
           navigateTo("user.php");
         }
         else
-          throw new InvalidArgumentException("Fail");
+          throw new InvalidArgumentException("Username o password errati, riprovare per favore.");
       }
       else
-        throw new Exception("mysqli fetch");
+        throw new Exception("mysql fetch");
       mysqli_stmt_close($stmt);
       mysqli_close($conn);
     }      
   } catch (Exception $ex) {
     $error_flag = true;
     $error_message = $ex->getMessage();
+    if (strlen($error_message >= 5) && substr($error_message, 0, 5) == "mysql")
+      $error_message = "mysql";
   }  
 ?>
 
@@ -95,8 +97,7 @@
     var err_array = {
       'usr' : 'Email non valida, riprovare per cortesia.',
       'pwd' : 'Password non valida, lunghezza minima 6 caratteri.',
-      'Fail' : 'Username o password errati, riprovare per favore.',
-      'Altro' : 'Login non riuscito, riprovare per favore.',
+      'mysql' : 'Login non riuscito, riprovare per favore.'
     };
     <?php
       $tempError = ($error_flag) ? $error_message : "";
@@ -109,38 +110,32 @@
         if ($error_flag)
           echo 'document.getElementById("'.$email.'").value="'.$_POST[$email].'";';
       ?>
-      for (var key in err_array) {
-        if (key == id_errore) {
-          if (key == "Fail")
-            var field = document.getElementById("usr");
-          else { //usr o pwd
-            var field = document.getElementById(key);
-          }
-          field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
-          field.setAttribute("onkeydown", "this.setCustomValidity('');");         
-          field.style.color = "red";
-          field.style.border = "2px solid red";
-          field.style.borderRadius = "4px";
-          document.getElementById("submit").click(); // show the validity box
-          break;
-        }
-        if (key == "Altro")
-            document.getElementById("userMessage").insertAdjacentHTML( 'beforeend', "<p style='color: red'>"+err_array[key]+"</p>");
-      }   
+      if (id_errore == "usr" || id_errore == "pwd") {
+        var field = document.getElementById(id_errore);
+        field.setCustomValidity(err_array[id_errore]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
+        field.setAttribute("onclick", "this.setCustomValidity('');");         
+        field.style.color = "red";
+        field.style.border = "2px solid red";
+        field.style.borderRadius = "4px";
+        document.getElementById("submit").click(); // show the validity box
+      }
+      else {
+        if (id_errore == "mysql")
+          id_errore = err_array[id_errore];
+        document.getElementById("userMessage").insertAdjacentHTML( 'beforeend', "<p style='color: red'>"+id_errore+"</p>"); 
+      }
     }
     <?php
       if ($error_flag) // se errore allora comunica all'utente ciò quando la pagina è ricaricata (funzione jquery)
-        echo '$(document).ready(loadPostData);'
+        echo '$(document).ready(loadPostData);';
     ?>
   </script>
 </head>
 
 <body>
-
   <?php
 		include("php/navbar.php")
 	?>
-
   <div class="container">
       <div id="logcon" class="form-group">
           <form name="login" id="login" class="form-in" method="post" action="login.php">

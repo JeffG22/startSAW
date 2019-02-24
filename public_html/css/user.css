@@ -88,7 +88,7 @@
   
   .profile-usermenu ul li a {
     color: #93a3b5;
-    font-size: 3vmin;
+    font-size: 16px;
     font-weight: 400;
   }
   
@@ -119,4 +119,8 @@
     padding: 20px;
     background: #fff;
     min-height: 460px;
+  }
+
+  .profile-card {
+    width: 100%;
   }

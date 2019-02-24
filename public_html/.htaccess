@@ -1,3 +1,9 @@
+ # hide your .htaccess file from public view #
+<Files .htaccess>
+	order allow,deny
+	deny from all
+</Files>
+
 # Extra Security Headers
 <IfModule mod_headers.c>
 	Header set X-XSS-Protection "1; mode=block"
@@ -7,14 +13,18 @@
     Header unset X-Powered-By
 </IfModule>
 
-# Disable server signature # it is not possible since we should modify php.ini adding "ServerTokensProd" 
+# Disable server signature # 
+# it is not possible since we should modify php.ini adding "ServerTokens Prod"
+# but it is not allowed
 ServerSignature Off
-
-# Disable FollowSymLinks, are not secure and not used
+php_value ServerTokens Prod
+# To disable FollowSymLinks, are not secure and not used
 Options -FollowSymLinks
+# To disable automatically generated directory listings
+Options -Indexes
 
-# Redirecting to index from non public folders #
-#RedirectMatch 301 /php(.*) /StartSAW/public_html/index.php
-#RedirectMatch 301 /Media(.*) /StartSAW/public_html/index.php
-#RedirectMatch 301 /JS(.*) /StartSAW/public_html/index.php
-#RedirectMatch 301 /CSS(.*) /StartSAW/public_html/index.php
+ErrorDocument 400 http://localhost/StartSaw/public_html/error.php?code=400
+ErrorDocument 401 http://localhost/StartSaw/public_html/error.php?code=401
+ErrorDocument 403 http://localhost/StartSaw/public_html/error.php?code=403
+ErrorDocument 404 http://localhost/StartSaw/public_html/error.php?code=404
+ErrorDocument 500 http://localhost/StartSaw/public_html/error.php?code=500

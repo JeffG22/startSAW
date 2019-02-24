@@ -53,7 +53,7 @@
             $success = $json_decoded->{'success'};
             if (!$success) {
                 $code = $json_decoded->{'error-codes'};
-                throw new InvalidArgumentException("captcha");
+                //throw new InvalidArgumentException("captcha");
             }
         // 2 ----- controllo dati utente ------
             
@@ -119,30 +119,30 @@
         // 6 ----- inserimento nel DB se rispetta vincoli -----
             require_once("../connection.php");
             if (!($conn = dbConnect()))
-                throw new Exception("sql ".mysqli_connect_error());
+                throw new Exception("mysql ".mysqli_connect_error());
             $query1 = "INSERT INTO user (email, passwd, type) VALUES (?, ?, ?)"; 
             
         // ----- inizio transazione e prima query in Utente ------
             if (!mysqli_begin_transaction($conn))
-                throw new Exception("sql transaction".mysqli_connect_error($conn));
+                throw new Exception("mysql transaction".mysqli_connect_error($conn));
             if (!mysqli_autocommit($conn, FALSE))
-                throw new Exception("sql transaction".mysqli_connect_error($conn));
+                throw new Exception("mysql transaction".mysqli_connect_error($conn));
             $insert1 = false;
             if (!($stmt = mysqli_prepare($conn, $query1)))
-                throw new Exception("mysqli prepare".mysqli_error($conn));
+                throw new Exception("mysql prepare".mysqli_error($conn));
             if (!mysqli_stmt_bind_param($stmt, 'sss', $fields_utente[0], $fields_utente[1], $fields_utente[2]))
-                throw new Exception("mysqli bind param");
+                throw new Exception("mysql bind param");
             if (!mysqli_stmt_execute($stmt)) {
                 if (mysqli_errno($conn) == 1062) // DUPLICATE PRIMARY KEY
                     throw new InvalidArgumentException($email."sql");
-                throw new InvalidArgumentException("mysqli execute".$stmt->error);
+                throw new InvalidArgumentException("mysql execute".$stmt->error);
             }
             if (mysqli_stmt_affected_rows($stmt) == 1) { // unico utente inserito
                 $insert1 = true;
                 $idUtente = mysqli_insert_id($conn); // id dell'ultima t-upla inserita
             }
             else
-                throw new InvalidArgumentException("sql insert");
+                throw new InvalidArgumentException("mysql insert");
             mysqli_stmt_close($stmt);
             // ----- seconda query ------
             $insert2 = false;
@@ -150,51 +150,52 @@
                 $query2 = "INSERT INTO person (id, name, surname, gender, birthdate, province, phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 if (!($stmt = mysqli_prepare($conn, $query2))) {
                     mysqli_rollback($conn);
-                    throw new Exception("mysqli prepare".$conn->error);
+                    throw new Exception("mysql prepare".$conn->error);
                 }
                 if (!mysqli_stmt_bind_param($stmt, 'issssss', 
                         $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], $fields_value[3], 
                         $fields_value[4], $fields_value[5])) {
                     mysqli_rollback($conn);
-                    throw new Exception("mysqli bind param");
+                    throw new Exception("mysql bind param");
                 }
             }
             else {
                 $query2 = "INSERT INTO organization (id, name, province, sector, website, phone) VALUES (?, ?, ?, ?, ?, ?)";
                     if (!($stmt = mysqli_prepare($conn, $query2))) {
                         mysqli_rollback($conn);
-                        throw new Exception("mysqli prepare ".$conn->error);
+                        throw new Exception("mysql prepare ".$conn->error);
                     }
                     if (!mysqli_stmt_bind_param($stmt, 'isssss', 
                             $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], 
                             $fields_value[3], $fields_value[4])) {
                         mysqli_rollback($conn);                            
-                        throw new Exception("mysqli param");
+                        throw new Exception("mysql param");
                     }
             }
             if (!mysqli_stmt_execute($stmt)) {
                 mysqli_rollback($conn);
-                throw new InvalidArgumentException("mysqli execute ".$stmt->error);
+                throw new InvalidArgumentException("mysql execute ".$stmt->error);
             }
             if (mysqli_stmt_affected_rows($stmt) == 1) // unica P/A inserita
                 $insert2 = true;
             else {
                 mysqli_rollback($conn);
-                throw new InvalidArgumentException("sql insert");
+                throw new InvalidArgumentException("mysql insert");
             }
             if (!mysqli_commit($conn))
-                throw new Exception("transaction failed");
+                throw new Exception("mysql transaction failed");
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
             // 7 ----- impostazione sessione e login automatico ----
-            my_session_login($idUtente, $person);
-            header("Location: index.php"); //TODO change to personal page
+            $display_name = ($person) ? $fields_value[0]." ".$fields_value[1] : $fields_value[1];
+            my_session_login($idUtente, $person, $display_name);
+            navigateTo("user.php");
         }      
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-        //echo $ex->getMessage();
-        //echo $error_flag;
+        if (strlen($error_message >= 5) && substr($error_message, 0, 5) == "mysql")
+            $error_message = "mysql";
     }
 ?>
 
@@ -290,7 +291,7 @@
         function loadPostData( jQuery ) {
             // ----- ricaricare dati inviati non validi -----
             <?php
-                if ($error_flag && $error_message != "TipoUtente") {
+                if ($error_flag && $tempError != "tipoUtente") {
                     echo 'document.getElementById("'.$email.'").value="'.$_POST[$email].'";';
                     echo 'document.getElementById("'.$telefono.'").value="'.$_POST[$telefono].'";';
                     echo 'document.getElementById("'.$nome.'").value="'.$_POST[$nome].'";';
@@ -318,12 +319,14 @@
                         field.insertAdjacentHTML( 'beforeend', "<p style='color: red'> Captcha non valido! </p>");
                     }
                     else {
+                        document.getElementById("password").required = false;
+                        document.getElementById("password").minlength = 0;
                         field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
-                        field.setAttribute("onkeydown", "this.setCustomValidity('');");         
+                        field.setAttribute("onclick", "this.setCustomValidity('');");         
                         field.style.color = "red";
                         field.style.border = "2px solid red";
                         field.style.borderRadius = "4px";
-                        document.getElementById("submit").click(); // show the validity box                    
+                        document.getElementById("submit").click(); // show the validity dialog                   
                     }
                     break;
                 }
@@ -389,7 +392,7 @@
                         <!-- nomeV -->
                         <div>
                             <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control input-in" minlength="2" maxlength="50" required>
+                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control input-in" minlength="3" maxlength="50" required>
                         </div>
                         <!-- cognome -->
                         <div>
@@ -455,7 +458,7 @@
                         <input type="checkbox" id="privacy" name="privacy" value="Y" required>
                         <div id="blurb">Do il consenso al trattamento dei dati nelle modalità conformi al D. Lgs. 30 giugno 2003, n. 196 e successivi aggiornamenti.</div>
                     </label>
-                    <div class=captcha-box>
+                    <div class="captcha-box" id="captcha">
                         <div class="g-recaptcha" role="captcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
                     </div>
                 </div>

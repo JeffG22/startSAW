@@ -35,7 +35,7 @@
         require_once("php/handlesession.php");
         my_session_start();
         if(my_session_is_valid()){
-          echo "<li class=\"nav-item\"><img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></li>";
+          echo "<li class=\"nav-item\"><a href=\"profile.php\"><img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></a></li>";
         } else {
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"login.php\">Log in</a></li>";
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"registration_form.php\">Sign up</a></li>";

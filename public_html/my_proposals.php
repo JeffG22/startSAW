@@ -9,6 +9,7 @@
         header("Location: login.php");
 
     $user_id = $_SESSION['userId'];
+    $name = $_SESSION['name'];
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +37,7 @@
     <script src="js/jquery.easing.min.js"></script>
       
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/user.css">
 </head>
 <body>
     <!--Header/Navbar-->
@@ -47,52 +48,11 @@
 
     <div class="container">
         <div class="row profile">
-            <div class="col-md-4">
-                <div class="profile-sidebar">
-                    <!-- SIDEBAR USERPIC -->
-                    <div class="profile-userpic">
-                        <img src="media/profile-placeholder.png" class="img-responsive" alt="">
-                    </div>
-                    <!-- END SIDEBAR USERPIC -->
-                    <!-- SIDEBAR USER TITLE -->
-                    <div class="profile-usertitle">
-                        <div class="profile-usertitle-name">
-                            Placeholder
-                        </div>
-                        <div class="profile-usertitle-job">
-                            Placeholder
-                        </div>
-                    </div>
-                    <!-- END SIDEBAR USER TITLE -->
 
-                    <!-- SIDEBAR MENU -->
-                    <div class="profile-usermenu">
-                        <ul class="nav">
-                            <li class="active">
-                                <a href="#">
-                                <i class="fas fa-home"></i>
-                                Profilo </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                <i class="fas fa-user"></i>
-                                Impostazioni</a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                <i class="fas fa-list-alt"></i>
-                                Le Mie Proposte </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                <i class="fas fa-list-alt"></i>
-                                Proposte Accettate </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- END MENU -->
-                </div>
-            </div>
+            <?php
+                include("php/user-sidebar.php")
+            ?>
+            
             <div class="col-md-8">
                 <div class="profile-content">
                     <main role="main">

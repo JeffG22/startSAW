@@ -33,7 +33,7 @@
     function checksOnSurname($str) {
         $surnameMinLength = 3;
         $surnameMaxLength = 31;
-        return strlen($str) < $surnameMaxLength;
+        return strlen($str) >= $surnameMinLength && strlen($str) < $surnameMaxLength;
     }
 
     function checksOnDate($str) {

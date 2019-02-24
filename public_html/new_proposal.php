@@ -97,7 +97,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="js/inputChecks.js"></script>
 
-    <!--Boostrap-->
+    <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -134,15 +134,13 @@
     <!--Navbar-->
     <?php
 		include("php/navbar.php")
-	?>
+    ?>
+    
+    <?php
+        include("php/popup.php");
+    ?>
 
     <a href="php/index_proposals.php">^ Home</a>
-    <?php
-        if (isset($_SESSION['message'])) {
-            echo "<div>".$_SESSION['message']."</div>";
-            unset($_SESSION['message']);
-        }
-    ?>  
     <div class="container">
         <div class="form-group">
             <form enctype="multipart/form-data" id="input_proposal" action="new_proposal.php" onsubmit="return checkPicture()" method="POST">

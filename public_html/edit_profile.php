@@ -152,7 +152,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Edit profile</title>
     
-    <!--Boostrap-->
+    <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
 	      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -169,8 +169,6 @@
     <link rel="stylesheet" type="text/css" href="css/login.css">
         
     <!-- SCRIPT -->
-    <!-- JQuery -->    
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <!-- Google ReCaptcha -->    
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- JS -->

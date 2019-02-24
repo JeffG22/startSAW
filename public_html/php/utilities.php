@@ -45,22 +45,27 @@
     function printUserInfo($con, $row) {
         echo "Descrizione: ".$row['description']."<br>\n";
     }
+    
 
     function printProposalInfo($con, $row) {
+        echo "<div class=\"card proposal-card mb-4 box-shadow\">";
         if (!empty($row['picture'])) {
-            echo "<img src='".$row['picture']."' height='50px'> ";
+            echo "<img class=\"card-img-top\" data-src='".$row['picture']."' alt=\"Immagine della proposta\"> ";
         }
+        echo "<div class=\"card-body\">";
         echo "<b>".$row['name']."</b><br>\n";
-        echo "<i>Inserito in data: ".$row['date_inserted'];
+        echo "<i class=\"text-muted\">Inserito in data: ".$row['date_inserted'];
         if ($name = getUserName($con, $row['proposer_id'])) {
             echo " da ".$name;
         }
         echo "</i><br>\n";
+        echo "<p class=\"card-text\">";
         echo "Descrizione: ".$row['description']."<br>\n";
         echo "Numero di volontari richiesti: <b><i>".$row['available_positions']."</b></i><br>\n";
         if (!empty($row['address'])) {
             echo "Indirizzo: ".$row['address']."<br>\n";
         }
+        echo "</p>";
 }
 
     function uploadPicture() {

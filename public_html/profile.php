@@ -41,11 +41,18 @@
     <link rel="stylesheet" href="css/user.css">
 </head>
 <body>
+  
+    <!--Popup for session messages-->
+    <?php
+        include("php/popup.php");
+    ?>
+    <!--Popup-->
+
     <!--Header/Navbar-->
     <?php
 		include("php/navbar.php");
-	?>
-	<!--Header/Navbar-->
+	  ?>
+	  <!--Header/Navbar-->
 
     <div class="container">
         <div class="row profile">
@@ -57,19 +64,16 @@
             <div class="col-md-8">
                 <div class="profile-content">
                     <main role="main">
+                      <h4>Informazioni</h4>
                         <div>
                             <div class="container">
                                 <div class="row">
-                                  <h4>Informazioni</h4>
                                   <div class="card profile-card mb-4 box-shadow">
                                       <div class="card-body">
                                         <h5 class="card-title">Descrizione</h5>
                                         <p class="card-text">
                                           <?php
-                                              if (isset($_SESSION['message'])) {
-                                                  echo "<div>".$_SESSION['message']."</div>";
-                                                  unset($_SESSION['message']);
-                                              }
+                                              
 
                                               if (($_SESSION['type'] == 'person')||($_SESSION['type'] == 'organization')){
                                                 $type = $_SESSION['type'];
@@ -124,5 +128,10 @@
             </div>
         </div>
     </div>
+    
+    <!--Active sidebar script-->
+    <script>
+      document.getElementById("side-profile").classList.add('active');
+    </script>
 </body>
 </html>

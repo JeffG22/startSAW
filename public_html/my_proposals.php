@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!--Boostrap-->
+    <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
                 integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -30,7 +30,7 @@
                       integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
                   integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <!--Boostrap-->
+    <!--Bootstrap-->
     
     <!--Inclusions-->
     <script src="js/jquery-3.1.0.min.js"></script>
@@ -56,11 +56,10 @@
             <div class="col-md-8">
                 <div class="profile-content">
                     <main role="main">
-                        <div class="album py-5 bg-light">
+                        <h4>Le mie proposte di volontariato</h4>
+                        <div class="album">
                             <div class="container">
-                                <div class="row">
-                                    <h4>Le mie proposte di volontariato</h4>
-                                    
+                                <div class="row">            
                                     <?php
                                     
                                         if (isset($_SESSION['message'])) {
@@ -89,14 +88,14 @@
                                         } else { // Result not empty
                                             while($row = mysqli_fetch_assoc($result)) {
                                                 printProposalInfo($conn, $row);
-
+                                                echo "<div class=\"d-flex justify-content-between align-items-center\">";
                                                 echo "<form method='POST'>
                                                         <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                                                        <input type='submit' value='Modifica proposta' formaction='php/edit_proposal.php'>
-                                                        <input type='submit' value='Elimina proposta' formaction='php/delete_proposal.php'>
+                                                        <input class='btn btn-sm btn-outline-secondary' type='submit' value='Modifica proposta' formaction='edit_proposal.php'>
+                                                        <input class='btn btn-sm btn-outline-secondary' type='submit' value='Elimina proposta' formaction='delete_proposal.php'>
                                                         </form>
                                                         <br>";
-                                                echo "</div>";
+                                                echo "</div></div></div>";
                                             }                                
                                         }         
                                         
@@ -109,5 +108,11 @@
             </div>
         </div>
     </div>
+
+    <!--Active sidebar script-->
+    <script>
+      document.getElementById("side-proposal").classList.add('active');
+    </script>
+
 </body>
 </html>

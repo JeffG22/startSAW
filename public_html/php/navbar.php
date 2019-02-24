@@ -24,7 +24,7 @@
         <a class="nav-link" href="browse_proposals.php">Vedi proposte</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Placeholder2</a>
+        <a class="nav-link" href="new_proposal.php">Crea una proposta</a>
       </li>
     </ul>
     <!---Links-->
@@ -47,7 +47,7 @@
     <div id="search-contain">
       <form class="form-inline my-2 my-lg-0" action = "browse_proposals.php" method="GET">
         <input class="form-control" type="search" name="search" placeholder="Cerca una proposta" aria-label="Search">
-        <button id="src-btn" class="btn btn-outline-dark my-2 my-sm-0" type="submit">
+        <button id="src-btn" class="src-btn btn btn-outline-dark my-2 my-sm-0" type="submit">
           <i class="fas fa-search"></i>
         </button>
       </form>

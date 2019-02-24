@@ -52,23 +52,23 @@
         <!-- SIDEBAR MENU -->
         <div class="profile-usermenu">
             <ul class="nav">
-                <li class="active">
-                    <a href="#">
+                <li id="side-profile">
+                    <a href="profile.php">
                     <i class="fas fa-home"></i>
                     Profilo </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li id="side-setting">
+                    <a href="edit_profile.php">
                     <i class="fas fa-user"></i>
                     Impostazioni</a>
                 </li>
-                <li>
-                    <a href="#" target="_blank">
+                <li id="side-proposal">
+                    <a href="my_proposals.php">
                     <i class="fas fa-list-alt"></i>
                     Le Mie Proposte </a>
                 </li>
-                <li>
-                    <a href="#" target="_blank">
+                <li id="side-accepted">
+                    <a href="accepted_proposals.php">
                     <i class="fas fa-heart"></i>
                     Proposte Accettate </a>
                 </li>

@@ -12,12 +12,13 @@
     }
 
     $user_id = $_SESSION['userId'];
+    $name = $_SESSION['name'];
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Le mie proposte</title>
+    <title>Proposte Accettate</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -39,9 +40,18 @@
     <script src="js/jquery.easing.min.js"></script>
       
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/user.css">
+    <link rel="stylesheet" href="css/proposal.css">
+
 </head>
 <body>
+
+    <!--Popup for session messages-->
+    <?php
+        include("php/popup.php");
+    ?>
+    <!--Popup-->
+
     <!--Header/Navbar-->
     <?php
 		include("php/navbar.php");
@@ -53,29 +63,22 @@
             <?php
                 include("php/user-sidebar.php")
             ?>
-            
+
             <div class="col-md-8">
                 <div class="profile-content">
                     <main role="main">
-                        <div class="album py-5 bg-light">
-                            <div class="container">
-                                <div class="row">
-                                    <h4>Proposte di volontariato accettate</h4>
-                                    
+                        <h4>Proposte di volontariato accettate</h4>
+                        <div class="album">
+                            <div class="container album-container">
+                                <div class="row"> 
                                     <?php
-                                    
-                                        if (isset($_SESSION['message'])) {
-                                            echo "<div>".$_SESSION['message']."</div>";
-                                            unset($_SESSION['message']);
-                                        }
-
                                         try {
                                             if(!($conn = dbConnect()))
                                                 throw new Exception("sql ".mysqli_connect_error());
                                         
                                             $query = "SELECT *
-                                                      FROM proposal, accepted
-                                                      WHERE proposal.id = accepted.proposal_id AND acceptor_id = ".$user_id;
+                                                    FROM proposal, accepted
+                                                    WHERE proposal.id = accepted.proposal_id AND acceptor_id = ".$user_id;
 
                                             if(!($result = mysqli_query($conn, $query))) 
                                                 throw new Exception("sql ".mysqli_error());
@@ -92,16 +95,15 @@
                                         } else { // Result not empty
                                             while($row = mysqli_fetch_assoc($result)) {
                                                 printProposalInfo($conn, $row);
-
+                                                echo "<div class=\"d-flex justify-content-between align-items-center\">";
                                                 echo "<form action='php/turn_down_proposal.php' method='post'>
                                                         <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                                                        <input type='submit' value='Rinuncia'>
+                                                        <button type=\"submit\" value=\"Rinuncia\" class=\"btn btn-sm btn-outline-secondary\">Rinuncia</button>
                                                         </form>
                                                         <br>";
-                                                echo "</div>";
+                                                echo "</div></div></div>";
                                             }                                
                                         }         
-                                        
                                     ?>
                                 </div>
                             </div>
@@ -111,5 +113,11 @@
             </div>
         </div>
     </div>
+
+    <!--Active sidebar script-->
+    <script>
+        document.getElementById("side-accepted").classList.add('active');
+    </script>
+
 </body>
 </html>

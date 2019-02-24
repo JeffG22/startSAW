@@ -49,7 +49,7 @@
         // ----- 4 impostazione sessione ----
           $person = ($type == "person");
           my_session_login($id, $person, $name);
-          navigateTo("user.php");
+          navigateTo("profile.php");
         }
         else
           throw new InvalidArgumentException("Username o password errati, riprovare per favore.");

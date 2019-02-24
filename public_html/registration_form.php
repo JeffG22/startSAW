@@ -232,8 +232,6 @@
     
     
     <!-- SCRIPT -->
-    <!-- JQuery -->    
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <!-- Google ReCaptcha -->    
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- JS -->

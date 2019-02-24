@@ -75,7 +75,7 @@
                 echo "<div>Esplora liberamente le proposte disponibili. Per accettare una proposta, <a href=\"login.php\">effettua il login</a>!</div>";
             } else if ($_SESSION['type'] == 'organization') {
                 echo $_SESSION['type'];
-                echo "<div>Non puoi accettare proposte perché hai eseguito il login come associazione. Per accettare una proposta, <a href=\"index.php\">effettua il login come utente</a>!</div>";
+                echo "<div>Non puoi accettare proposte perché hai eseguito il login come associazione. Per accettare una proposta, <a href=\"logout_then_in.php\">effettua il login come utente</a>!</div>";
             }
         
             $query = "SELECT * FROM proposal WHERE available_positions > 0";

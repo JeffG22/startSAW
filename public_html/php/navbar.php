@@ -3,7 +3,7 @@
 	<a class="navbar-brand" href="index.php">
 		<!--TODO CAMBIARE (fare in modo che il logo si raggiunga globalmente-->
 		<img src="media/Ph.png" width="40" height="40" alt="Logo">
-		Volontari per caso
+    Hand-aid
   </a>
   <!--Logo-->
   

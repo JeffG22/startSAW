@@ -43,9 +43,15 @@
                     echo $name;
                 ?>
             </div>
-            <!--div class="profile-usertitle-job">
-                Volontario o organizzazione
-            </div-->
+            <div class="profile-usertitle-job">
+                <?php
+                    if ($_SESSION['type'] == 'organization') {
+                        echo "Organizzazione";
+                    } else {
+                        echo "Volontario";
+                    }
+                ?>
+            </div>
         </div>
         <!-- END SIDEBAR USER TITLE -->
 

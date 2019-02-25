@@ -16,6 +16,8 @@ h4 {
 
 	#header {
 		top: 0;
+		position: sticky;
+		position: -webkit-sticky;
 	}
 
 	footer {

@@ -24,7 +24,7 @@
         <a class="nav-link" href="browse_proposals.php">Vedi proposte</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Aggiungi proposte</a>
+        <a class="nav-link" href="#">Fai una proposta!</a>
       </li>
     </ul>
     <!---Links-->

@@ -62,7 +62,7 @@
   } catch (Exception $ex) {
     $error_flag = true;
     $error_message = $ex->getMessage();
-    if (strlen($error_message >= 5) && substr($error_message, 0, 5) == "mysql")
+    if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
       $error_message = "mysql";
   }  
 ?>
@@ -114,6 +114,7 @@
         var field = document.getElementById(id_errore);
         field.setCustomValidity(err_array[id_errore]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
         field.setAttribute("onclick", "this.setCustomValidity('');");         
+        field.setAttribute("onchange", "this.setCustomValidity('');");         
         field.style.color = "red";
         field.style.border = "2px solid red";
         field.style.borderRadius = "4px";

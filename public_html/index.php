@@ -26,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
   <!--Inclusions-->
-  <script src="js/include.js"></script> 
+  <!--<script src="js/include.js"></script>-->
  	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src="js/jquery.easing.min.js"></script>
 	
@@ -165,7 +165,7 @@
 	
 	
 	<script>
-		includeHTML();
+		//includeHTML();
 	</script> 
   <script>
 	  /*$(document).ready(function() {

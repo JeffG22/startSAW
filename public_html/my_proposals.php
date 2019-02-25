@@ -40,6 +40,13 @@
     <link rel="stylesheet" href="css/user.css">
 </head>
 <body>
+
+    <!--Popup for session messages-->
+    <?php
+        include("php/popup.php");
+    ?>
+    <!--Popup-->
+
     <!--Header/Navbar-->
     <?php
 		include("php/navbar.php");
@@ -50,7 +57,10 @@
         <div class="row profile">
 
             <?php
-                include("php/user-sidebar.php")
+                include("php/user_sidebar.php");
+                if ($_SESSION['type'] == 'organization'){
+                    echo "<script>document.getElementById(\"side-accepted\").remove();</script>";
+                }
             ?>
             
             <div class="col-md-8">
@@ -61,12 +71,6 @@
                             <div class="container">
                                 <div class="row">            
                                     <?php
-                                    
-                                        if (isset($_SESSION['message'])) {
-                                            echo "<div>".$_SESSION['message']."</div>";
-                                            unset($_SESSION['message']);
-                                        }
-
                                         try {
                                             if(!($conn = dbConnect()))
                                                 throw new Exception("sql ".mysqli_connect_error());

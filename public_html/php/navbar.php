@@ -24,7 +24,7 @@
         <a class="nav-link" href="browse_proposals.php">Vedi proposte</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Aggiungi proposte</a>
+        <a class="nav-link" href="new_proposal.php">Aggiungi proposte</a>
       </li>
     </ul>
     <!---Links-->
@@ -33,7 +33,16 @@
     <ul class="navbar-nav ml-auto">
       <?php
         if(my_session_is_valid()){
-          echo "<li class=\"nav-item\"><a href=\"profile.php\" class=\"nav-link\"><img style=\"margin-right: 10px;\" id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></a></li>";
+          echo "<li class=\"nav-item dropdown\">
+                  <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\"
+                  role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
+                    <img style=\"margin-right: 10px;\" id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\">
+                  </a>
+                  <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">
+                    <a class=\"dropdown-item\" href=\"profile.php\" class=\"nav-link\">Profilo</a>
+                    <a class=\"dropdown-item\" href=\"#\">Logout</a>
+                  </div>
+                </li>";
         } else {
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"login.php\">Log in</a></li>";
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"registration_form.php\">Sign up</a></li>";

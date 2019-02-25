@@ -50,15 +50,18 @@
 
     <!--Header/Navbar-->
     <?php
-		include("php/navbar.php");
-	  ?>
-	  <!--Header/Navbar-->
+        include("php/navbar.php");
+    ?>
+    <!--Header/Navbar-->
 
     <div class="container">
         <div class="row profile">
             
             <?php
-                include("php/user-sidebar.php")
+                include("php/user_sidebar.php");
+                if ($_SESSION['type'] == 'organization'){
+                    echo "<script>document.getElementById(\"side-accepted\").remove();</script>";
+                }
             ?>
             
             <div class="col-md-8">
@@ -73,7 +76,7 @@
                                         <h5 class="card-title">Descrizione</h5>
                                         <p class="card-text">
                                           <?php
-                                              
+                                            
 
                                               if (($_SESSION['type'] == 'person')||($_SESSION['type'] == 'organization')){
                                                 $type = $_SESSION['type'];

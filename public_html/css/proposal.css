@@ -24,3 +24,9 @@
 #proposal-container {
   margin-top: 20px;
 }
+
+#notice-account {
+  flex-grow: 1;
+  width: 100%;
+  text-align: center;
+}

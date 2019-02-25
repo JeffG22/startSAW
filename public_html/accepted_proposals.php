@@ -8,7 +8,7 @@
     if (!my_session_is_valid()) {
         navigateTo("login.php");
     } else if ($_SESSION['type'] == "organization") {   // An organization can't have accepted proposals
-        navigateTo("user.php");
+        navigateTo("profile.php");
     }
 
     $user_id = $_SESSION['userId'];
@@ -61,7 +61,7 @@
     <div class="container">
         <div class="row profile">
             <?php
-                include("php/user-sidebar.php")
+                include("php/user_sidebar.php");
             ?>
 
             <div class="col-md-8">

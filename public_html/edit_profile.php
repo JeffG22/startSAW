@@ -29,13 +29,13 @@
         mysqli_close($conn);
         
         //print_r($row);
-        // if person row(id, name, surname, birthdate, gender, phone, province)
+        // if person row(id, name, surname, description, birthdate, gender, phone, province)
         if ($person) {
             $surname_value = $row["surname"];
             $birthdate_value = $row["birthdate"];
             $gender_value = $row["gender"];
         }
-        // if organization row(id, name, phone, province, sector, website)
+        // if organization row(id, name, description, phone, province, sector, website)
         else {
             $sector_value = $row["sector"];
             $website_value = $row["website"];
@@ -43,6 +43,7 @@
         $name_value = $row["name"];
         $phone_value = $row["phone"];
         $province_value = $row["province"];
+        $description_value = $row["description"];
 
         $nome = "nome"; // nome
         $tel = "tel"; // telefono
@@ -52,6 +53,7 @@
         $pr = "provincia"; // provincia
         $sett = "settore"; // settore
         $sito = "sito"; // sito
+        $descrizione = "descrizione"; // descrizione
       
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
@@ -72,6 +74,8 @@
                 throw new InvalidArgumentException($sett);
             if (!$person && (!empty($_POST[$sito]) && !checksOnSite($_POST[$sito])))
                 throw new InvalidArgumentException($sito);
+            if ((!empty($_POST[$descrizione]) && !checksOnDescription($_POST[$descrizione])))
+                throw new InvalidArgumentException($descrizione);
             
         // ----- sanitizzazione input -----           
             if ($person) {
@@ -94,24 +98,28 @@
                     $_POST[$tel] = sanitize_inputString($_POST[$tel]);
                 else
                     $_POST[$tel] = null;
+            if (!empty($_POST[$descrizione]))
+                    $_POST[$descrizione] = sanitize_inputString($_POST[$descrizione]);
+                else
+                    $_POST[$descrizione] = null;
         
         // ----- inserimento nel DB se rispetta vincoli -----
             if (!($conn = dbConnect()))
                 throw new Exception("mysql ".mysqli_connect_error());
             if ($person) {
-                $query2 = "UPDATE person SET name=?, surname=?, gender=?, birthdate=?, province=?, phone=? WHERE id=".$_SESSION['userId'];
+                $query2 = "UPDATE person SET name=?, surname=?, gender=?, birthdate=?, province=?, phone=?, description=?, WHERE id=".$_SESSION['userId'];
                 if (!($stmt = mysqli_prepare($conn, $query2)))
                     throw new Exception("mysql ".$conn->error);
                 if (!mysqli_stmt_bind_param($stmt, 'ssssss', 
-                        $_POST[$nome], $_POST[$cognome], $_POST[$sex], $_POST[$data], $_POST[$pr], $_POST[$tel]))
+                        $_POST[$nome], $_POST[$cognome], $_POST[$sex], $_POST[$data], $_POST[$pr], $_POST[$tel], $_POST[$descrizione]))
                     throw new Exception("mysql bind param");
             }
             else {
-                $query2 = "UPDATE organization SET name=?, province=?, sector=?, website=?, phone=? WHERE id=".$_SESSION['userId'];
+                $query2 = "UPDATE organization SET name=?, province=?, sector=?, website=?, phone=?, description=?, WHERE id=".$_SESSION['userId'];
                     if (!($stmt = mysqli_prepare($conn, $query2)))
                         throw new Exception("mysql prepare ".$conn->error);
                     if (!mysqli_stmt_bind_param($stmt, 'sssss', 
-                            $_POST[$nome], $_POST[$pr], $_POST[$sett], $_POST[$sito], $_POST[$tel]))                           
+                            $_POST[$nome], $_POST[$pr], $_POST[$sett], $_POST[$sito], $_POST[$tel], $_POST[$descrizione]))                           
                         throw new Exception("mysql param");
             }
             if (!mysqli_stmt_execute($stmt))
@@ -132,7 +140,8 @@
             $name_value = $_POST[$nome];
             $phone_value = $_POST[$tel];
             $province_value = $_POST[$pr];
-            
+            $description_value = $_POST[$descrizione];
+
             $updated = true;
         }      
     } catch (Exception $ex) {
@@ -152,7 +161,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Edit profile</title>
     
-    <!--Boostrap-->
+    <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
 	      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -169,8 +178,6 @@
     <link rel="stylesheet" type="text/css" href="css/login.css">
         
     <!-- SCRIPT -->
-    <!-- JQuery -->    
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <!-- Google ReCaptcha -->    
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- JS -->
@@ -186,7 +193,8 @@
                 'genere' : 'Selezionare un genere..',
                 'provincia' : 'Provincia scelta non valida.',
                 'settore' : 'Settore non valido.',
-                'sito' : 'Sito inserito non valido.'
+                'sito' : 'Sito inserito non valido.',
+                'descrizione' : 'Descrizione non valida.'
         };
         <?php
             $tempError = ($error_flag) ? $error_message : "";
@@ -211,6 +219,7 @@
                 echo 'document.getElementById("'.$nome.'").value="'.$name_value.'";';
                 echo 'document.getElementById("'.$pr.'").value="'.$province_value.'";';
                 echo 'document.getElementById("'.$tel.'").value="'.$phone_value.'";';
+                echo 'document.getElementById("'.$descrizione.'").value="'.$description_value.'";';
             }
             if ($error_flag && $tempError != "mysql") {
                 echo '
@@ -288,6 +297,11 @@
                             <div>
                                 <label for="tel">Telefono: </label>&emsp;
                                 <input type="tel" id="tel" class="form-control input-in" name="tel" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
+                            </div>
+                            <!-- Descrizione -->
+                            <div>
+                                <label for="descrizione">Descrizione: </label>&emsp;
+                                <input type="descrizione" id="descrizione" class="form-control input-in" name="descrizione">
                             </div>
                         </div>
                         <div class="btn-container">

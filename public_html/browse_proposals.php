@@ -25,7 +25,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!--Boostrap-->
+    <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
                 integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -36,100 +36,108 @@
                       integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
                   integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <!--Boostrap-->
+    <!--Bootstrap-->
     
     <!--Inclusions-->
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/jquery.easing.min.js"></script>
       
     <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/proposal.css">
+
 </head>
 <body>
+
+    <!--Popup for session messages-->
+    <?php
+        include("php/popup.php");
+    ?>
+    <!--Popup-->
+
+
     <!--Header/Navbar-->
     <?php
 		include("php/navbar.php");
 	?>
 	<!--Header/Navbar-->
 
+    <div class="col-md-11 container"> 
+        <h4>Proposte di volontariato disponibili</h4>
 
-    <h4>Proposte di volontariato disponibili</h4>
+        <form class="form-inline my-2 my-lg-0" action ="browse_proposals.php" method="GET">
+            <input type="search" name="search" id="searchbox" class="form-control ml-auto" value="<?php echo $search_query ?>">
+            <div class="btn-group src-btn">
+                <input type="submit" class="btn btn-outline-dark my-2 my-sm-0" value="Cerca">
+                <input type="submit" class="btn btn-outline-dark my-2 my-sm-0" value="Vedi tutte" 
+                       onclick="document.getElementById('searchbox').value = '';">
+            </div>
+        </form>
+            <div id="proposal-container" class="album">
+                <div class="row">
+                <?php
+                    try {
+                        if(!($conn = dbConnect()))
+                            throw new Exception("sql ".mysqli_connect_error());
 
-    <form action = "browse_proposals.php" method="GET">
-        <input type="search" name="search" id="searchbox" value="<?php echo $search_query ?>">
-        <input type="submit" value="Cerca">
-        <input type="submit" value="Vedi tutte" onclick="document.getElementById('searchbox').value = '';">
-    </form>
+                        if (!my_session_is_valid()) {
+                            echo "<div class=\"alert alert-primary\" id=\"notice-account\">Esplora liberamente le proposte disponibili. Per accettare una proposta, <a href=\"login.php\">effettua il login</a>!</div>";
+                        } else if ($_SESSION['type'] == 'organization') {
+                            echo $_SESSION['type'];
+                            echo "<div class=\"alert alert-primary\" id=\"notice-account\">Non puoi accettare proposte perché hai eseguito il login come associazione. Per accettare una proposta, <a href=\"logout_then_in.php\">effettua il login come utente</a>!</div>";
+                        }
+                    
+                        $query = "SELECT * FROM proposal WHERE available_positions > 0";
 
-    <?php
-    
-        if (isset($_SESSION['message'])) {
-            echo "<div>".$_SESSION['message']."</div>";
-            unset($_SESSION['message']);
-        }
+                        if (empty($_GET['search'])) {
+                            $result = mysqli_query($conn, $query);
+                        } else {
+                            $search_query = "%".$search_query."%";
+                            $query = $query." AND (name LIKE ? OR description LIKE ?)";
+                            
+                            if(!($stmt = mysqli_prepare($conn, $query))) 
+                                throw new Exception("mysqli prepare".mysqli_errno($conn));
 
-        try {
-            if(!($conn = dbConnect()))
-                throw new Exception("sql ".mysqli_connect_error());
+                            if(!mysqli_stmt_bind_param($stmt, "ss", $search_query, $search_query))
+                                throw new Exception("mysqli bind param");
+                            
+                            if(!mysqli_stmt_execute($stmt))
+                                throw new Exception("mysqli execute ".mysqli_errno($conn));
 
-            if (!my_session_is_valid()) {
-                echo "<div>Esplora liberamente le proposte disponibili. Per accettare una proposta, <a href=\"login.php\">effettua il login</a>!</div>";
-            } else if ($_SESSION['type'] == 'organization') {
-                echo $_SESSION['type'];
-                echo "<div>Non puoi accettare proposte perché hai eseguito il login come associazione. Per accettare una proposta, <a href=\"logout_then_in.php\">effettua il login come utente</a>!</div>";
-            }
-        
-            $query = "SELECT * FROM proposal WHERE available_positions > 0";
+                            $result = mysqli_stmt_get_result($stmt);
+                        }
 
-            if (empty($_GET['search'])) {
-                $result = mysqli_query($conn, $query);
-            } else {
-                $search_query = "%".$search_query."%";
-                $query = $query." AND (name LIKE ? OR description LIKE ?)";
-                
-                if(!($stmt = mysqli_prepare($conn, $query))) 
-                    throw new Exception("mysqli prepare".mysqli_errno($conn));
+                        if(!($result)) 
+                            throw new Exception("sql ".mysqli_errno());
 
-                if(!mysqli_stmt_bind_param($stmt, "ss", $search_query, $search_query))
-                    throw new Exception("mysqli bind param");
-                
-                if(!mysqli_stmt_execute($stmt))
-                    throw new Exception("mysqli execute ".mysqli_errno($conn));
-
-                $result = mysqli_stmt_get_result($stmt);
-            }
-
-            if(!($result)) 
-                throw new Exception("sql ".mysqli_errno());
-
-        } catch (Exception $ex) {
-            $error_flag = true;
-            $error_message = $ex->getMessage();
-            //echo $ex->getMessage();
-            //echo $error_flag;
-        }
-            
-        if (mysqli_num_rows($result) == 0) { // Empty result
-            echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";  
-        } else { // Result not empty
-            while($row = mysqli_fetch_assoc($result)) {
-                echo "<br><div>\n";
-                printProposalInfo($conn, $row);
-
-                if (my_session_is_valid() && $_SESSION['type'] == 'person') {   
-                    if($row['proposer_id'] == $_SESSION['userId']) {
-                        echo "<input type=\"button\" disabled value=\"Non puoi accettare una proposta inserita da te\">";
-                    } else {
-                        echo "<form action='php/accept_proposal.php' method='post'>
-                            <input type='hidden' name='proposal_id' value='".$row['id']."'>
-                            <input type='submit' value='Accetta questa proposta'>
-                            </form>";
+                    } catch (Exception $ex) {
+                        $error_flag = true;
+                        $error_message = $ex->getMessage();
+                        //echo $ex->getMessage();
+                        //echo $error_flag;
                     }
-                }
-
-                echo "</div>";
-            }                                
-        }         
-        
-    ?>
+                        
+                    if (mysqli_num_rows($result) == 0) { // Empty result
+                        echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";  
+                    } else { // Result not empty
+                        while($row = mysqli_fetch_assoc($result)) {
+                            printProposalInfo($conn, $row);
+                            echo "<div class=\"d-flex justify-content-between align-items-center\">";
+                            if (my_session_is_valid() && $_SESSION['type'] == 'person') {   
+                                if($row['proposer_id'] == $_SESSION['userId']) {
+                                    echo "<input type=\"button\" class=\"btn btn-sm btn-outline-secondary\" disabled value=\"Non puoi accettare una proposta inserita da te\">";
+                                } else {
+                                    echo "<form action='php/accept_proposal.php' method='post'>
+                                        <input type='hidden' name='proposal_id' value='".$row['id']."'>
+                                        <input type='submit' class=\"btn btn-sm btn-outline-secondary\" value='Accetta questa proposta'>
+                                        </form>";
+                                }
+                            }
+                            echo "</div></div></div>";
+                        }                                
+                    }         
+                ?>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

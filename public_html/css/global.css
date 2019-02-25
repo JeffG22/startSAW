@@ -3,6 +3,10 @@ body {
 	padding: 0;
 }
 
+h4 {
+	margin: 1em 0;
+}
+
 /*Navbar & footer*/
 	#header, footer {
 		background-color: #fff;
@@ -44,14 +48,62 @@ body {
 		display: inline-block;
 	}
 
-	#src-btn{
+	.src-btn{
 		margin: 0 3px 0 3px;
+	}
+
+	.dropdown {
+		margin: 0 5px 0 0;
 	}
 
 	#bar-id-pic {
 		width: 30px;
 		height: 30px;
-		margin: 0 10px;
+	}
+
+
+/*Popup*/
+	.popup {
+		position: fixed;
+		top: 25%;
+		left: 50%;
+		z-index: 9999;
+	}
+
+	.popup .popup-body {
+		background-color: #ffffff;
+		opacity: 1;
+		min-height: 150px;
+		width: 400px;
+		margin-left: -200px;
+		padding: 20px;
+		position: relative;
+		-moz-box-shadow: 1px 2px 3px 1px rgb(185, 185, 185);
+		-webkit-box-shadow: 1px 2px 3px 1px rgb(185, 185, 185);
+		box-shadow: 1px 2px 3px 1px rgb(185, 185, 185);
+		text-align: center;
+		border: 1px solid #e9e9e9;
+	}
+
+	.popup .popup-exit {
+		cursor: pointer;
+		display: block;
+		margin: auto;
+	}
+
+	.popup-content .popup-title {
+		font-size: 24px;
+		border-bottom: 1px solid #e9e9e9;
+		padding-bottom: 10px;
+	}
+	.popup-content p button {
+		font-size: 15px;
+		text-align: center;
+		white-space: pre-wrap;
+	}
+
+	.popup.visible .popup-body {
+		opacity: 1;
 	}
 
 /*Removes dotted outlines*/

@@ -91,7 +91,7 @@
                                             echo "Sembra che tu non abbia inserito alcuna proposta.";  
                                         } else { // Result not empty
                                             while($row = mysqli_fetch_assoc($result)) {
-                                                printProposalInfo($conn, $row);
+                                                printProposalInfo($conn, $row, false);
                                                 echo "<div class=\"d-flex justify-content-between align-items-center\">";
                                                 echo "<form method='POST'>
                                                         <input type='hidden' name='proposal_id' value='".$row['id']."'>

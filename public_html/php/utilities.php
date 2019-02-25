@@ -1,28 +1,4 @@
 <?php
-    function getUserName($con, $id) {
-        $result = mysqli_query($con, "SELECT name, surname
-                                      FROM user, person
-                                      WHERE user_id = ".$id." AND user_id = person.id");
-        if (!$result) {
-            return FALSE;
-        } else if (mysqli_num_rows($result) != 0) {
-            $row = mysqli_fetch_assoc($result);
-            return $row['name']." ".$row['surname'];
-        } else {    // If no result, it might be an organization
-            $result = mysqli_query($con, "SELECT name
-                                      FROM user, organization
-                                      WHERE user_id = ".$id." AND user_id = organization.id");
-            if (!$result) {
-                return FALSE;
-            } else if (mysqli_num_rows($result) != 0) {
-                $row = mysqli_fetch_assoc($result);
-                return $row['name'];
-            } else {
-                return FALSE;
-            }
-        }
-    }
-
     // Simple function to stop current script and navigate to a specified location
     function navigateTo($location) {
         header("Location: ".$location);
@@ -47,7 +23,7 @@
     }
     
 
-    function printProposalInfo($con, $row) {
+    function printProposalInfo($con, $row, $show_name) {
         echo "<div class=\"card proposal-card mb-4 box-shadow\">";
         if (!empty($row['picture'])) {
             echo "<img class=\"card-img-top\" src='".$row['picture']."' alt=\"Immagine della proposta\"> ";
@@ -55,7 +31,8 @@
         echo "<div class=\"card-body\">";
         echo "<b>".$row['name']."</b><br>\n";
         echo "<i class=\"text-muted\">Inserito in data: ".$row['date_inserted'];
-        if ($name = getUserName($con, $row['proposer_id'])) {
+        if ($show_name) {
+            $name = $row['display_name'];
             echo " da ".$name;
         }
         echo "</i><br>\n";
@@ -104,4 +81,7 @@
     function sanitize_email($value) {
         return filter_var(trim($value), FILTER_SANITIZE_EMAIL);
     }
+
+        // Temporary hack to allow login
+        //session_start();
 ?>

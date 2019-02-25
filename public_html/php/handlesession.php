@@ -63,10 +63,10 @@
     // Logout unsetting the session
     function my_session_logout() {
         session_unset(); // unset all of the session variables in this way
-        session_destroy();
+        //session_destroy();
         safe_session_start();
         my_session_regenerate_id();
-        header("Location: index.php");
+        //header("Location: index.php");
     }
 
     function my_session_login($idUtente, $person, $name) {

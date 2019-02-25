@@ -40,7 +40,7 @@
                   </a>
                   <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">
                     <a class=\"dropdown-item\" href=\"profile.php\" class=\"nav-link\">Profilo</a>
-                    <a class=\"dropdown-item\" href=\"#\">Logout</a>
+                    <a class=\"dropdown-item\" href=\"php/logout.php\">Logout</a>
                   </div>
                 </li>";
         } else {

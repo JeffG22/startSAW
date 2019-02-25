@@ -93,9 +93,10 @@
         echo "<div class=\"card-body\">";
         echo "<b>".$row['name']."</b><br>\n";
         echo "<i class=\"text-muted\">Inserito in data: ".$row['date_inserted'];
-        if ($name = getUserName($con, $row['proposer_id'])) {
-            echo " da <div class=\"proposer-name\">".$name."
-                        <div class=\"card profile-card mb-4 box-shadow profile-overlay profile-sidebar\">
+        if ($show_name) {
+            $name = getUserName($con, $row['proposer_id']);
+            echo " da <div class=\"proposer-name\">".$name.
+                        "<div class=\"card profile-card mb-4 box-shadow profile-overlay profile-sidebar\">
                             <div class=\"profile-userpic\">
                                 <img class=\"userpic-inner\" src=\"\" alt=\"Immagine del profilo\">
                             </div>
@@ -152,4 +153,7 @@
     function sanitize_email($value) {
         return filter_var(trim($value), FILTER_SANITIZE_EMAIL);
     }
+
+        // Temporary hack to allow login
+        //session_start();
 ?>

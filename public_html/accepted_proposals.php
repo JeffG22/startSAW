@@ -77,8 +77,8 @@
                                                 throw new Exception("sql ".mysqli_connect_error());
                                         
                                             $query = "SELECT *
-                                                    FROM proposal, accepted
-                                                    WHERE proposal.id = accepted.proposal_id AND acceptor_id = ".$user_id;
+                                                    FROM proposal, accepted, user
+                                                    WHERE proposal.id = accepted.proposal_id AND acceptor_id = user_id AND acceptor_id = ".$user_id;
 
                                             if(!($result = mysqli_query($conn, $query))) 
                                                 throw new Exception("sql ".mysqli_error());
@@ -94,7 +94,7 @@
                                             echo "Sembra che tu non abbia ancora accettato alcuna proposta.";  
                                         } else { // Result not empty
                                             while($row = mysqli_fetch_assoc($result)) {
-                                                printProposalInfo($conn, $row);
+                                                printProposalInfo($conn, $row, true);
                                                 echo "<div class=\"d-flex justify-content-between align-items-center\">";
                                                 echo "<form action='php/turn_down_proposal.php' method='post'>
                                                         <input type='hidden' name='proposal_id' value='".$row['id']."'>

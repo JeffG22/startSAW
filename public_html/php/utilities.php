@@ -104,15 +104,4 @@
     function sanitize_email($value) {
         return filter_var(trim($value), FILTER_SANITIZE_EMAIL);
     }
-
-    // Temporary hack to allow login
-    session_start();
-    if(isset($_SESSION['user_id'])){
-        $user_id = $_SESSION['user_id'];
-    } else {
-        if (isset($_GET['id'])) {
-            $_SESSION['user_id'] = $_GET['id'];
-            $user_id = $_SESSION['user_id'];
-        }
-    }
 ?>

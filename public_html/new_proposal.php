@@ -11,11 +11,10 @@
 
     try {
         if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)) {
-
+            
             $name = "name";
             $description = "description";
             $available_pos = "available_positions";
-            $upload_picture = "upload_picture";
             $address = "address";
 
         // Checks on user input
@@ -25,8 +24,8 @@
                 throw new InvalidArgumentException($description);
             if (empty($_POST[$available_pos]) || !checksOnAvailablePos($_POST[$available_pos]))
                 throw new InvalidArgumentException($available_pos);
-            if (!empty($_POST[$upload_picture]) && !($file = uploadPicture()))
-                throw new InvalidArgumentException($upload_picture);
+            if (!empty($_FILES['upload_picture']) && !($file = uploadPicture('upload_picture')))
+                throw new InvalidArgumentException('upload_picture');
             if (!empty($_POST[$address]) && !checksOnAddress($_POST[$address]))
                 throw new InvalidArgumentException($address);
 
@@ -129,6 +128,27 @@
                 'address' : 'Indirizzo non valido.',
                 'altro' : 'Inserimento non riuscito, si prega di riprovare'
         };
+
+        for (var key in err_array) {
+                if (key == id_errore) {
+                    var field = document.getElementById(key);
+                    field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
+                    field.setAttribute("onclick", "this.setCustomValidity('');");         
+                    field.style.color = "red";
+                    field.style.border = "2px solid red";
+                    field.style.borderRadius = "4px";
+                    document.getElementById("submit").click(); // show the validity dialog                   
+                    break;
+                }
+                if (key == "altro") // problemi con db o altro
+                    document.getElementById("userMessage").insertAdjacentHTML( 'beforeend', "<p style='color: red'>"+err_array[key]+"</p>");
+            }
+        }
+        
+        <?php
+            if ($error_flag) // se errore allora comunica all'utente ciò quando la pagina è ricaricata (funzione jquery)
+                echo '$(document).ready(loadPostData);'
+        ?>
     </script>
 </head>
 <body>
@@ -144,8 +164,13 @@
 
     <div class="container">
         <div class="form-group">
-            <form enctype="multipart/form-data" id="input_proposal" action="new_proposal.php" onsubmit="return checkPicture()" method="POST">
-            <!-- enctype is necessary to encode picture correctly -->
+            <form enctype="multipart/form-data" class="form-in" id="input_proposal" action="new_proposal.php" method="POST">
+            <!-- ^ enctype is necessary to encode picture correctly ^ -->
+
+                <!-- div to show error message -->                
+                <div id="userMessage">
+                </div>
+
                 <legend>Inserisci nuova proposta</legend>
                 <!-- Name -->
                 <label for="name">Nome proposta: </label>&emsp;
@@ -164,7 +189,7 @@
                 and the file is not sent, thus preventing user from waiting for a file
                 that will be rejected server-side.-->
                 <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
-                <input type="file" name="upload_picture" id="upload_picture" class="form-control" accept="image/png, image/jpeg, image/jpg, image/bmp" onchange="checkPicture()" hidden>
+                <input type="file" name="upload_picture" id="upload_picture" class="form-control" accept="image/png, image/jpeg, image/jpg, image/bmp"  onchange="checkPicture()">
                 
                 <!-- Address -->
                 <label for="address">Indirizzo: </label>&emsp;

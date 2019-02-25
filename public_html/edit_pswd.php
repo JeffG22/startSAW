@@ -65,7 +65,7 @@
         } catch (Exception $ex) {
             $error_flag = true;
             $error_message = $ex->getMessage();
-            if (strlen($error_message >= 5) && substr($error_message, 0, 5) == "mysql")
+            if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
                 $error_message = "mysql";
         }
     }

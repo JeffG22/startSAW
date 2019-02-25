@@ -95,7 +95,7 @@
             $hovrole = 'Volontario';
         echo "<div class=\"card proposal-card mb-4 box-shadow\">";
         if (!empty($row['picture'])) {
-            echo "<img class=\"card-img-top\" data-src='".$row['picture']."' alt=\"Immagine della proposta\"> ";
+            echo "<img class=\"card-img-top\" src='".$row['picture']."' alt=\"Immagine della proposta\"> ";
         }
         echo "<div class=\"card-body\">";
         echo "<b>".$row['name']."</b><br>\n";
@@ -123,26 +123,27 @@
         
     }
 
-    function uploadPicture() {
-        if(isset($_FILES['picture']) && is_uploaded_file($_FILES['picture']['tmp_name'])) {
-            $uploaddir = "../userpics/";
+    function uploadPicture($fieldname) {
+        if(isset($_FILES[$fieldname]) && is_uploaded_file($_FILES[$fieldname]['tmp_name'])) {
+            $uploaddir = "./userpics/";
             $filename = (microtime(true)*10000);
-            $uploadfile = $uploaddir.$filename.".".pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
+            $uploadfile = $uploaddir.$filename.".".pathinfo($_FILES[$fieldname]['name'], PATHINFO_EXTENSION);
 
-            $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_JPG, IMAGETYPE_BMP);
-            $detectedType = exif_imagetype($_FILES['picture']['tmp_name']);
+            $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_BMP);
+            $detectedType = exif_imagetype($_FILES[$fieldname]['tmp_name']);
 
             if(!in_array($detectedType, $allowedTypes)) {
                 $_SESSION['message'] = "Formato file non ammesso";
-            } else if ($_FILES['picture']['size'] > 4194304) {
+            } else if ($_FILES[$fieldname]['size'] > 4194304) {
                 $_SESSION['message'] = "Dimensione massima superata.\n";
-            } else if (move_uploaded_file($_FILES['picture']['tmp_name'], $uploadfile)) {
-                $_SESSION['message'] = "File caricato con successo.\n";
+            } else if (move_uploaded_file($_FILES[$fieldname]['tmp_name'], $uploadfile)) {
                 return $uploadfile;
             } else {
                 $_SESSION['message'] = "Caricamento fallito.\n";
             }
-        }
+            return false;
+        } else
+            return false;
     }
 
     /** ----- Sanitization utility ----- */
@@ -157,16 +158,5 @@
 
     function sanitize_email($value) {
         return filter_var(trim($value), FILTER_SANITIZE_EMAIL);
-    }
-
-    // Temporary hack to allow login
-    session_start();
-    if(isset($_SESSION['user_id'])){
-        $user_id = $_SESSION['user_id'];
-    } else {
-        if (isset($_GET['id'])) {
-            $_SESSION['user_id'] = $_GET['id'];
-            $user_id = $_SESSION['user_id'];
-        }
     }
 ?>

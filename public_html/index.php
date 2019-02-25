@@ -158,7 +158,6 @@
     </div>
 		<!--Third view--> 	
 	</div>
-
   <script>
 	  /*$(document).ready(function() {
 	    // Sets viewScroller

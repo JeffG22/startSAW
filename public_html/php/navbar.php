@@ -24,7 +24,7 @@
         <a class="nav-link" href="browse_proposals.php">Vedi proposte</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="new_proposal.php">Aggiungi proposte</a>
+        <a class="nav-link" href="new_proposal.php">Fai una proposta!</a>
       </li>
     </ul>
     <!---Links-->
@@ -40,7 +40,7 @@
                   </a>
                   <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">
                     <a class=\"dropdown-item\" href=\"profile.php\" class=\"nav-link\">Profilo</a>
-                    <a class=\"dropdown-item\" href=\"#\">Logout</a>
+                    <a class=\"dropdown-item\" href=\"php/logout.php\">Logout</a>
                   </div>
                 </li>";
         } else {

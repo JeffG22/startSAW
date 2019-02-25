@@ -147,7 +147,7 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-        if (strlen($error_message >= 5) && substr($error_message, 0, 5) == "mysql")
+        if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $error_message = "mysql";
     }
 ?>
@@ -223,19 +223,14 @@
             }
             if ($error_flag && $tempError != "mysql") {
                 echo '
-                    for (var key in err_array) {
-                        if (key == id_errore) {
-                            var field = document.getElementById(key);
-                            field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
-                            field.setAttribute("onclick", "this.setCustomValidity(\'\');");
-                            field.setAttribute("onchange", "this.setCustomValidity(\'\');");         
-                            field.style.color = "red";
-                            field.style.border = "2px solid red";
-                            field.style.borderRadius = "4px";
-                            document.getElementById("submit").click(); // show the validity box
-                            break;              
-                    }
-                }
+                        var field = document.getElementById(id_errore);
+                        field.setCustomValidity(err_array[id_errore]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
+                        field.setAttribute("onclick", "this.setCustomValidity(\'\');");
+                        field.setAttribute("onchange", "this.setCustomValidity(\'\');");         
+                        field.style.color = "red";
+                        field.style.border = "2px solid red";
+                        field.style.borderRadius = "4px";
+                        document.getElementById("submit").click(); // show the validity box
                 ';
             }
             else if ($updated)

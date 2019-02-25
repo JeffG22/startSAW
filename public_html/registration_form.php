@@ -194,7 +194,7 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-        if (strlen($error_message >= 5) && substr($error_message, 0, 5) == "mysql")
+        if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $error_message = "mysql";
     }
 ?>
@@ -279,7 +279,7 @@
                 'settore' : 'Settore non valido.',
                 'sito' : 'Sito inserito non valido.',
                 'emailsql' : 'L\'email inserita è già registrata!',
-                'altro' : 'Registrazione non riuscita, si prega di riprovare'
+                'mysql' : 'Registrazione non riuscita, si prega di riprovare.'
         };
         <?php
             $tempError = ($error_flag) ? $error_message : "";
@@ -307,31 +307,28 @@
                 }
             ?>
 
-            for (var key in err_array) {
-                if (key == id_errore) {
-                    if (key == "emailsql") 
-                        var field = document.getElementById("email");
-                    else 
-                        var field = document.getElementById(key);
-                    if (key == "captcha") {
-                        field.insertAdjacentHTML( 'beforeend', "<p style='color: red'> Captcha non valido! </p>");
-                    }
-                    else {
-                        document.getElementById("password").required = false;
-                        document.getElementById("password").minlength = 0;
-                        field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
-                        field.setAttribute("onclick", "this.setCustomValidity('');");         
-                        field.style.color = "red";
-                        field.style.border = "2px solid red";
-                        field.style.borderRadius = "4px";
-                        document.getElementById("submit").click(); // show the validity dialog                   
-                    }
-                    break;
-                }
-                if (key == "altro") // problemi con db o altro
-                    document.getElementById("userMessage").insertAdjacentHTML( 'beforeend', "<p style='color: red'>"+err_array[key]+"</p>");
-            }
-        
+            
+            if (id_errore == "emailsql") 
+                var field = document.getElementById("email");
+            else if (id_errore == "mysql")
+                var field = document.getElementById("userMessage");                
+            else 
+                var field = document.getElementById(id_errore);
+            if (id_errore == "captcha")
+                field.insertAdjacentHTML( 'beforeend', "<p style='color: red'> Captcha non valido! </p>");
+            else if (id_errore == "mysql")
+                field.insertAdjacentHTML( 'beforeend', "<p style='color: red'>"+err_array[id_errore]+"</p>");                
+            else {
+                document.getElementById("password").required = false;
+                document.getElementById("password").minlength = 0;
+                field.setCustomValidity(err_array[id_errore]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
+                field.setAttribute("onclick", "this.setCustomValidity('');");         
+                field.setAttribute("onchange", "this.setCustomValidity('');");         
+                field.style.color = "red";
+                field.style.border = "2px solid red";
+                field.style.borderRadius = "4px";
+                document.getElementById("submit").click(); // show the validity dialog                   
+            }        
         }
         <?php
             if ($error_flag) // se errore allora comunica all'utente ciò quando la pagina è ricaricata (funzione jquery)

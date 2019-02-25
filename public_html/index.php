@@ -1,7 +1,6 @@
 <?php
 	require_once("php/handlesession.php");
 	my_session_start();
-	//print_r($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="it">

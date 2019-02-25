@@ -137,8 +137,20 @@
     </div>
 
     <script>
-        $(document).ready(function(){
-            $('[data-toggle="popover"]').popover();
+        //Shows/hides profiles
+        $(".proposer-name").click(function() {
+            $(this).find(".profile-usertitle-name").text('Abaj');
+            $(this).find(".profile-usertitle-job").text('yeh');
+            $(this).find(".hover-desc").text('uwah');            
+            $(this).find(".userpic-inner").attr('src', 'media/profile-placeholder.png');
+            $(this).children().show();
+        });
+        $(document).click(function(event) { 
+            $target = $(event.target);
+            if(!$target.closest('.proposer-name').length && 
+              $('.proposer-name .profile-overlay').is(":visible")) {
+                $('.proposer-name .profile-overlay').hide();
+            }        
         });
     </script>
 

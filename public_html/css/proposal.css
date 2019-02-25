@@ -31,6 +31,10 @@
   text-align: center;
 }
 
+.proposer-name {
+  color: #5b9bd1;
+}
+
 .profile-overlay {
   display: none;
   position: absolute;
@@ -53,11 +57,10 @@
   height: 50px;
 }
 
+/*
 .proposer-name:hover .profile-overlay{
   display: flex;
   align-items: center;
   justify-content: center;
   height: auto;
-
-
-}
+}*/

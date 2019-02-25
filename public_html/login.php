@@ -1,7 +1,7 @@
 <?php
+  require_once("php/handlesession.php");
   require_once("php/domain_constraints.php");
   require_once("php/utilities.php");
-  require_once("php/handlesession.php");
   require_once("php/data.php");
   require_once("../confidential_info.php");
 

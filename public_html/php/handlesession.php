@@ -3,11 +3,9 @@
     function safe_session_start() {
         // before of everything, if it is not active yet, to handle and use session we have to call start()
         if (session_status() != PHP_SESSION_ACTIVE) { 
-            // Use_strict_mode must always be enabled for many security reasons.
-            // As well as the flag httponly and cookie_secure
-            ini_set('session.use_strict_mode', 1);
+            ini_set('session.use_strict_mode', 1); // Use_strict_mode must always be enabled for many security reasons.
             ini_set('session.cookie_httponly', 1); // to prevent Cross-Site Scripting Attack to steal cookies
-            //ini_set('session.cookie_secure', 1); // Sidejacking
+            //ini_set('session.cookie_secure', 1); // to prevent sidejacking BUT NOT possible HTTPS
             session_start();
         }
     }
@@ -62,14 +60,15 @@
 
     // Logout unsetting the session
     function my_session_logout() {
+        safe_session_start();
         session_unset(); // unset all of the session variables in this way
-        //session_destroy();
+        session_destroy();
         safe_session_start();
         my_session_regenerate_id();
-        //header("Location: index.php");
     }
 
     function my_session_login($idUtente, $person, $name) {
+        safe_session_start();
         // ----- renewing the sid -----
         // It is a best practice when the user changes its privileges
         my_session_regenerate_id();
@@ -84,7 +83,8 @@
     }
 
     // "go away" for protected area
-    function my_session_is_valid() {       
+    function my_session_is_valid() {
+        safe_session_start();
         // ----- checks on renewing, user data and security variables -----
         // too old session
         if (isDeletedOrInactive()) {

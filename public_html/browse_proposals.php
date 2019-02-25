@@ -37,13 +37,10 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
                   integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <!--Bootstrap-->
-    
-    <!--Inclusions-->
-    <script src="js/jquery-3.1.0.min.js"></script>
-    <script src="js/jquery.easing.min.js"></script>
-      
+          
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/proposal.css">
+    <link rel="stylesheet" href="css/user.css">
 
 </head>
 <body>
@@ -139,5 +136,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+
 </body>
 </html>

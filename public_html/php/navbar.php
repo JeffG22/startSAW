@@ -24,11 +24,7 @@
         <a class="nav-link" href="browse_proposals.php">Vedi proposte</a>
       </li>
       <li class="nav-item">
-<<<<<<< HEAD
-        <a class="nav-link" href="#">Fai una proposta!</a>
-=======
-        <a class="nav-link" href="new_proposal.php">Aggiungi proposte</a>
->>>>>>> 257f46d0a10e57dd59c5e7ce2535ba1c2064661a
+        <a class="nav-link" href="new_proposal.php">Fai una proposta!</a>
       </li>
     </ul>
     <!---Links-->

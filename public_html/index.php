@@ -26,10 +26,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
   <!--Inclusions-->
-<<<<<<< HEAD
-  <!--<script src="js/include.js"></script>-->
-=======
->>>>>>> 257f46d0a10e57dd59c5e7ce2535ba1c2064661a
  	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src="js/jquery.easing.min.js"></script>
 	
@@ -162,15 +158,6 @@
     </div>
 		<!--Third view--> 	
 	</div>
-<<<<<<< HEAD
-	
-	
-	<script>
-		//includeHTML();
-	</script> 
-=======
-
->>>>>>> 257f46d0a10e57dd59c5e7ce2535ba1c2064661a
   <script>
 	  /*$(document).ready(function() {
 	    // Sets viewScroller

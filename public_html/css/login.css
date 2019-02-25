@@ -103,6 +103,12 @@ label {
   margin: 3vh;
 }
 
+.upload-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 10px 0;
+}
 
 @media only screen and (max-width: 500px) {
 	body {

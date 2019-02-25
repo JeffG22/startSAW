@@ -1,0 +1,32 @@
+.album-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  align-content: flex-start;
+  margin: 20px 0;
+}
+
+.proposal-card {
+  margin: 10px;
+  min-width: 100px;
+  max-width: 350px;
+  box-sizing: content-box;
+}
+
+.proposal-card p {
+  white-space: pre-wrap;
+}
+
+.row {
+  justify-content: center;
+}
+
+#proposal-container {
+  margin-top: 20px;
+}
+
+#notice-account {
+  flex-grow: 1;
+  width: 100%;
+  text-align: center;
+}

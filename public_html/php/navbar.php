@@ -3,7 +3,7 @@
 	<a class="navbar-brand" href="index.php">
 		<!--TODO CAMBIARE (fare in modo che il logo si raggiunga globalmente-->
 		<img src="media/Ph.png" width="40" height="40" alt="Logo">
-		Placeholder
+		Volontari per caso
   </a>
   <!--Logo-->
   
@@ -24,7 +24,7 @@
         <a class="nav-link" href="browse_proposals.php">Vedi proposte</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Placeholder2</a>
+        <a class="nav-link" href="new_proposal.php">Aggiungi proposte</a>
       </li>
     </ul>
     <!---Links-->
@@ -32,10 +32,17 @@
     <!--Login/profile-->
     <ul class="navbar-nav ml-auto">
       <?php
-        require_once("php/handlesession.php");
-        my_session_start();
         if(my_session_is_valid()){
-          echo "<li class=\"nav-item\"><a href=\"profile.php\"><img id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\"></a></li>";
+          echo "<li class=\"nav-item dropdown\">
+                  <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\"
+                  role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
+                    <img style=\"margin-right: 10px;\" id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\">
+                  </a>
+                  <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">
+                    <a class=\"dropdown-item\" href=\"profile.php\" class=\"nav-link\">Profilo</a>
+                    <a class=\"dropdown-item\" href=\"#\">Logout</a>
+                  </div>
+                </li>";
         } else {
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"login.php\">Log in</a></li>";
           echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"registration_form.php\">Sign up</a></li>";
@@ -47,7 +54,7 @@
     <div id="search-contain">
       <form class="form-inline my-2 my-lg-0" action = "browse_proposals.php" method="GET">
         <input class="form-control" type="search" name="search" placeholder="Cerca una proposta" aria-label="Search">
-        <button id="src-btn" class="btn btn-outline-dark my-2 my-sm-0" type="submit">
+        <button id="src-btn" class="src-btn btn btn-outline-dark my-2 my-sm-0" type="submit">
           <i class="fas fa-search"></i>
         </button>
       </form>

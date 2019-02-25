@@ -110,6 +110,10 @@ label {
   margin: 10px 0;
 }
 
+#descrizione {
+  min-height: 100px;
+}
+
 @media only screen and (max-width: 500px) {
 	body {
     background-color: #ffffff;

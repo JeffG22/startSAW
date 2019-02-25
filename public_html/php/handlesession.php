@@ -7,7 +7,7 @@
             // As well as the flag httponly and cookie_secure
             ini_set('session.use_strict_mode', 1);
             ini_set('session.cookie_httponly', 1); // to prevent Cross-Site Scripting Attack to steal cookies
-            ini_set('session.cookie_secure', 1); // Sidejacking
+            //ini_set('session.cookie_secure', 1); // Sidejacking
             session_start();
         }
     }

@@ -68,7 +68,7 @@
                 <li id="side-setting">
                     <a href="edit_profile.php">
                     <i class="fas fa-user"></i>
-                    Impostazioni</a>
+                    Modifica dati</a>
                 </li>
                 <li id="side-setting">
                     <a href="edit_pswd.php">

@@ -72,25 +72,26 @@
                             <div class="container album-container">
                                 <div class="row"> 
                                     <?php
+                                        $error_flag = false;
                                         try {
                                             if(!($conn = dbConnect()))
                                                 throw new Exception("sql ".mysqli_connect_error());
                                         
                                             $query = "SELECT *
-                                                    FROM proposal, accepted, user
-                                                    WHERE proposal.id = accepted.proposal_id AND acceptor_id = user_id AND acceptor_id = ".$user_id;
+                                                      FROM proposal, accepted
+                                                      WHERE proposal.id = accepted.proposal_id AND acceptor_id = ".$user_id;
 
                                             if(!($result = mysqli_query($conn, $query))) 
-                                                throw new Exception("sql ".mysqli_error());
+                                                throw new Exception("mysql ".mysqli_error());
 
                                         } catch (Exception $ex) {
                                             $error_flag = true;
                                             $error_message = $ex->getMessage();
-                                            //echo $ex->getMessage();
-                                            //echo $error_flag;
                                         }
                                             
-                                        if (mysqli_num_rows($result) == 0) { // Empty result
+                                        if ($error_flag) {
+                                            echo "Errore di accesso al database. Riprova.";
+                                        } else if (mysqli_num_rows($result) == 0) { // Empty result
                                             echo "Sembra che tu non abbia ancora accettato alcuna proposta.";  
                                         } else { // Result not empty
                                             while($row = mysqli_fetch_assoc($result)) {

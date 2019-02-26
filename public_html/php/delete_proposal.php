@@ -25,11 +25,13 @@
                       FROM proposal 
                       WHERE id = ".$proposal_id." AND proposer_id = ".$user_id;
             
+            // Not using prepared statements since the only user-submitted value has already
+            // been sanitized by php function intval() which returns an integer.
             if(!mysqli_query($conn, $query))
-                    throw new Exception("mysql ".mysqli_errno());
+                    throw new Exception("mysql ".mysqli_errno($conn));
             
             if(mysqli_affected_rows($conn) < 0) {    // MySQL error
-                throw new Exception("mysql ".mysqli_errno());
+                throw new Exception("mysql ".mysqli_errno($conn));
             } else if(mysqli_affected_rows($conn) == 0) {    // Wrong proposal_id or not belonging to this user
                 throw new Exception("Impossibile eliminare questa proposta. Potresti averla già eliminata.");
             }
@@ -43,21 +45,12 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-/*
+
         if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $_SESSION['message'] = "Errore nell'eliminazione della proposta. Attendi qualche istante e riprova.";
         else
-        */
             $_SESSION['message'] = $error_message;
 
         navigateTo("../my_proposals.php");
-    }
-
-    
-    
-
-    // No need to perform additional action, since db is configured to delete all other records
-    // referencing a proposal when deleting one (through foreign key constraints)
-
-    
+    }    
 ?>

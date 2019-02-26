@@ -80,7 +80,7 @@
 
     // Prints informations about a specified proposal, passed as an argument in form of a complete
     // row fetched as an associative array from the "proposal" table in the database
-    function printUserInfo($con, $row) {
+    function printUserInfo($row) {
         echo $row['description'];
     }
     

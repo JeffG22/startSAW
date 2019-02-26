@@ -27,10 +27,9 @@
 </head>
 
 <body>
-	<div id="mainContainer">
-		
-		<!--First view-->
-		<div id="firstView">
+	
+	<!--First view-->
+	<div id="firstView">
 			<!--Header/Navbar-->
 			<?php include("php/navbar.php"); ?>
 			<!--Header/Navbar-->
@@ -39,9 +38,9 @@
 	  		<div class="carousel-inner">
 	  			<!--First slide-->
   			  <div id="firstSlide" class="carousel-item active">
-    		  	<img class="d-block img-fluid" src="" alt="">
+    		  	<!--<img class="d-block img-fluid" src="" alt="">-->
     		  	<span class="sr-only">First slide</span>
-    		    <div class="carousel-caption d-none d-md-block">
+    		    <div class="carousel-caption">
     					<h5>Cerca tra decine di proposte quella adatta a te!</h5>
     					<p>Puoi essere volontario per un giorno, volontario per la vita!</p>
   					</div>
@@ -51,19 +50,19 @@
     			<div id="secondSlide" class="carousel-item">
     		  	<img class="d-block img-fluid" src="" alt="">
     		  	<span class="sr-only">Second slide</span>
-    		  	<div class="carousel-caption d-none d-md-block" style="display: flex; height: 120px; color: #dedede; background: #222; background: rgba(0,0,0,0.7); left: 0px; width: 100%;">
-							<h5 style="font-size: 30px; word-spacing: 4px; color: #ffffff; margin-top: -20px;">Ciò che abbiamo fatto solo per noi stessi muore con noi. Ciò che abbiamo fatto per gli altri e per il mondo resta ed è immortale.</h5>
-    					<p style="font-size: 15px; word-spacing: 4px; color: #ffffff; ">Harvey B. Mackay</p>
+    		  	<div class="carousel-caption">
+							<h5>Ciò che abbiamo fatto solo per noi stessi muore con noi. Ciò che abbiamo fatto per gli altri e per il mondo resta ed è immortale.</h5>
+    					<p>Harvey B. Mackay</p>
   					</div>
     			</div>
     			<!--Second slide-->
     			<!--Third slide-->
     			<div id="thirdSlide" class="carousel-item">
-   			  	<img class="d-block img-fluid" src="" alt="">
+   			  	<!--<img class="d-block img-fluid" src="" alt="">-->
    			  	<span class="sr-only">Third slide</span>
-   			  	<div class="carousel-caption d-none d-md-block" style="display: flex; height: 80px; color: #dedede; background: #222; background: rgba(0,0,0,0.7); left: 0px; width: 100%; ">
-    					<h5 style="font-size: 30px; word-spacing: 4px; color: #ff8c00; margin-top: -20px;">Prendere riempie le mani, dare riempie il cuore</h5>
-    					<p style="font-size: 15px; word-spacing: 4px; color: #ff8c00; ">M. Seeman</p>
+   			  	<div class="carousel-caption">
+    					<h5>Prendere riempie le mani, dare riempie il cuore.</h5>
+    					<p>M. Seeman</p>
   					</div>
    			 	</div>
    			 	<!--Third slide-->
@@ -81,57 +80,132 @@
   			  <li data-target="#carouselTop" data-slide-to="1"></li>
  	  	 		<li data-target="#carouselTop" data-slide-to="2"></li>
  				</ol>
-			</div>
-			<!--Carousel-->
-			
-			<!--Continue button-->
-			<div id="continue">
-				<a href="#secondView"><button id="continueBtn" type="button" value="Scopri di più">Scopri di più</button></a>
-			</div>
-			<!--Continue button-->
 		</div>
+		<!--Carousel-->
+			
+		<!--Continue button-->
+		<!--div id="continue">
+				<form action="#services" method="GET"><button id="continueBtn" type="submit" value="Scopri di più">Scopri di più</button></form>
+		</div>
+			<!Continue button-->
+	</div>
+</div>
 		<!--First view-->
 	
 		<!--Second view-->
-		<div id="secondView" class="mainView">
-    	<!--Description-->
-    	<div id="desContainer" class="contain">
-				<!-- Three columns of text below the carousel -->
-				<div class="row">
-          <div class="three-columns col-lg-4">
-            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-          <div class="three-columns col-lg-4">
-            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
-            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-          <div class="three-columns col-lg-4">
-            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-        </div><!-- /.row -->
-			</div>
-			<!--Description-->	
+		<section id="services">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading">Hand-Aid</h2>
+          <h3 class="section-subheading text-muted">La piattaforma per il volontariato libero</h3>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <span class="fa-stack fa-4x">
+            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+            <i class="fas fa-check-circle fa-stack-1x fa-inverse"></i>
+          </span>
+          <h4 class="service-heading">Semplice</h4>
+          <p class="text-muted">Una semplice iscrizione, e sei pronto ad aiutare.</p>
+        </div>
+        <div class="col-md-4">
+          <span class="fa-stack fa-4x">
+            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+            <i class="fas fa-users fa-stack-1x fa-inverse"></i>
+          </span>
+          <h4 class="service-heading">Per tutti</h4>
+          <p class="text-muted">Chiunque tu sia, c'è un ruolo per te nella nostra comunità.</p>
+        </div>
+        <div class="col-md-4">
+          <span class="fa-stack fa-4x">
+            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+            <i class="fas fa-stopwatch fa-stack-1x fa-inverse"></i>
+          </span>
+          <h4 class="service-heading">Immediata</h4>
+          <p class="text-muted">La nostra interfaccia intuitiva è adatta a chiunque.</p>
+        </div>
+      </div>
     </div>
-    <!--Second view--> 
-	
+  </section>	
+		<!--Second view--> 
+		
 		<!--Third view-->
-		<div vs-anchor="thirdView" class="mainview">
     	<!--Testimonials-->
-    	<div id="testimContainer" class="contain">asd</div>
+			<section class="text-center">
+
+			<!-- Section heading -->
+			<h2 class="h1-responsive font-weight-bold my-5">Dicono di noi</h2>
+			<!-- Section description -->
+			<p id="desc" class="dark-grey-text w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+				Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam
+				eum porro a pariatur veniam.</p>
+
+			<!--Grid row-->
+			<div class="row text-center">
+
+				<!--Grid column-->
+				<div class="col-md-4 mb-md-0 mb-5">
+
+					<div class="testimonial">
+						<!--Avatar-->
+						<div class="avatar mx-auto">
+							<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(1).jpg" class="rounded-circle z-depth-1 img-fluid">
+						</div>
+						<!--Content-->
+						<h4 class="font-weight-bold dark-grey-text mt-2">Anna Deynah</h4>
+						<p class="font-weight-normal avatar-text dark-grey-text">
+							<i class="fas fa-quote-left pr-2"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod
+							eos id officiis hic tenetur quae quaerat ad velit ab hic tenetur. <i class="fas fa-quote-right pr-2"></i></p>
+					</div>
+
+				</div>
+				<!--Grid column-->
+
+				<!--Grid column-->
+				<div class="col-md-4 mb-md-0 mb-5">
+
+					<div class="testimonial">
+						<!--Avatar-->
+						<div class="avatar mx-auto">
+							<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" class="rounded-circle z-depth-1 img-fluid">
+						</div>
+						<!--Content-->
+						<h4 class="font-weight-bold dark-grey-text mt-2">John Doe</h4>
+						<p class="font-weight-normal avatar-text dark-grey-text">
+							<i class="fas fa-quote-left pr-2"></i>Ut enim ad minima veniam, quis nostrum exercitationem ullam
+							corporis suscipit laboriosam, nisi ut aliquid commodi. <i class="fas fa-quote-right pr-2"></i></p>
+					</div>
+
+				</div>
+				<!--Grid column-->
+
+				<!--Grid column-->
+				<div class="col-md-4">
+
+					<div class="testimonial">
+						<!--Avatar-->
+						<div class="avatar mx-auto">
+							<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg" class="rounded-circle z-depth-1 img-fluid">
+						</div>
+						<!--Content-->
+						<h4 class="font-weight-bold dark-grey-text mt-2">Maria Kate</h4>
+						<p class="font-weight-normal avatar-text dark-grey-text">
+							<i class="fas fa-quote-left pr-2"></i>At vero eos et accusamus et iusto odio dignissimos ducimus qui
+							blanditiis praesentium voluptatum deleniti atque corrupti. <i class="fas fa-quote-right pr-2"></i></p>
+					</div>
+
+				</div>
+				<!--Grid column-->
+
+			</div>
+			<!--Grid row-->
+			</section>
 			<!--Testimonials-->	
-    </div>
 		<!--Third view--> 
 		
 		<!--Fourth view-->
-		<div vs-anchor="fourthView" class="mainview">
     	<!--Map-->
     	<div id="mapContainer" class="contain">
 			<h4 id="preMap">Scopri sulla <span style="inline: block; color: cornflowerblue">mappa</span> le proposte di volontariato!<h4>
@@ -170,29 +244,23 @@
     <!--Fourth view-->
 	
 		<!--Third view-->
-		<div vs-anchor="fifthView" class="mainview">
 			<!--Footer-->
 			<?php
 				include("php/footer.php")
 			?>
 			<!--Footer-->	
-    </div>
 		<!--Third view--> 	
-	</div>
-  <script>
-	  /*$(document).ready(function() {
-	    // Sets viewScroller
-      $('.mainbag').viewScroller({
-	      useScrollbar: true,
-        changeWhenAnim: false,
-				viewsHeight: [0, 0, 0, 0, 232]
-      });
-    });*/
-		$("#continueBtn").click(function() {
-    $("html, body").animate({
-        scrollTop: $("#secondView").offset().top - 65
-			}, "slow");
-});
+	
+	<script>
+		document.querySelectorAll('form[action^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('action')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    	});
+		});
 	</script>	
 </body>
 

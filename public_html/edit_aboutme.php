@@ -189,13 +189,12 @@
                                 <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
                                 <input type="file" name="picture" id="picture" accept="image/png, image/jpeg, image/jpg, image/bmp"  onchange="checkPicture()">
                             </div>
-                            
                     ';
                 }
                 echo '<div class="btn-container"> ';
                 if ($tempError != "mysql")
                         echo '<input type="submit" id="submit" class="btn btn-primary" value="Modifica!">';
-                echo ' <a href="profile.php"><button type="button" class="btn btn-danger" value="Indietro">Indietro</button></a>
+                echo ' <a href="profile.php" class="btn btn-danger" role="button">Indietro</a>
                        </div>
                      ';
             ?>

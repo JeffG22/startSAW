@@ -1,46 +1,49 @@
-<footer id="footer" class="page-footer font-small">
+<footer id="footer" class="page-footer font-small pt-4">
 
     <!--Footer Links-->
-    
+    <div class="container-fluid text-center text-md-left">
+
       <!--Grid row-->
-      <div class="" style="text-align: center; margin-top: 0px; padding-bottom: 0px; padding-top: 3px; font: Tahoma"><h2 style="font-variant: small-caps;"><strong>HAND-AID<strong></h2></div>
-      <div class="" style="text-align: center; margin-top: -17px; padding-top: -17px; color: white; "><h4>Volontariato per la vita, vita per il volontariato!</h4></div>
-    <div class="container text-center text-md-left" style="margin-top: -7px; padding-top: -7px; " >
+      
       <div class="row">
+      
         <!--Grid column-->
-        <div class="col-md-3 mx-auto">
-          <h5 class="font-weight-bold text-uppercase mt-3 mb-4"><a href="under-construction.php">Cosa facciamo</a></h5>
+        <div class="col-md-6 mt-md-0 mt-3">
+
+          <!-- Content -->
+          <h5 class="text-uppercase" style="color: white;"><strong>HAND-AID</strong></h5>
+          <p>Volontariato per la vita, vita per il volontariato!</p>
+        
         </div>
         <!--Grid column-->
        
         <!--Spacer-->
-        <hr class="clearfix w-100 d-md-none">
+        <hr class="clearfix w-100 d-md-none pb-3">
         
         <!--Grid column-->
-        <div class="col-md-3 mx-auto">
+        <div class="col-md-3 mb-md-0 mb-3">
+          
           <!--Links-->
-          <h5 class="font-weight-bold text-uppercase mt-3 mb-4"><a href="under-construction.php">Chi siamo</a></h5>
-					<!--Links-->
-        </div>
-        <!--Grid column-->
-        
-        <!--Spacer-->
-        <hr class="clearfix w-100 d-md-none">
+          <h5 class="text-uppercase">Links</h5>
 
-        <!--Grid column-->
-        <div class="col-md-3 mx-auto">
-          <h5 class="font-weight-bold text-uppercase mt-3 mb-4"><a href="under-construction.php">Dove siamo</a></h5>
-        </div>
-        <!--Grid column-->
+          <ul>
+            <li>
+              <a href="under-construction.php">Chi siamo</a>
+            </li>
+            <li>
+              <a href="under-construction.php">Cosa facciamo</a>
+            </li>
+            <li>
+              <a href="under-construction.php">Dove siamo</a>
+            </li>
+            <li>
+              <a href="under-construction.php">Contatti</a>
+            </li>
+          </ul>
+          <!--Links-->
         
-        <!--Spacer-->
-        <hr class="clearfix w-100 d-md-none">
-
-        <!--Grid column-->
-        <div class="col-md-3 mx-auto">
-          <h5 class="font-weight-bold text-uppercase mt-3 mb-4"><a href="under-construction.php">Contatti</a></h5>
         </div>
-        <!--Grid column -->
+        <!--Grid column-->
 
       </div>
       <!--Grid row-->
@@ -50,7 +53,7 @@
 
     <!--Copyright-->
     <div class="footer-copyright text-center py-3">
-    	© 2019 Copyright: Hand-aid
+    	© 2019 Copyright: Hand-Aid
     </div>
     <!--Copyright-->
 

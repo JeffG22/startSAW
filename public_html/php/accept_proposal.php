@@ -73,6 +73,8 @@
             if (!mysqli_commit($conn))
                 throw new Exception("mysql transaction failed");
                 
+            require("send_email.php");
+
             mysqli_close($conn);
             
         }
@@ -83,8 +85,13 @@
 
         if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $_SESSION['message'] = "Errore nell'accettazione della proposta. Attendi qualche istante e riprova.";
-        else
-            $_SESSION['message'] = $error_message;
+        else if ($error_message != "email") {
+            $_SESSION['message'] = "$error_message";
+        }
+        
+        if ($error_message == "email" || !empty($mail->ErrorInfo))
+            $_SESSION['message'] = "Proposta accettata. Grazie del tuo aiuto! <br>PS: C'è stato un problema con l'invio della mail. 
+                                        Non preoccuparti, la proposta è stata comunque accettata.";
 
         navigateTo("../browse_proposals.php");
     } 

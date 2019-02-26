@@ -16,7 +16,7 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <title>Proposte Accettate</title>
 
@@ -50,7 +50,7 @@
 
             <div class="col-md-8">
                 <div class="profile-content">
-                    <main role="main">
+                    <main>
                         <h4>Proposte di volontariato accettate</h4>
                         <div class="album">
                             <div class="container album-container">

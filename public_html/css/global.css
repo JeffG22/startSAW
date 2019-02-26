@@ -25,6 +25,14 @@ h4 {
 		background-color: #00a7e1;
 	}
 
+	footer h5{
+		color: #b0fcffe8;
+	}
+
+	.footer-copyright {
+		background-color: #1194c0;
+	}
+
 	.navbar-light .navbar-brand {
 		color: #2e577d;
 	}
@@ -110,6 +118,14 @@ h4 {
 
 	.popup.visible .popup-body {
 		opacity: 1;
+	}
+
+	.text-muted {
+		font-style: italic;
+	}
+
+	.text-muted * {
+		font-style: normal;
 	}
 
 /*Removes dotted outlines*/

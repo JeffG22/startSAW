@@ -85,7 +85,7 @@
             ?>
             <div class="col-md-8">
               <div class="profile-content">
-                <main role="main">
+                <main>
                   <h4>Informazioni</h4>
                   <div>
                     <div class="container">

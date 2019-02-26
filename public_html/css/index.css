@@ -15,7 +15,7 @@ body {
 
 	.carousel {
 	  width: 100%; /*slider width*/
-		height: 85vh;
+		height: 80vh;
 		flex: 0 1 auto;
 	  z-index: 2;
 	}
@@ -37,7 +37,6 @@ body {
 		  filter: alpha(opacity=80);
 		}
 
-		/*This is the hackiest possible solution, but it also is THE ONLY WORKING ONE.*/
 		#firstSlide {
 			background-image: url(../media/group1.jpg);
 		}
@@ -51,15 +50,21 @@ body {
 		}
 	
 		.carousel-caption {
-			text-shadow: 0 1px 4px rgba(0, 0, 0, 0.90);
+			text-shadow: 0 1px 4px rgba(0, 0, 0, 0.90); 
+			height: 120px; 
+			color: #dedede;  
+			background: rgba(0,0,0,0.5); 
+			left: 0px; 
+			width: 100%;
 		}
 
 	#continue {
 		width: 100%;
+		height: 7vh;
 		flex-grow: 1;
 		padding: 0 0 0 0;
-		margin: 0 0 0 0;
-		background-color: #3e92cc;
+		margin: 0 0 5vh 0;
+		background-color: #fff;
 		position: relative;
 		bottom: 0;
 		box-sizing: border-box;
@@ -69,14 +74,13 @@ body {
 		#continueBtn {
 			height: 100%;
 			min-height: 30px;
-			width: 100%;
   			border: none;
   			margin: 0;
   			text-decoration: none;
   			background: #3e92cc;
-  			color: #253e5e;
+  			color: #fff;
   			font-family: sans-serif;
-  			font-size: 20px;
+  			font-size: 17px;
   			cursor: pointer;
   			text-align: center;
   			box-shadow: inset 0 5px 0 rgba(0, 0, 0, 0.1);	
@@ -91,16 +95,14 @@ body {
 	height: 100%;
 }
 
+.feature {
+	display: flex;
+}
+
 #secondView{
 	background-color: #fefefe;
 	padding: 5vh 5vh 5vh 5vh;
 }
-
-	.three-columns {
-		padding: 10px;
-		border-radius: 5px;
-		background-color: #fefefe;
-	}
 
 #thirdView{
 	background-color: cornflowerblue;
@@ -129,4 +131,50 @@ body {
 #preMap{
 	text-align: center;
 	margin-top: 0px;
+}
+
+section {
+  padding: 5vh 0;
+}
+
+.text-primary {
+	color: #00a7e1 !important;
+}
+
+section h2.section-heading {
+  font-size: 40px;
+  margin-top: 6vh;
+  margin-bottom: 15px;
+}
+
+section h3.section-subheading {
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  margin-bottom: 75px;
+  text-transform: none;
+  font-family: 'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.col-md-4 {
+	margin-bottom: 20px;
+}
+
+#desc {
+	margin: auto;
+	padding: 0 50px;
+}
+
+.avatar {
+	padding: 5% 10%;
+}
+
+.avatar-text {
+	padding: 10px;
+}
+
+@media (min-width: 768px) {
+  section {
+    padding: 5vh 0;
+  }
 }

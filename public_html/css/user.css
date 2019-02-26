@@ -6,6 +6,11 @@
     width: 100%;
   }
   
+  section {
+    margin: 10vh 2vw;   
+    padding: 2vmin;
+  }
+
   /* Profile container */
   .profile {
     margin: 20px 0;

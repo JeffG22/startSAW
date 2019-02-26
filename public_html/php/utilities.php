@@ -19,7 +19,7 @@
         }
         echo "<div class=\"card-body\">";
         echo "<b>".$row['name']."</b><br>\n";
-        echo "<i class=\"text-muted\">Inserito in data: ".$row['date_inserted'];
+        echo "<div class=\"text-muted\">Inserito in data: ".$row['date_inserted'];
         
         if (!empty($row['display_name'])) {
             echo " da <div class=\"proposer-name\">".$row['display_name'].
@@ -33,12 +33,18 @@
                                 <div class=\"hover-desc\"></div>
                             </div>
                         </div>
-                        </div>";
+                        <div class=\"info-container\">
+                            <div class=\"profile-usertitle-name hover-name\"></div>
+                            <div class=\"profile-usertitle-job\ hover-role\"></div>
+                            <div class=\"hover-desc\"></div>
+                        </div>
+                    </div>
+                    </div>";
         }
-        echo "</i><br>\n";
+        echo "</div><br>\n";
         echo "<p class=\"card-text\">";
         echo "Descrizione: ".$row['description']."<br>\n";
-        echo "Numero di volontari richiesti: <b><i>".$row['available_positions']."</b></i><br>\n";
+        echo "Numero di volontari richiesti: <b><i>".$row['available_positions']."</i></b><br>\n";
         if (!empty($row['address'])) {
             echo "Indirizzo: ".$row['address']."<br>\n";
         }

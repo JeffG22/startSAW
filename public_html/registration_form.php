@@ -187,7 +187,7 @@
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
             // 7 ----- impostazione sessione e login automatico ----
-            $display_name = ($person) ? $fields_value[0]." ".$fields_value[1] : $fields_value[1];
+            $display_name = ($person) ? $fields_value[0]." ".$fields_value[1] : $fields_value[0];
             my_session_login($idUtente, $person, $display_name, "");
             navigateTo("profile.php");
         }      

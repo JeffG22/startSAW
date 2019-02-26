@@ -74,7 +74,7 @@
                 </li>
                 <li id="side-setting">
                     <a href="edit_pswd.php">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-key"></i>
                     Modifica password</a>
                 </li>
                 <li id="side-proposal">

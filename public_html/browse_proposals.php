@@ -72,9 +72,10 @@
             <div id="proposal-container" class="album">
                 <div class="row">
                 <?php
+                    $error_flag = false;
                     try {
                         if(!($conn = dbConnect()))
-                            throw new Exception("sql ".mysqli_connect_error());
+                            throw new Exception("mysql ".mysqli_connect_error());
 
                         if (!my_session_is_valid()) {
                             echo "<div class=\"alert alert-primary\" id=\"notice-account\">Esplora liberamente le proposte disponibili. Per accettare una proposta, <a href=\"login.php\">effettua il login</a>!</div>";
@@ -91,10 +92,10 @@
                             $result = mysqli_query($conn, $query);
                         } else {
                             $search_query = "%".$search_query."%";
-                            $query = $query." AND (name LIKE ? OR description LIKE ?)";
+                            $query = $query." AND (proposal.name LIKE ? OR proposal.description LIKE ?)";
                             
                             if(!($stmt = mysqli_prepare($conn, $query))) 
-                                throw new Exception("mysqli prepare".mysqli_errno($conn));
+                                throw new Exception("mysqli prepare ".mysqli_errno($conn));
 
                             if(!mysqli_stmt_bind_param($stmt, "ss", $search_query, $search_query))
                                 throw new Exception("mysqli bind param");
@@ -114,8 +115,10 @@
                         //echo $ex->getMessage();
                         //echo $error_flag;
                     }
-                        
-                    if (mysqli_num_rows($result) == 0) { // Empty result
+
+                    if ($error_flag) {
+                        echo "<p id='errmessage'>Errore di accesso al database. Riprova.</p>"; 
+                    } else if (mysqli_num_rows($result) == 0) { // Empty result
                         echo "Nessuna proposta disponibile al momento. Torna presto a controllare.";  
                     } else { // Result not empty
                         while($row = mysqli_fetch_assoc($result)) {

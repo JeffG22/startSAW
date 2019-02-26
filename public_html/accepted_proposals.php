@@ -90,7 +90,7 @@
                                         }
                                             
                                         if ($error_flag) {
-                                            echo "Errore di accesso al database. Riprova.";
+                                            echo "<p id='errmessage'>Errore di accesso al database. Riprova.</p>";
                                         } else if (mysqli_num_rows($result) == 0) { // Empty result
                                             echo "Sembra che tu non abbia ancora accettato alcuna proposta.";  
                                         } else { // Result not empty

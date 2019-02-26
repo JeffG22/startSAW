@@ -15,7 +15,7 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <title>Profilo</title>
     
@@ -104,9 +104,9 @@
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
-                                <a href="edit_aboutme.php">
-                                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </a>
+                                <form action="edit_aboutme.php" method="get">
+                                  <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </form>
                               </div>
                             </div>
                           </div>
@@ -148,14 +148,14 @@
                           <div class="card-body">
                             <h5 class="card-title">Contatti</h5>
                             <p class="card-text">
-                              <div>Telefono: 
+                              <p>Telefono: 
                               <?php   
                                 if (empty($row['phone'])) // Empty result
                                   echo "Sembra che tu non abbia ancora aggiunto il tuo numero di telefono.";  
                                 else // Result not empty
                                   echo($row['phone']);                               
                               ?>
-                              </div>
+                              </p>
                               <?php
                                 if (!empty($row['website'])){
                                   echo "<a href=\"".($row['website'])."\">Sito ufficiale</a>";
@@ -164,9 +164,9 @@
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
-                                <a href="edit_profile.php">
-                                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </a>
+                                <form action="edit_profile.php" method="get">
+                                  <button type="submit" class="btn btn-sm btn-outline-secondary">Edit</button>
+                              </form>
                               </div>
                             </div>
                           </div>

@@ -50,7 +50,7 @@
 
     <!--Copyright-->
     <div class="footer-copyright text-center py-3">
-    	© 2019 Copyright: Placeholder
+    	© 2019 Copyright: Hand-aid
     </div>
     <!--Copyright-->
 

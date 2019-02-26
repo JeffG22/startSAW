@@ -20,18 +20,16 @@ $(".proposer-name").click(function(e) {
             dataType: 'json',
             success: function(response) {
             // We get the element having id of display_info and put the response inside it
-                $($clicked).find(".profile-usertitle-name").text(response[0]);
-                $($clicked).find(".profile-usertitle-job").text(response[1]);
-                $($clicked).find(".hover-desc").text(response[3]);
-                
-                if (response[2] != null) {
-                    $($clicked).find(".userpic-inner").attr('src', 'userpics/'+response[2]);
-                } else {
-                    $($clicked).find(".userpic-inner").attr('src', 'media/profile-placeholder.png');
+                $($clicked).find(".profile-usertitle-name").text(response['display_name']);
+                var $type = (response['type'] == 'person') ? "Volontario" : "Associazione";
+                $($clicked).find(".profile-usertitle-job").text($type);
+                $($clicked).find(".hover-desc").text(response['description']);
+
+                if (response['picture'] != "") {
+                    $($clicked).find(".userpic-inner").attr("src", response['picture']);
                 }
             }
-        });           
-    //$(this).find(".userpic-inner").attr('src', 'media/profile-placeholder.png');
-    $(this).children().fadeTo(100, 1);
+        });       
+    $(this).children().delay(300).fadeTo(100, 1);
     }
 });

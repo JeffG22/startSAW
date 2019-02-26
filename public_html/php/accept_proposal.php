@@ -76,7 +76,6 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage(); 
-        echo $error_message; exit();
         if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $_SESSION['message'] = "Errore nell'accettazione della proposta. Attendi qualche istante e riprova.";
         else

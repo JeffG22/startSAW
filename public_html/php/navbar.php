@@ -3,7 +3,7 @@
 	<a class="navbar-brand" href="index.php">
 		<!--TODO CAMBIARE (fare in modo che il logo si raggiunga globalmente-->
 		<img src="media/Ph.png" width="40" height="40" alt="Logo">
-		Volontari per caso
+    Hand-aid
   </a>
   <!--Logo-->
   
@@ -32,11 +32,12 @@
     <!--Login/profile-->
     <ul class="navbar-nav ml-auto">
       <?php
-        if(my_session_is_valid()){
+        if(my_session_is_valid()) {
+          $picture = $_SESSION['picture'];
           echo "<li class=\"nav-item dropdown\">
                   <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\"
                   role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
-                    <img style=\"margin-right: 10px;\" id=\"bar-id-pic\" src=\"media/Ph.png\" alt=\"Placeholder (profile pic)\">
+                    <img style=\"margin-right: 10px;\" id=\"bar-id-pic\" src=\"".$picture."\" alt=\"Profile\">
                   </a>
                   <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">
                     <a class=\"dropdown-item\" href=\"profile.php\" class=\"nav-link\">Profilo</a>

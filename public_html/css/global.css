@@ -16,6 +16,8 @@ h4 {
 
 	#header {
 		top: 0;
+		position: sticky;
+		position: -webkit-sticky;
 	}
 
 	footer {
@@ -59,6 +61,9 @@ h4 {
 	#bar-id-pic {
 		width: 30px;
 		height: 30px;
+		-webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
 	}
 
 

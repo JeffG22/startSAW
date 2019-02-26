@@ -33,7 +33,9 @@
     <div class="profile-sidebar">
         <!-- SIDEBAR USERPIC -->
         <div class="profile-userpic">
-            <img src="media/profile-placeholder.png" class="img-responsive" alt="">
+            <div class="profile-userpic-inner">
+                <img src="<?php echo $picture ?>" class="img-responsive" alt="">
+            </div>
         </div>
         <!-- END SIDEBAR USERPIC -->
         <!-- SIDEBAR USER TITLE -->

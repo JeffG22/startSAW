@@ -109,7 +109,6 @@
                                               } else { // Result not empty
                                                   while($row = mysqli_fetch_assoc($result)) {
                                                       printUserInfo($conn, $row);
-                                                      echo "abaj";
                                                   }                                
                                               }         
                                           ?>

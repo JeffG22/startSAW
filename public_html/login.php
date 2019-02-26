@@ -1,7 +1,7 @@
 <?php
-  require_once("php/handlesession.php");
   require_once("php/domain_constraints.php");
   require_once("php/utilities.php");
+  require_once("php/handlesession.php");
   require_once("../confidential_info.php");
 
   my_session_start();
@@ -44,14 +44,35 @@
       if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type, $name))
         throw new Exception("mysqli bind result".$stmt->error);
       if (mysqli_stmt_fetch($stmt)) {
-        if(password_verify($_POST[$password], $pswd)) {
-        // ----- 4 impostazione sessione ----
-          $person = ($type == "person");
-          my_session_login($id, $person, $name);
-          navigateTo("profile.php");
-        }
-        else
-          throw new InvalidArgumentException("Username o password errati, riprovare per favore.");
+        
+        //Picture
+        $person = ($type == "person");
+          if ($type == "person")
+            $query2 = "SELECT person.picture FROM user, person WHERE user.user_id = person.id AND user.user_id = ?";
+          else
+            $query2 = "SELECT organization.picture FROM user, organization WHERE user.user_id = organization.id AND user.user_id = ?";
+          if (!($conn = dbConnect()))
+            throw new Exception("mysql ".mysqli_connect_error());
+          if (!($stmt = mysqli_prepare($conn, $query2)))
+            throw new Exception("mysql prepare".mysqli_error($conn));
+          if (!mysqli_stmt_bind_param($stmt, 'i', $id))
+            throw new Exception("mysql bind param");
+          if (!mysqli_stmt_execute($stmt))
+            throw new InvalidArgumentException("mysql execute".$stmt->error);
+          mysqli_stmt_store_result($stmt);
+          if (mysqli_stmt_num_rows($stmt) != 1) // not match
+              throw new InvalidArgumentException("Si è verificato un errore, riprovare per favore.");
+          if(!mysqli_stmt_bind_result($stmt, $picture))
+            throw new Exception("mysqli bind result".$stmt->error);
+          if (mysqli_stmt_fetch($stmt)) {
+            if(password_verify($_POST[$password], $pswd)) {
+            
+              // ----- 4 impostazione sessione ----
+            my_session_login($id, $person, $name, $picture);
+            navigateTo("profile.php");
+            } else
+              throw new InvalidArgumentException("Username o password errati, riprovare per favore.");
+          }
       }
       else
         throw new Exception("mysql fetch");
@@ -113,7 +134,7 @@
         var field = document.getElementById(id_errore);
         field.setCustomValidity(err_array[id_errore]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
         field.setAttribute("onclick", "this.setCustomValidity('');");         
-        field.setAttribute("onchange", "this.setCustomValidity('');");         
+        field.setAttribute("onchange", "this.setCustomValidity('');");
         field.style.color = "red";
         field.style.border = "2px solid red";
         field.style.borderRadius = "4px";

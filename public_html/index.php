@@ -30,7 +30,7 @@
 	  		<div class="carousel-inner">
 	  			<!--First slide-->
   			  <div id="firstSlide" class="carousel-item active">
-    		  	<img class="d-block img-fluid" src="" alt="">
+    		  	<!--<img class="d-block img-fluid" src="" alt="">-->
     		  	<span class="sr-only">First slide</span>
     		    <div class="carousel-caption d-none d-md-block">
     					<h5>Cerca tra decine di proposte quella adatta a te!</h5>
@@ -40,8 +40,8 @@
     			<!--First slide-->
     			<!--Second slide-->
     			<div id="secondSlide" class="carousel-item">
-    		  	<img class="d-block img-fluid" src="" alt="">
-    		  	<span class="sr-only">Second slide</span>
+    		  	<!--<img class="d-block img-fluid" src="" alt="">-->
+						<span class="sr-only">Second slide</span>
     		  	<div class="carousel-caption d-none d-md-block" style="display: flex; height: 120px; color: #dedede; background: #222; background: rgba(0,0,0,0.7); left: 0px; width: 100%;">
 							<h5 style="font-size: 30px; word-spacing: 4px; color: #ffffff; margin-top: -20px;">Ciò che abbiamo fatto solo per noi stessi muore con noi. Ciò che abbiamo fatto per gli altri e per il mondo resta ed è immortale.</h5>
     					<p style="font-size: 15px; word-spacing: 4px; color: #ffffff; ">Harvey B. Mackay</p>
@@ -50,7 +50,7 @@
     			<!--Second slide-->
     			<!--Third slide-->
     			<div id="thirdSlide" class="carousel-item">
-   			  	<img class="d-block img-fluid" src="" alt="">
+   			  	<!--<img class="d-block img-fluid" src="" alt="">-->
    			  	<span class="sr-only">Third slide</span>
    			  	<div class="carousel-caption d-none d-md-block" style="display: flex; height: 80px; color: #dedede; background: #222; background: rgba(0,0,0,0.7); left: 0px; width: 100%; ">
     					<h5 style="font-size: 30px; word-spacing: 4px; color: #ff8c00; margin-top: -20px;">Prendere riempie le mani, dare riempie il cuore</h5>
@@ -77,7 +77,7 @@
 			
 			<!--Continue button-->
 			<div id="continue">
-				<a href="#secondView"><button id="continueBtn" type="button" value="Scopri di più">Scopri di più</button></a>
+				<a href="#secondView"><div id="continueBtn">Scopri di più</div></a>
 			</div>
 			<!--Continue button-->
 		</div>
@@ -114,7 +114,7 @@
     <!--Second view--> 
 	
 		<!--Third view-->
-		<div vs-anchor="thirdView" class="mainview">
+		<div class="mainview">
     	<!--Testimonials-->
     	<div id="testimContainer" class="contain">asd</div>
 			<!--Testimonials-->	
@@ -122,7 +122,7 @@
 		<!--Third view--> 
 		
 		<!--Fourth view-->
-		<div vs-anchor="fourthView" class="mainview">
+		<div class="mainview">
     	<!--Map-->
     	<div id="mapContainer" class="contain">asdjasf</div>
 			<!--Map-->
@@ -130,16 +130,15 @@
 		</div>	
     <!--Fourth view-->
 	
-		<!--Third view-->
-		<div vs-anchor="fifthView" class="mainview">
+		<div class="mainview">
 			<!--Footer-->
 			<?php
 				include("php/footer.php")
 			?>
 			<!--Footer-->	
-    </div>
-		<!--Third view--> 	
+		</div>
 	</div>
+
   <script>
 	  /*$(document).ready(function() {
 	    // Sets viewScroller

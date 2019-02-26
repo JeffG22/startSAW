@@ -51,7 +51,7 @@
             
             <div class="col-md-8">
                 <div class="profile-content">
-                    <main role="main">
+                    <main>
                         <h4>Le mie proposte di volontariato</h4>
                         <div class="album">
                             <div class="container">

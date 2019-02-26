@@ -28,6 +28,5 @@
     }
     $rex = mysqli_fetch_array($re, MYSQLI_NUM);
     if(mysqli_num_rows($re) == 1)
-        $rex = (object) array_filter((array) $rex);
         echo json_encode($rex);
 ?>

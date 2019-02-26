@@ -33,15 +33,13 @@
 </head>
 
 <body>
-	
-	<!--Header/Navbar-->
-	<?php include("php/navbar.php"); ?>
-	<!--Header/Navbar-->
-
 	<div id="mainContainer">
 		
 		<!--First view-->
 		<div id="firstView">
+			<!--Header/Navbar-->
+			<?php include("php/navbar.php"); ?>
+			<!--Header/Navbar-->
 			<!--Carousel-->
 			<div id="carouselTop" class="carousel slide" data-ride="carousel">
 	  		<div class="carousel-inner">

@@ -18,8 +18,13 @@
     box-sizing: content-box;
   }
 
-  .profile-userpic{
-    padding: 5% 10%;
+  .profile-userpic-side {
+    padding: 10% 20%;
+    margin: auto;
+  }
+
+  .profile-userpic-card {
+    width: 100%;
     margin: auto;
   }
 
@@ -31,7 +36,7 @@
     position: relative;
   }
 
-  .profile-userpic img {
+  .profile-userpic-side img {
     text-align: center;
     display: block;
     float: none;
@@ -46,7 +51,25 @@
     -moz-border-radius: 50% !important;
     border-radius: 50% !important;
   }
-  
+
+  .profile-userpic-card img {
+      text-align: center;
+      display: block;
+      float: none;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 10px;
+      width: 50%;
+      max-width: 120px;
+      height: 50%;
+      max-height: 120px;
+      -webkit-border-radius: 50% !important;
+      -webkit-border-radius: 50% !important;
+      -moz-border-radius: 50% !important;
+      -moz-border-radius: 50% !important;
+      border-radius: 50% !important;
+  }
+
   .profile-usertitle {
     text-align: center;
     margin-top: 20px;

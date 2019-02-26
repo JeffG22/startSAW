@@ -9,7 +9,6 @@ h4 {
 
 /*Navbar & footer*/
 	#header, footer {
-		background-color: #fff;
 		color: #253e5e;
 		z-index: 9;
 	}
@@ -18,10 +17,12 @@ h4 {
 		top: 0;
 		position: sticky;
 		position: -webkit-sticky;
+		background-color: #fff;
 	}
 
 	footer {
 		bottom: 0;
+		background-color: #00a7e1;
 	}
 
 	.navbar-light .navbar-brand {

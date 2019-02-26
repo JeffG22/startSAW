@@ -98,7 +98,7 @@
             if (!empty($name)) {
             echo " da <div class=\"proposer-name\">".$name.
                         "<div class=\"card profile-card mb-4 box-shadow profile-overlay\">
-                            <div class=\"profile-userpic\">
+                            <div class=\"profile-userpic-card\">
                                 <img class=\"userpic-inner\" src=\"\" alt=\"Immagine del profilo\">
                             </div>
                             <div class=\"info-container\">

@@ -8,66 +8,78 @@
     if (!my_session_is_valid()) {
         navigateTo("../login.php");
     } else if ($_SESSION['type'] == "organization") {   // An organization can't have accepted proposals
-        navigateTo("../user.php");
+        navigateTo("../profile.php");
     }
 
-    $user_id = $_SESSION['userId'];
+    $error_flag = false;
+    try {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST) && !empty($_POST['proposal_id'])) {
+            
+            $proposal_id = intval($_POST['proposal_id']);
+            $user_id = $_SESSION['userId'];
 
-    $prev_location = "../accepted_proposals.php";
+            if ($proposal_id <= 0)
+                throw new InvalidArgumentException("Si è verificato un errore imprevisto nel ritirare la proposta. Riprova.");
 
-    if (empty($_POST) || empty($_POST['proposal_id'])) {
-        $_SESSION['message'] = "Si è verificato un errore imprevisto nel rinunciare alla proposta. Riprova.";
-        navigateTo($prev_location);
-    }
+            if (!($conn = dbConnect()))
+                throw new Exception("mysql ".mysqli_connect_error());
 
-    $proposal_id = intval($_POST['proposal_id']);
+            // Prevents inconsistent states, since I need to update multiple tables
+            if (!mysqli_begin_transaction($conn))
+                throw new Exception("mysql transaction".mysqli_connect_error($conn));
 
-    if ($proposal_id < 0) {
-        $_SESSION['message'] = "Si è verificato un errore imprevisto nel rinunciare alla proposta. Riprova.";
-        navigateTo($prev_location);
-    }
+            if (!mysqli_autocommit($conn, FALSE))
+                throw new Exception("mysql transaction".mysqli_connect_error($conn));
+            
+            $query1 = "UPDATE proposal
+                       SET available_positions = available_positions + 1
+                       WHERE proposal.id = ".$proposal_id." AND 
+                             proposal.id IN 
+                                        (SELECT id
+                                         FROM accepted
+                                         WHERE acceptor_id = ".$user_id.")";
+            
+            // Not using prepared statements since the only user-submitted value has already
+            // been sanitized by php function intval() which returns an integer.
+            if(!mysqli_query($conn, $query1))
+                    throw new Exception("mysql ".mysqli_errno($conn));            
+            
+            if(mysqli_affected_rows($conn) < 0) {    // MySQL error
+                mysqli_rollback($conn);
+                throw new Exception("mysql ".mysqli_errno($conn));
+            } else if(mysqli_affected_rows($conn) == 0) {    // Wrong proposal_id or not belonging to this user
+                mysqli_rollback($conn);
+                throw new Exception("Errore nel rifiutare la proposta. 
+                    La proposta potrebbe non esistere o non essere stata accettata da te. Riprova.");
+            }   
 
-    $con = dbConnect();
+            // If previous query succeeded, we know that proposal_id is valid
+            $query2 = "DELETE FROM accepted
+                       WHERE proposal_id = ".$proposal_id." AND acceptor_id = ".$user_id;
 
-    if (!$con) {
-        navigateTo($prev_location);
-    }
+            if(!mysqli_query($conn, $query2))
+                throw new Exception("mysql ".mysqli_errno($conn));
 
-    // Prevents inconsistent states, since I need to update multiple tables
-    mysqli_begin_transaction($con);
+            if(mysqli_affected_rows($conn) == 1) {
+                $_SESSION['message'] = "Hai rinunciato a questa proposta";
+            } else {
+                $_SESSION['message'] = "Errore: hai già rinunciato a questa.";
+                mysqli_rollback($conn);
+            }
 
-    mysqli_autocommit($con, FALSE);
+            if (!mysqli_commit($conn))
+                throw new Exception("mysql transaction failed");
+                
+            mysqli_close($conn);            
+        }
+    } catch (Exception $ex) {
+        $error_flag = true;
+        $error_message = $ex->getMessage();
 
-    // Not using prepared statements since the only user-submitted value has already
-    // been sanitized by php function intval() which return an integer.
-    mysqli_query($con, "UPDATE proposal 
-                        SET available_positions = available_positions + 1
-                        WHERE id = ".$proposal_id);
-    
-    if(mysqli_affected_rows($con) < 0) {    // MySQL error
-        $_SESSION['message'] = "Errore nella registrazione della richiesta. Attendi qualche istante e riprova.";
-        mysqli_rollback($con);
-        navigateTo($prev_location);
-    } else if(mysqli_affected_rows($con) == 0) {    // Wrong proposal_id
-        $_SESSION['message'] = "La proposta specificata sembra non esistere. Riprova.";
-        mysqli_rollback($con);
-        navigateTo($prev_location);
-    }
-
-    // If previous query succeeded, we know that proposal_id is valid
-    $stmt = "DELETE FROM accepted
-             WHERE proposal_id = ".$proposal_id." AND acceptor_id = ".$user_id;
-    mysqli_query($con, $stmt);
-
-    if(mysqli_affected_rows($con) == 1) {
-        $_SESSION['message'] = "Hai rinunciato a questa proposta.";
-    } else {
-        $_SESSION['message'] = "Impossibile rinunciare a questa proposta. Potresti aver già rinunciato o non averla accettata.";
-        mysqli_rollback($con);
-    }
-
-    mysqli_commit($con);
-    mysqli_close($con);
-
-    navigateTo($prev_location);
+        if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
+            $_SESSION['message'] = "Errore nell'eliminazione della proposta. Attendi qualche istante e riprova.";
+        else
+            $_SESSION['message'] = $error_message;
+    }    
+    navigateTo("../accepted_proposals.php");
 ?>

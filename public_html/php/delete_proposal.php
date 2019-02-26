@@ -41,7 +41,6 @@
             $_SESSION['message'] = "Proposta eliminata correttamente!";
             
         }
-        navigateTo("../my_proposals.php");
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
@@ -50,7 +49,7 @@
             $_SESSION['message'] = "Errore nell'eliminazione della proposta. Attendi qualche istante e riprova.";
         else
             $_SESSION['message'] = $error_message;
-
-        navigateTo("../my_proposals.php");
     }    
+    navigateTo("../my_proposals.php");
+
 ?>

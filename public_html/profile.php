@@ -11,7 +11,7 @@
 
     $user_id = $_SESSION['userId'];
     $name = $_SESSION['name'];
-    $picture = $_SESSION['picture'];
+    //$picture = $_SESSION['picture'];
 ?>
 
 <!DOCTYPE html>

@@ -82,7 +82,10 @@
                             echo "<div class=\"alert alert-primary\" id=\"notice-account\">Non puoi accettare proposte perché hai eseguito il login come associazione. Per accettare una proposta, <a href=\"logout_then_in.php\">effettua il login come utente</a>!</div>";
                         }
                     
-                        $query = "SELECT * FROM proposal, user WHERE proposer_id = user_id AND available_positions > 0";
+                        $query = "SELECT *, proposal.description AS description, proposal.picture AS picture
+                                  FROM proposal, user 
+                                  WHERE proposer_id = user_id 
+                                  AND available_positions > 0";
 
                         if (empty($_GET['search'])) {
                             $result = mysqli_query($conn, $query);

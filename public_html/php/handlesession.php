@@ -77,7 +77,12 @@
         $_SESSION['userId'] = $idUtente;
         $_SESSION['type'] = ($person) ? "person" : "organization";
         $_SESSION['name'] = $name;
-        $_SESSION['picture'] = $picture;
+        if (!empty($picture)) {
+            $_SESSION['picture'] = "userpics/".$picture;
+        } else {
+            $_SESSION['picture'] = "media/profile-placeholder.png";
+        }
+        
 
         // ----- Security session variables (agent and ip) -----
         $_SESSION['identity'] =  security_variables();        

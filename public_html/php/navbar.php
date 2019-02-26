@@ -32,12 +32,12 @@
     <!--Login/profile-->
     <ul class="navbar-nav ml-auto">
       <?php
-        if(my_session_is_valid()){
+        if(my_session_is_valid()) {
           $picture = $_SESSION['picture'];
           echo "<li class=\"nav-item dropdown\">
                   <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\"
                   role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
-                    <img style=\"margin-right: 10px;\" id=\"bar-id-pic\" src=\"userpics/".$picture."\" alt=\"Profile\">
+                    <img style=\"margin-right: 10px;\" id=\"bar-id-pic\" src=\"".$picture."\" alt=\"Profile\">
                   </a>
                   <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">
                     <a class=\"dropdown-item\" href=\"profile.php\" class=\"nav-link\">Profilo</a>

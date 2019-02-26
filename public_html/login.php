@@ -45,6 +45,7 @@
       if(!mysqli_stmt_bind_result($stmt, $id, $pswd, $type, $name))
         throw new Exception("mysqli bind result".$stmt->error);
       if (mysqli_stmt_fetch($stmt)) {
+        
         //Picture
         $person = ($type == "person");
           if ($type == "person")
@@ -66,7 +67,8 @@
             throw new Exception("mysqli bind result".$stmt->error);
           if (mysqli_stmt_fetch($stmt)) {
             if(password_verify($_POST[$password], $pswd)) {
-            // ----- 4 impostazione sessione ----
+            
+              // ----- 4 impostazione sessione ----
             my_session_login($id, $person, $name, $picture);
             navigateTo("profile.php");
             } else

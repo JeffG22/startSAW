@@ -1,7 +1,7 @@
 <?php
-    include_once("php/utilities.php");
-    include_once("php/handlesession.php");
-    include_once("../connection.php");
+    require_once("php/utilities.php");
+    require_once("php/handlesession.php");
+    require_once("../connection.php");
     
     my_session_start();
 
@@ -47,7 +47,7 @@
 
     <!--Popup for session messages-->
     <?php
-        include("php/popup.php");
+        require("php/popup.php");
     ?>
     <!--Popup-->
 

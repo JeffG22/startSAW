@@ -1,7 +1,7 @@
 <?php
-    include("../../connection.php");
-    include_once("handlesession.php");
-    include("utilities.php");
+    require("../../connection.php");
+    require_once("handlesession.php");
+    require("utilities.php");
 
     my_session_start();
     // If a user is not logged in and lands on this page, redirect to login

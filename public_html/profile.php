@@ -1,7 +1,7 @@
 <?php
-    include_once("php/utilities.php");
-    include_once("php/handlesession.php");
-    include_once("../connection.php");
+    require_once("php/utilities.php");
+    require_once("php/handlesession.php");
+    require_once("../connection.php");
     
     my_session_start();
     // If a user is not logged in and lands on this page, redirect to login
@@ -45,7 +45,7 @@
   
     <!--Popup for session messages-->
     <?php
-        include("php/popup.php");
+        require("php/popup.php");
     ?>
     <!--Popup-->
 
@@ -59,7 +59,7 @@
         <div class="row profile">
             
             <?php
-                include("php/user_sidebar.php");
+                require("php/user_sidebar.php");
                 if ($_SESSION['type'] == 'organization'){
                     echo "<script>document.getElementById(\"side-accepted\").remove();</script>";
                 }

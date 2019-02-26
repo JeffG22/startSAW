@@ -1,5 +1,5 @@
 <?php
-	include_once("php/handlesession.php");
+	require_once("php/handlesession.php");
     my_session_start();
     $text = "";
 	if(!empty($_GET["code"])) {

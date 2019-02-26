@@ -128,7 +128,7 @@
     ?>
     
     <?php
-        include("php/popup.php");
+        require("php/popup.php");
     ?>
 
     <?php

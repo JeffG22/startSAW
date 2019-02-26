@@ -1,6 +1,6 @@
 <?php
-    include("../../connection.php");
-    include("utilities.php");
+    require("../../connection.php");
+    require("utilities.php");
     setlocale(LC_ALL, "it_IT"); // Required to print birth month in italian
 
     // Import PHPMailer classes into the global namespace
@@ -58,7 +58,7 @@
 
         $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
         try {
-            include("../../mail_server_settings.php");
+            require("../../mail_server_settings.php");
     
             $mail->CharSet = 'UTF-8';
 

@@ -53,7 +53,7 @@
             $success = $json_decoded->{'success'};
             if (!$success) {
                 $code = $json_decoded->{'error-codes'};
-                //throw new InvalidArgumentException("captcha");
+                throw new InvalidArgumentException("captcha");
             }
         // 2 ----- controllo dati utente ------
             
@@ -386,7 +386,7 @@
                     </div>
                     <!-- telefono -->
                     <div>
-                        <label for="telefono">Telefono: </label>&emsp;
+                        <label for="telefono">Telefono: </label><i>facoltativo</i>&emsp;
                         <input type="tel" id="telefono" class="form-control input-in" name="telefono" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
                     </div>
                 </div>
@@ -452,7 +452,7 @@
                         </div>
                         <!-- sito, non è required -->
                         <div>
-                            <label for="sito">Sito web: </label>&emsp;
+                            <label for="sito">Sito web: </label><i>facoltativo</i>&emsp;
                             <input type="url" id="sito" class="form-control input-in" name="sito" maxlength="63">
                         </div>
                     </div>

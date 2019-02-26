@@ -77,7 +77,17 @@
               try {
                   if(!($conn = dbConnect()))
                       throw new Exception("sql ".mysqli_connect_error());
-                  $query = "SELECT user.description, ".$type.".phone FROM user, ".$type." WHERE user.user_id=".$user_id." AND user.user_id = ".$type.".id";
+                  if ($type == 'person') {
+                    $query = "SELECT user.description, person.phone, person.birthday, person.gender, person.province 
+                              FROM user, person 
+                              WHERE user.user_id=".$user_id." 
+                              AND user.user_id = person.id";
+                  } else {
+                    $query = "SELECT user.description, organization.phone, organization.sector, organization.website, organization.province 
+                              FROM user, person 
+                              WHERE user.user_id=".$user_id." 
+                              AND user.user_id = person.id";
+                  }
                   if(!($result = mysqli_query($conn, $query))) 
                       throw new Exception("sql ".mysqli_error($conn));
                   if (!($row = mysqli_fetch_assoc($result)))
@@ -88,62 +98,98 @@
                   $error_message = $ex->getMessage();
               }
             ?>
-
             <div class="col-md-8">
-                <div class="profile-content">
-                    <main role="main">
-                      <h4>Informazioni</h4>
-                        <div>
-                            <div class="container">
-                                <div class="row">
-                                  <div class="card profile-card mb-4 box-shadow">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Descrizione</h5>
-                                        <p class="card-text">
-                                          <?php   
-                                              if (empty($row['description'])) // Empty result
-                                                echo "Sembra che tu non abbia ancora aggiunto una tua descrizione.";  
-                                              else // Result not empty
-                                                printUserInfo($row);                               
-                                          ?>
-                                        </p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                              <a href="edit_aboutme.php">
-                                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                              </a>
-                                            </div>
-                                        </div>
-                                      </div>
+              <div class="profile-content">
+                <main role="main">
+                  <h4>Informazioni</h4>
+                    <div>
+                      <div class="container">
+                        <div class="row">
+
+                          <div class="card profile-card mb-4 box-shadow">
+                            <div class="card-body">
+                              <h5 class="card-title">Descrizione</h5>
+                                <p class="card-text">
+                                  <?php   
+                                    if (empty($row['description'])) // Empty result
+                                      echo "Sembra che tu non abbia ancora aggiunto una tua descrizione.";  
+                                    else // Result not empty
+                                      printUserInfo($row);                               
+                                  ?>
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <div class="btn-group">
+                                    <a href="edit_aboutme.php">
+                                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    </a>
                                   </div>
                                 </div>
-                                <div class="card profile-card mb-4 box-shadow">
-                                      <div class="card-body">
-                                        <h5 class="card-title">Telefono</h5>
-                                        <p class="card-text">
-                                          <?php   
-                                              if (empty($row['phone'])) // Empty result
-                                                echo "Sembra che tu non abbia ancora aggiunto il tuo numero di telefono.";  
-                                              else // Result not empty
-                                                echo($row['phone']);                               
-                                          ?>
-                                        </p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                              <a href="edit_profile.php">
-                                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                              </a>
-                                            </div>
-                                        </div>
-                                      </div>
-                                  </div>
+                              </div>
                             </div>
+                          </div>
+                          
+                          <div class="card profile-card mb-4 box-shadow">
+                            <div class="card-body">
+                              <h5 class="card-title">Informazioni</h5>
+                              <p class="card-text">
+                                <?php
+                                  if (!empty($row)) {
+                                  echo "<div>Provincia: <p class=\"caps\"".($row[$type.'province'])."</p></div>";
+                                  if ($type == 'person') {// Empty result
+                                    echo "<div>Data di nascita: ".($row['birthdate'])."</div>";  
+                                    echo "<div>Genere: ";
+                                    if ($row['gender'] == 'M'){
+                                      echo "Maschio";
+                                    } else if ($row['gender'] == 'F') {
+                                      echo "Femmina";
+                                    } else {
+                                      echo "Non specificato";
+                                    }
+                                    echo "</div>";
+                                  } else {
+                                    echo "<div>Settore: ".($row['sector'])."</div>";
+                                  }
+                                }
+                                ?>
+                              </p>
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                  <a href="edit_profile.php">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="card profile-card mb-4 box-shadow">
+                            <div class="card-body">
+                              <h5 class="card-title">Telefono</h5>
+                              <p class="card-text">
+                                <?php   
+                                  if (empty($row['phone'])) // Empty result
+                                    echo "Sembra che tu non abbia ancora aggiunto il tuo numero di telefono.";  
+                                  else // Result not empty
+                                    echo($row['phone']);                               
+                                ?>
+                              </p>
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                  <a href="edit_profile.php">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
                         </div>
+                      </div>
                     </main>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
     
     <!--Active sidebar script-->
     <script>

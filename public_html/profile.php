@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Le mie proposte</title>
+    <title>Profilo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -90,28 +90,21 @@
                                               try {
                                                   if(!($conn = dbConnect()))
                                                       throw new Exception("sql ".mysqli_connect_error());
-                                              
-                                                  $query = "SELECT * FROM person
-                                                            WHERE (SELECT description
-                                                            FROM person /*".$type."*/
-                                                            WHERE /*".$type."*/person.id = ".$user_id.")
-                                                            IS NOT NULL";
-
+                                                  $query = "SELECT description FROM user WHERE user_id=".$user_id;
                                                   if(!($result = mysqli_query($conn, $query))) 
-                                                      throw new Exception("sql ".mysqli_error());
-
+                                                      throw new Exception("sql ".mysqli_error($conn));
+                                                  if (!($row = mysqli_fetch_assoc($result)))
+                                                    throw new InvalidArgumentException("mysql");
+                                                  mysqli_close($conn);
                                               } catch (Exception $ex) {
                                                   $error_flag = true;
                                                   $error_message = $ex->getMessage();
                                               }
-                                                  
-                                              if (mysqli_num_rows($result) == 0) { // Empty result
-                                                  echo "Sembra che tu non abbia ancora aggiunto una tua descrizione.";  
-                                              } else { // Result not empty
-                                                  while($row = mysqli_fetch_assoc($result)) {
-                                                      printUserInfo($conn, $row);
-                                                  }                                
-                                              }         
+                                              
+                                              if (empty($row['description'])) // Empty result
+                                                echo "Sembra che tu non abbia ancora aggiunto una tua descrizione.";  
+                                              else // Result not empty
+                                                printUserInfo($row);                               
                                           ?>
                                         </p>
                                         <div class="d-flex justify-content-between align-items-center">

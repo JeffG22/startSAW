@@ -120,13 +120,19 @@
                             echo "<div class=\"d-flex justify-content-between align-items-center\">";
                             if (my_session_is_valid() && $_SESSION['type'] == 'person') {   
                                 if($row['proposer_id'] == $_SESSION['userId']) {
-                                    echo "<input type=\"button\" class=\"btn btn-sm btn-outline-secondary\" disabled value=\"Non puoi accettare una proposta inserita da te\">";
+                                    echo "<input type='hidden' class='proposal_id' name='proposal_id' value='".$row['id']."'>
+                                    <input type=\"button\" class=\"btn btn-sm btn-outline-secondary\" 
+                                            name='".$row['id']."' disabled value=\"Non puoi accettare una proposta inserita da te\">";
                                 } else {
                                     echo "<form action='php/accept_proposal.php' method='post'>
                                         <input type='hidden' class='proposal_id' name='proposal_id' value='".$row['id']."'>
                                         <input type='submit' class=\"btn btn-sm btn-outline-secondary\" value='Accetta questa proposta'>
                                         </form>";
                                 }
+                            } else if (my_session_is_valid() && $_SESSION['type'] == 'organization') {
+                                echo "<input type='hidden' class='proposal_id' name='proposal_id' value='".$row['id']."'>
+                                <input type=\"button\" class=\"btn btn-sm btn-outline-secondary\" 
+                                        disabled value=\"Un'organizzazione non può accettare una proposta\">";
                             }
                             echo "</div></div></div>";
                         }                                

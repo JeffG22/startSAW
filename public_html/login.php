@@ -2,7 +2,6 @@
   require_once("php/handlesession.php");
   require_once("php/domain_constraints.php");
   require_once("php/utilities.php");
-  require_once("php/data.php");
   require_once("../confidential_info.php");
 
   my_session_start();
@@ -107,8 +106,8 @@
     function loadPostData( jQuery ) {
     // ----- ricaricare dati inviati non validi -----
       <?php
-        if ($error_flag)
-          echo 'document.getElementById("'.$email.'").value="'.$_POST[$email].'";';
+        if ($error_flag && !empty($_POST[$email]))
+          echo 'document.getElementById("'.$email.'").value="'.sanitize_email($_POST[$email]).'";';
       ?>
       if (id_errore == "usr" || id_errore == "pwd") {
         var field = document.getElementById(id_errore);

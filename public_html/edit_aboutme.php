@@ -2,13 +2,12 @@
     require_once("php/domain_constraints.php");
     require_once("php/utilities.php");
     require_once("php/handlesession.php");
-    require_once("php/data.php");
     require_once("../confidential_info.php");
     require_once("../connection.php");
 
     my_session_start();
     if (!my_session_is_valid()) // Se un utente non è registrato --> redirect to index.php
-        header("Location: index.php");
+        navigateTo("index.php");
     // Se un utente è registrato --> ok
 
     // ----- CONTROLLI LATO SERVER su INPUT RICEVUTI -----
@@ -17,7 +16,7 @@
     try {
         // ----- recupero dati utente -----
         $person = ($_SESSION["type"] == "person") ? true : false;
-        $query1 = "SELECT * FROM ".$_SESSION['type']." WHERE id=".$_SESSION['userId'];
+        $query1 = "SELECT description  FROM ".$_SESSION['type']." WHERE id=".$_SESSION['userId'];
         if (!($conn = dbConnect()))
             throw new Exception("mysql ".mysqli_connect_error());
         if (!($res = mysqli_query($conn, $query1)))
@@ -29,119 +28,71 @@
         mysqli_close($conn);
         
         //print_r($row);
-        // if person row(id, name, surname, description, birthdate, gender, phone, province)
-        if ($person) {
-            $surname_value = $row["surname"];
-            $birthdate_value = $row["birthdate"];
-            $gender_value = $row["gender"];
-        }
-        // if organization row(id, name, description, phone, province, sector, website)
-        else {
-            $sector_value = $row["sector"];
-            $website_value = $row["website"];
-        }
-        $name_value = $row["name"];
-        $phone_value = $row["phone"];
-        $province_value = $row["province"];
+        // row(description, picture)
         $description_value = $row["description"];
 
-        $nome = "nome"; // nome
-        $tel = "tel"; // telefono
-        $cognome = "cognome"; // cognome
-        $data = "data"; // data
-        $sex = "genere"; // genere
-        $pr = "provincia"; // provincia
-        $sett = "settore"; // settore
-        $sito = "sito"; // sito
-        $descrizione = "descrizione"; // descrizione
+        $description = "description"; // descrizione
+        $picture = "picture"; // picture
       
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
-        // ----- controllo dati ------    
-            if (!empty($_POST[$tel]) && !checksOnTel($_POST[$tel])) // due opzioni perchè non required
-                throw new InvalidArgumentException($tel);
-            if (empty($_POST[$nome]) || !checksOnName($_POST[$nome]))
-                throw new InvalidArgumentException($nome);
-            if ($person && (empty($_POST[$cognome]) || !checksOnSurname($_POST[$cognome])))
-                throw new InvalidArgumentException($cognome);
-            if ($person && (empty($_POST[$data]) || !checksOnDate($_POST[$data])))
-                throw new InvalidArgumentException($data);
-            if ($person && (empty($_POST[$sex]) || ($_POST[$sex] != "F" && $_POST[$sex] != "M" && $_POST[$sex] != "-")))
-                throw new InvalidArgumentException($sex);
-            if (empty($_POST[$pr]) || !checksOnProv($_POST[$pr]))
-                throw new InvalidArgumentException($pr);
-            if (!$person && (empty($_POST[$sett]) || !checksOnSettore($_POST[$sett])))
-                throw new InvalidArgumentException($sett);
-            if (!$person && (!empty($_POST[$sito]) && !checksOnSite($_POST[$sito])))
-                throw new InvalidArgumentException($sito);
-            if ((!empty($_POST[$descrizione]) && !checksOnDescription($_POST[$descrizione])))
-                throw new InvalidArgumentException($descrizione);
+        // ----- controllo dati ------
+            if (empty($_POST[$description]) && empty($_FILES[$picture]['tmp_name']))
+                throw new InvalidArgumentException("args");
+            if (!empty($_POST[$description]) && !checksOnDescription($_POST[$description]))
+                throw new InvalidArgumentException($description);
+            if (!empty($_FILES[$picture]['tmp_name']) && !($file = uploadPicture($picture)))
+                throw new InvalidArgumentException($picture);
             
         // ----- sanitizzazione input -----           
-            if ($person) {
-            // person: (name, surname, gender, birthdate, province, phone)
-                $_POST[$cognome] = sanitize_inputString($_POST[$cognome]);
-                $_POST[$sex] = sanitize_inputString($_POST[$sex]);
-                $_POST[$data] = sanitize_inputString($_POST[$data]);
-            }
-            else {
-            // organization: (name, province, sector, website, phone)
-                $_POST[$sett] = sanitize_inputString($_POST[$sett]);
-                if (!empty($_POST[$sito]))
-                    $_POST[$sito] = sanitize_url($_POST[$sito]);
-                else
-                    $_POST[$sito] = null;
-            }
-            $_POST[$nome] = sanitize_inputString($_POST[$nome]);
-            $_POST[$pr] = sanitize_inputString($_POST[$pr]);
-            if (!empty($_POST[$tel]))
-                    $_POST[$tel] = sanitize_inputString($_POST[$tel]);
-                else
-                    $_POST[$tel] = null;
-            if (!empty($_POST[$descrizione]))
-                    $_POST[$descrizione] = sanitize_inputString($_POST[$descrizione]);
-                else
-                    $_POST[$descrizione] = null;
+            if (!empty($_POST[$description]))
+                    $_POST[$description] = nl2br(sanitize_inputString($_POST[$description]));
+            else
+                $_POST[$description] = null;
         
         // ----- inserimento nel DB se rispetta vincoli -----
             if (!($conn = dbConnect()))
                 throw new Exception("mysql ".mysqli_connect_error());
-            if ($person) {
-                $query2 = "UPDATE person SET name=?, surname=?, gender=?, birthdate=?, province=?, phone=?, description=?, WHERE id=".$_SESSION['userId'];
-                if (!($stmt = mysqli_prepare($conn, $query2)))
+
+            if ($person)
+                $query2 = "UPDATE person SET ";
+            else
+                $query2 = "UPDATE organization SET ";
+
+            if (!empty($_POST[$description]))
+                $query2 .= "description=?";
+            if (!empty($_POST[$description]) && !empty($_FILES[$picture]['tmp_name']))
+                $query2 .= ", picture=?";
+            if (empty($_POST[$description]) && !empty($_FILES[$picture]['tmp_name']))
+                $query2 .= "picture=?";
+            $query2 .= " WHERE id=".$_SESSION['userId'];
+
+            echo $query2;
+            
+            if (!($stmt = mysqli_prepare($conn, $query2)))
                     throw new Exception("mysql ".$conn->error);
-                if (!mysqli_stmt_bind_param($stmt, 'ssssss', 
-                        $_POST[$nome], $_POST[$cognome], $_POST[$sex], $_POST[$data], $_POST[$pr], $_POST[$tel], $_POST[$descrizione]))
+
+            if (!empty($_POST[$description]) && !empty($_FILES[$picture]['tmp_name'])) {
+                if (!mysqli_stmt_bind_param($stmt, 'ss', $_POST[$description], $file))
+                    throw new Exception("mysql bind param");
+            }
+            else if (!empty($_POST[$description])) {
+                if (!mysqli_stmt_bind_param($stmt, 's', $_POST[$description]))
                     throw new Exception("mysql bind param");
             }
             else {
-                $query2 = "UPDATE organization SET name=?, province=?, sector=?, website=?, phone=?, description=?, WHERE id=".$_SESSION['userId'];
-                    if (!($stmt = mysqli_prepare($conn, $query2)))
-                        throw new Exception("mysql prepare ".$conn->error);
-                    if (!mysqli_stmt_bind_param($stmt, 'sssss', 
-                            $_POST[$nome], $_POST[$pr], $_POST[$sett], $_POST[$sito], $_POST[$tel], $_POST[$descrizione]))                           
-                        throw new Exception("mysql param");
+                if (!mysqli_stmt_bind_param($stmt, 's', $file))
+                    throw new Exception("mysql bind param");
             }
+
             if (!mysqli_stmt_execute($stmt))
                 throw new InvalidArgumentException("mysql execute ".$stmt->error);
             if (mysqli_stmt_affected_rows($stmt) != 1)
                 throw new InvalidArgumentException("mysql insert");
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
-            if ($person) {
-                $surname_value = $_POST[$cognome];
-                $birthdate_value = $_POST[$data];
-                $gender_value = $_POST[$sex];
-            }
-            else {
-                $sector_value = $_POST[$sett];
-                $website_value = $_POST[$sito];
-            }
-            $name_value = $_POST[$nome];
-            $phone_value = $_POST[$tel];
-            $province_value = $_POST[$pr];
-            $description_value = $_POST[$descrizione];
 
+            $description_value = $_POST[$description];
             $updated = true;
         }      
     } catch (Exception $ex) {
@@ -159,7 +110,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit profile</title>
+    <title>Update aboutMe</title>
     
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
@@ -177,24 +128,17 @@
 	<link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" type="text/css" href="css/login.css">
         
-    <!-- SCRIPT -->
     <!-- Google ReCaptcha -->    
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- JS -->
+    <script src="JS/inputChecks.js"></script>
     <script>
         "use strict"; //necessario per strict mode
         
         // creare un'array associativo "messaggio -> errore"           
         var err_array = {
-                'tel' : 'Telefono inserito non valido.',
-                'nome' : 'Nome non valido.',
-                'cognome' : 'Cognome non valido.',
-                'data' : 'Data non valida.',
-                'genere' : 'Selezionare un genere..',
-                'provincia' : 'Provincia scelta non valida.',
-                'settore' : 'Settore non valido.',
-                'sito' : 'Sito inserito non valido.',
-                'descrizione' : 'Descrizione non valida.'
+                'description' : 'Descrizione non valida.',
+                'picture' : 'Immagine non valida.'
         };
         <?php
             $tempError = ($error_flag) ? $error_message : "";
@@ -203,38 +147,22 @@
         /** ----- operazione di recupero dati se non validi ----- */
         function loadData( jQuery ) {
             <?php
-            // ----- caricare dati utente -----
+            // ----- comunicare errore -----
             if ($tempError == "mysql")
                 echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Non sono riuscito a caricare i dati del profilo, si prega di riprovare.</p>"';
-            else {
-                if ($_SESSION["type"] == "person") {
-                    echo 'document.getElementById("'.$cognome.'").value="'.$surname_value.'";';
-                    echo 'document.getElementById("'.$data.'").value="'.$birthdate_value.'";';
-                    echo 'document.getElementById("'.$sex.'").value="'.$gender_value.'";';
-                }
-                else {
-                    echo 'document.getElementById("'.$sett.'").value="'.$sector_value.'";';
-                    echo 'document.getElementById("'.$sito.'").value="'.$website_value.'";';                
-                }
-                echo 'document.getElementById("'.$nome.'").value="'.$name_value.'";';
-                echo 'document.getElementById("'.$pr.'").value="'.$province_value.'";';
-                echo 'document.getElementById("'.$tel.'").value="'.$phone_value.'";';
-                echo 'document.getElementById("'.$descrizione.'").value="'.$description_value.'";';
-            }
+            else
+                echo 'document.getElementById("'.$description.'").value="'.$description_value.'";';
+
             if ($error_flag && $tempError != "mysql") {
-                echo '
-                        var field = document.getElementById(id_errore);
-                        field.setCustomValidity(err_array[id_errore]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
-                        field.setAttribute("onclick", "this.setCustomValidity(\'\');");
-                        field.setAttribute("onchange", "this.setCustomValidity(\'\');");         
-                        field.style.color = "red";
-                        field.style.border = "2px solid red";
-                        field.style.borderRadius = "4px";
-                        document.getElementById("submit").click(); // show the validity box
-                ';
+                if ($tempError == "args")
+                    echo 'document.getElementById("userMessage").insertAdjacentHTML(\'afterbegin\', "<p style=\'color: red\'>Dati inseriti non validi.</p>")';
+                else if ($tempError == "description")
+                    echo 'document.getElementById("userMessage").insertAdjacentHTML(\'afterbegin\', "<p style=\'color: red\'>Controllare la descrizione.</p>")';
+                else // picture
+                    echo 'document.getElementById("userMessage").insertAdjacentHTML(\'afterbegin\', "<p style=\'color: red\'>Immagine non valida.</p>")';
             }
             else if ($updated)
-                echo 'document.getElementById("userMessage").insertAdjacentHTML(\'afterbegin\', "<p style=\'color: green\'>Aggiornamento del profilo riuscito!</p>")';
+                echo 'document.getElementById("userMessage").insertAdjacentHTML(\'afterbegin\', "<p style=\'color: green\'>Aggiornamento riuscito!</p>")';
             ?>
         }
         <?php echo '$(document).ready(loadData);' ?>
@@ -242,109 +170,43 @@
     </script>
 </head>
 
-<!-- BODY con campi per modifica profilo -->
+<!-- BODY con campi per aggiornamento profilo -->
 <body>
     <!-- Navbar -->
     <?php include("php/navbar.php") ?>
-    <!-- MODIFICA PROFILO -->
+    <!-- AGGIORNA PROFILO -->
 	<div id="FirstBox" class="container">
 	<div id="sigcon" class="form-group">
-        <legend>Modifica Profilo</legend>
-        <form name="editUser" id="editUser" class="form-in" method="POST" action="edit_profile.php">
+        <legend>Aggiorna le informazioni su di te</legend>
+        <form enctype="multipart/form-data" name="editUser" id="editUser" class="form-in" method="POST" action="edit_aboutme.php">
+            <!-- ^ enctype is necessary to encode picture correctly ^ -->
             <!-- div to show error message -->                
             <div id="userMessage">
-                <p>Aggiornare i campi che si intende modificare</p>
-                <br/>
             </div>
             <fieldset>
             <?php
-                if ($_SESSION["type"] == "person" && $tempError != "mysql") {
+                if ($tempError != "mysql") {
                     echo '
-                        <div id="campiPerson">
-                            <!-- nome -->
-                            <div>
-                                <label for="nome">Nome: </label>&emsp;
-                                <input type="text" id="nome" name="nome" class="form-control input-in" minlength="3" maxlength="50" required>
-                            </div>
-                            <!-- cognome -->
-                            <div>
-                                <label for="cognome">Cognome: </label>&emsp;
-                                <input type="text" id="cognome" name="cognome" class="form-control input-in" maxlength="50" required>
-                            </div>
-                            <!-- data di nascita -->
-                            <div>
-                                <label for="data">Data di nascita: </label>&emsp;
-                                <input type="date" id="data" name="data" class="form-control input-in" min="1900-01-01" max="2006-12-31" required>
-                            </div>
-                            <!-- Sesso -->
-                            <div>
-                                <label for="genere">Sesso: </label>&emsp;
-                                <select id="genere" name="genere" class="form-control input-in" required>
-                                    <option value="-">Non specificato</option>
-                                    <option value="F">F</option>
-                                    <option value="M">M</option>
-                                </select>
-                            </div>
-                            <div>
-                            <!-- Provincia --> 
-                                <label for="provincia">Provincia: </label>&emsp;
-                                <select id="provincia" name="provincia" class="form-control input-in" required>';
-                    show_province();
-                    echo '
-                            </select>
-                            </div>
-                            <!-- telefono -->
-                            <div>
-                                <label for="tel">Telefono: </label>&emsp;
-                                <input type="tel" id="tel" class="form-control input-in" name="tel" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
-                            </div>
                             <!-- Descrizione -->
                             <div>
-                                <label for="descrizione">Descrizione: </label>&emsp;
-                                <input type="descrizione" id="descrizione" class="form-control input-in" name="descrizione">
+                                <label for="description">Descrizione: </label>&emsp;
+                                <textarea id="description" placeholder="Racconta qualcosa di te!" class="form-control input-in" rows="6" name="description" minlength="10" maxlength="50000"></textarea>
                             </div>
-                        </div>
-                        <div class="btn-container">
-                        <input type="submit" id="submit" class="btn btn-primary" value="Modifica!">
-                        </div>
-                    ';
-                }
-                else if ($tempError != "mysql") {
-                    echo '
-                        <div id="campiOrganization">
-                            <!-- nome -->
+                            <!-- Picture -->
+                            <br/>
                             <div>
-                                <label for="nome">Nome: </label>&emsp;
-                                <input type="text" id="nome" class="form-control input-in" name="nome" minlength="3" maxlength="50">
+                            <!-- Upload picture -->
+                                <label class="upload-btn btn btn-sm btn-secondary" for="picture">Carica un\'immagine</label>
+                                <!-- This hidden field is used by php to avoid uploading large files.
+                                Files lager than 4MB are not blocked by this, but upload stops at 4M
+                                and the file is not sent, thus preventing user from waiting for a file
+                                that will be rejected server-side.-->
+                                <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
+                                <input type="file" name="picture" id="picture" class="form-control" accept="image/png, image/jpeg, image/jpg, image/bmp"  onchange="checkPicture()">
                             </div>
-                            <div>
-                            <!-- Provincia --> 
-                                <label for="provincia">Provincia delle sede: </label>&emsp;
-                                <select id="provincia" name="provincia" class="form-control input-in">
-                        ';
-                    show_province();
-                    echo'
-                            </select>
+                            <div class="btn-container">
+                            <input type="submit" id="submit" class="btn btn-primary" value="Modifica!">
                             </div>
-                            <!-- settore -->
-                            <div>
-                                <label for="settore">Settore in cui opera: </label>&emsp;
-                                <input type="text" id="settore" name="settore" class="form-control input-in" maxlength="35">
-                            </div>
-                            <!-- sito, non è required -->
-                            <div>
-                                <label for="sito">Sito web: </label>&emsp;
-                                <input type="url" id="sito" class="form-control input-in" name="sito" maxlength="63">
-                            </div>
-                            <!-- telefono -->
-                            <div>
-                                <label for="tel">Telefono: </label>&emsp;
-                                <input type="tel"id="tel" class="form-control input-in" name="tel" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
-                            </div>
-                        </div>
-                        <div class="btn-container">
-                        <input type="submit" id="submit" class="btn btn-primary" value="Modifica!">
-                        </div>
                     ';
                 }
             ?>

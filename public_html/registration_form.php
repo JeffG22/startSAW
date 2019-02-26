@@ -290,15 +290,24 @@
             // ----- ricaricare dati inviati non validi -----
             <?php
                 if ($error_flag && $tempError != "tipoUtente") {
-                    echo 'document.getElementById("'.$email.'").value="'.$_POST[$email].'";';
-                    echo 'document.getElementById("'.$telefono.'").value="'.$_POST[$telefono].'";';
-                    echo 'document.getElementById("'.$nome.'").value="'.$_POST[$nome].'";';
-                    echo 'document.getElementById("'.$cognome.'").value="'.$_POST[$cognome].'";';
-                    echo 'document.getElementById("'.$data.'").value="'.$_POST[$data].'";';
-                    echo 'document.getElementById("'.$sex.'").value="'.$_POST[$sex].'";';
-                    echo 'document.getElementById("'.$pr.'").value="'.$_POST[$pr].'";';
-                    echo 'document.getElementById("'.$sett.'").value="'.$_POST[$sett].'";';
-                    echo 'document.getElementById("'.$sito.'").value="'.$_POST[$sito].'";';
+                    if (isset($_POST[$email]))
+                        echo 'document.getElementById("'.$email.'").value="'.sanitize_email($_POST[$email]).'";';
+                    if (isset($_POST[$telefono]))
+                        echo 'document.getElementById("'.$telefono.'").value="'.sanitize_inputString($_POST[$telefono]).'";';
+                    if (isset($_POST[$nome]))
+                        echo 'document.getElementById("'.$nome.'").value="'.sanitize_inputString($_POST[$nome]).'";';
+                    if (isset($_POST[$cognome]))
+                        echo 'document.getElementById("'.$cognome.'").value="'.sanitize_inputString($_POST[$cognome]).'";';
+                    if (isset($_POST[$data]))
+                        echo 'document.getElementById("'.$data.'").value="'.sanitize_inputString($_POST[$data]).'";';
+                    if (isset($_POST[$sex]))
+                        echo 'document.getElementById("'.$sex.'").value="'.sanitize_inputString($_POST[$sex]).'";';
+                    if (isset($_POST[$pr]))
+                        echo 'document.getElementById("'.$pr.'").value="'.sanitize_inputString($_POST[$pr]).'";';
+                    if (isset($_POST[$sett]))
+                        echo 'document.getElementById("'.$sett.'").value="'.sanitize_inputString($_POST[$sett]).'";';
+                    if (isset($_POST[$sito]))
+                        echo 'document.getElementById("'.$sito.'").value="'.sanitize_inputString($_POST[$sito]).'";';
                     if (isset($person) && $person)
                         echo 'document.getElementById("persona").checked = true;';
                     else
@@ -327,7 +336,9 @@
                 field.style.color = "red";
                 field.style.border = "2px solid red";
                 field.style.borderRadius = "4px";
-                document.getElementById("submit").click(); // show the validity dialog                   
+                document.getElementById("submit").click(); // show the validity dialog
+                document.getElementById("password").required = true;
+                document.getElementById("password").minlength = 6;                  
             }        
         }
         <?php

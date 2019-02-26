@@ -72,7 +72,7 @@
 
             if(mysqli_affected_rows($conn) == 1) {
                 $_SESSION['message'] = "Inserimento completato correttamente.";
-                header("Location: my_proposals.php");
+                navigateTo("my_proposals.php");
             } else {
                 throw new Exception("sql insert");
             }

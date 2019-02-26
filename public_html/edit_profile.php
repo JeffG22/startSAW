@@ -16,7 +16,6 @@
     $updated = false;
     try {
         // ----- recupero dati utente -----
-        print_r($_SESSION);
         $person = ($_SESSION["type"] == "person");
         $query1 = "SELECT * FROM ".$_SESSION['type']." WHERE id=".$_SESSION['userId'];
         if (!($conn = dbConnect()))
@@ -118,7 +117,7 @@
             if (!mysqli_stmt_execute($stmt))
                 throw new InvalidArgumentException("mysql execute ".$stmt->error);
             if (mysqli_stmt_affected_rows($stmt) != 1)
-                throw new InvalidArgumentException("mysql insert");
+                throw new InvalidArgumentException("mysql updated");
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
             if ($person) {
@@ -139,7 +138,6 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-        echo $error_message;
         if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $error_message = "mysql";
     }
@@ -194,7 +192,7 @@
             <?php
             // ----- caricare dati utente -----
             if ($tempError == "mysql")
-                echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Non sono riuscito a caricare i dati del profilo, si prega di riprovare.</p>"';
+                echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Non sono riuscito a caricare/modificare i dati del profilo, si prega di riprovare.</p>"';
             else {
                 if ($_SESSION["type"] == "person") {
                     echo 'document.getElementById("'.$cognome.'").value="'.$surname_value.'";';

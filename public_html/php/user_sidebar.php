@@ -70,6 +70,11 @@
                     <i class="fas fa-user"></i>
                     Impostazioni</a>
                 </li>
+                <li id="side-setting">
+                    <a href="edit_pswd.php">
+                    <i class="fas fa-user"></i>
+                    Modifica password</a>
+                </li>
                 <li id="side-proposal">
                     <a href="my_proposals.php">
                     <i class="fas fa-list-alt"></i>

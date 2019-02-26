@@ -4,7 +4,7 @@
     
       <!--Grid row-->
       <div class="" style="text-align: center; margin-top: 0px; padding-bottom: 0px; padding-top: 3px; font: Tahoma"><h2 style="font-variant: small-caps;"><strong>HAND-AID<strong></h2></div>
-      <div class="" style="text-align: center; margin-top: -17px; padding-top: -17px; color: white; "><h4>volontariato per la vita e vita per il volontariato</h4></div>
+      <div class="" style="text-align: center; margin-top: -17px; padding-top: -17px; color: white; "><h4>Volontariato per la vita, vita per il volontariato!</h4></div>
     <div class="container text-center text-md-left" style="margin-top: -7px; padding-top: -7px; " >
       <div class="row">
         <!--Grid column-->

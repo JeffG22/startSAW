@@ -10,10 +10,19 @@
     
 	<?php
         require("php/head_common.php");
-  ?>
-
+	?>
+	<!--Include Leaflet CSS -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+			  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+			  crossorigin=""/>
+	<!--Include Leaflet JavaScript file after Leaflet’s CSS-->
+	<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+					integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+					crossorigin="">
+	</script>
 	<script src="js/jquery.easing.min.js"></script>
-	
+	<?php include("php/map.php"); ?>
+	<script src="js/mapFunction.js"></script>
   <link rel="stylesheet" href="css/index.css">
 </head>
 
@@ -124,9 +133,39 @@
 		<!--Fourth view-->
 		<div vs-anchor="fourthView" class="mainview">
     	<!--Map-->
-    	<div id="mapContainer" class="contain">asdjasf</div>
+    	<div id="mapContainer" class="contain">
+			<h4 id="preMap">Scopri sulla <span style="inline: block; color: cornflowerblue">mappa</span> le proposte di volontariato!<h4>
+			<h6 id="preMap"><i>Se non ce ne sono, guarda che tempo fa con un click.</i></h6>
+			<!-- a questo id viene associata la mappa -->
+			<div id="mapid"></div>
+			</div>
 			<!--Map-->
+			<script>
+				var mymap = L.map("mapid").setView([41.9109, 12.4818], 6);
 
+				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+						attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+						maxZoom: 21,
+						id: 'mapbox.streets',
+						accessToken: 'pk.eyJ1IjoiamVmZmdpbGliZXJ0aSIsImEiOiJjam9rN2EzaTMwYnQ3M3NwajZ1Y2l1czh4In0.LfOcrE8c99dDvDAurXe9Mg'
+				}).addTo(mymap);
+
+				var heartIcon = L.icon({
+						iconUrl: 'media/heart.png',
+						iconSize: [30, 30],
+						iconAnchor: [16, 25],
+						popupAnchor: [0, -28]
+				});
+
+				/* adding the marker from feature collections by geojson+lfleat */
+				L.geoJSON(layer1, {
+						pointToLayer: function (feature, latlng) {return L.marker(latlng, {icon: heartIcon});},
+						onEachFeature: onEachFeature}).addTo(mymap);
+				
+				var popup = L.popup();
+				mymap.on('click', onMapClick);
+				mymap.on('popupopen', onMapOpen);
+    </script>
 		</div>	
     <!--Fourth view-->
 	

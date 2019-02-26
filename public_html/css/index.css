@@ -114,3 +114,19 @@ body {
 	bottom: 0;
 }
 	
+#mapid {
+	margin: auto;
+	width: 720px;
+	height: 480px;
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
+#fontMap{
+	font: Tahoma,Arial,sans-serif;	
+}
+
+#preMap{
+	text-align: center;
+	margin-top: 0px;
+}

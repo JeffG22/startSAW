@@ -77,13 +77,14 @@
         $_SESSION['userId'] = $idUtente;
         $_SESSION['type'] = ($person) ? "person" : "organization";
         $_SESSION['name'] = $name;
-        $_SESSION['picture'] = ($picture) ? $picture : "media/profile-placeholder.png";
-        
-
-
+        $_SESSION['picture'] = (!empty($picture)) ? $picture : "media/profile-placeholder.png";
 
         // ----- Security session variables (agent and ip) -----
         $_SESSION['identity'] =  security_variables();        
+    }
+
+    function my_session_update_picture($picture) {
+        $_SESSION['picture'] = $picture;
     }
 
     // "go away" for protected area

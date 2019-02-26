@@ -15,8 +15,7 @@
     $updated = false;
     try {
         // ----- recupero dati utente -----
-        $person = ($_SESSION["type"] == "person") ? true : false;
-        $query1 = "SELECT description  FROM ".$_SESSION['type']." WHERE id=".$_SESSION['userId'];
+        $query1 = "SELECT description FROM user WHERE user_id=".$_SESSION['userId'];
         if (!($conn = dbConnect()))
             throw new Exception("mysql ".mysqli_connect_error());
         if (!($res = mysqli_query($conn, $query1)))
@@ -54,10 +53,7 @@
             if (!($conn = dbConnect()))
                 throw new Exception("mysql ".mysqli_connect_error());
 
-            if ($person)
-                $query2 = "UPDATE person SET ";
-            else
-                $query2 = "UPDATE organization SET ";
+            $query2 = "UPDATE user SET ";
 
             if (!empty($_POST[$description]))
                 $query2 .= "description=?";
@@ -65,22 +61,18 @@
                 $query2 .= ", picture=?";
             if (empty($_POST[$description]) && !empty($_FILES[$picture]['tmp_name']))
                 $query2 .= "picture=?";
-            $query2 .= " WHERE id=".$_SESSION['userId'];
-
-            echo $query2;
+            $query2 .= " WHERE user_id=".$_SESSION['userId'];
             
             if (!($stmt = mysqli_prepare($conn, $query2)))
                     throw new Exception("mysql ".$conn->error);
 
             if (!empty($_POST[$description]) && !empty($_FILES[$picture]['tmp_name'])) {
                 if (!mysqli_stmt_bind_param($stmt, 'ss', $_POST[$description], $file))
-                    throw new Exception("mysql bind param");
-            }
-            else if (!empty($_POST[$description])) {
+                    throw new Exception("mysql bind param");            
+            } else if (empty($_FILES[$picture]['tmp_name'])) {
                 if (!mysqli_stmt_bind_param($stmt, 's', $_POST[$description]))
                     throw new Exception("mysql bind param");
-            }
-            else {
+            } else {
                 if (!mysqli_stmt_bind_param($stmt, 's', $file))
                     throw new Exception("mysql bind param");
             }
@@ -94,6 +86,8 @@
 
             $description_value = $_POST[$description];
             $updated = true;
+            if (!empty($_FILES[$picture]['tmp_name']))
+                my_session_update_picture($file);
         }      
     } catch (Exception $ex) {
         $error_flag = true;
@@ -128,8 +122,6 @@
 	<link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" type="text/css" href="css/login.css">
         
-    <!-- Google ReCaptcha -->    
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- JS -->
     <script src="JS/inputChecks.js"></script>
     <script>

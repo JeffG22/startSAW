@@ -151,7 +151,7 @@
 					<div class="testimonial">
 						<!--Avatar-->
 						<div class="avatar mx-auto">
-							<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(1).jpg" class="rounded-circle z-depth-1 img-fluid">
+							<img src="media/person1.png" class="rounded-circle z-depth-1 img-fluid">
 						</div>
 						<!--Content-->
 						<h4 class="font-weight-bold dark-grey-text mt-2">Anna Deynah</h4>
@@ -169,7 +169,7 @@
 					<div class="testimonial">
 						<!--Avatar-->
 						<div class="avatar mx-auto">
-							<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" class="rounded-circle z-depth-1 img-fluid">
+							<img src="media/person2.png" class="rounded-circle z-depth-1 img-fluid">
 						</div>
 						<!--Content-->
 						<h4 class="font-weight-bold dark-grey-text mt-2">John Doe</h4>
@@ -187,7 +187,7 @@
 					<div class="testimonial">
 						<!--Avatar-->
 						<div class="avatar mx-auto">
-							<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg" class="rounded-circle z-depth-1 img-fluid">
+							<img src="media/person3.jpeg" class="rounded-circle z-depth-1 img-fluid">
 						</div>
 						<!--Content-->
 						<h4 class="font-weight-bold dark-grey-text mt-2">Maria Kate</h4>

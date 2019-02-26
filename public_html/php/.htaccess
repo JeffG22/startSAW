@@ -1,6 +1,6 @@
 Order deny,allow
 Deny from all
-<FilesMatch "ajax_profile\.php|accept_proposal\.php|delete_proposal.php|turn_down_proposal.php">
+<FilesMatch "ajax_profile\.php|accept_proposal\.php|delete_proposal.php|turn_down_proposal.php|logout.php">
   Allow from all
 </FilesMatch>
 # send_email.php

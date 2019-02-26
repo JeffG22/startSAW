@@ -85,11 +85,12 @@
 
         if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $_SESSION['message'] = "Errore nell'accettazione della proposta. Attendi qualche istante e riprova.";
-        else if ($error_message != "email")
+        else if ($error_message != "email") {
             $_SESSION['message'] = "$error_message";
+        }
         
         if ($error_message == "email" || !empty($mail->ErrorInfo))
-            $_SESSION['message'] = $_SESSION['message']."<br>PS: C'è stato un problema con l'invio della mail. 
+            $_SESSION['message'] = "Proposta accettata. Grazie del tuo aiuto! <br>PS: C'è stato un problema con l'invio della mail. 
                                         Non preoccuparti, la proposta è stata comunque accettata.";
 
         navigateTo("../browse_proposals.php");

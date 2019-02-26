@@ -67,7 +67,7 @@
                         if (!my_session_is_valid()) {
                             echo "<div class=\"alert alert-primary\" id=\"notice-account\">Esplora liberamente le proposte disponibili. Per accettare una proposta, <a href=\"login.php\">effettua il login</a>!</div>";
                         } else if ($_SESSION['type'] == 'organization') {
-                            echo "<div class=\"alert alert-primary\" id=\"notice-account\">Non puoi accettare proposte perché hai eseguito il login come associazione. Per accettare una proposta, <a href=\"logout_then_in.php\">effettua il login come utente</a>!</div>";
+                            echo "<div class=\"alert alert-primary\" id=\"notice-account\">Non puoi accettare proposte perché hai eseguito il login come associazione. Per accettare una proposta, effettua il login come utente.</div>";
                         }
                     
                         $query = "SELECT *, proposal.description AS description, proposal.picture AS picture

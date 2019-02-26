@@ -143,7 +143,7 @@
                 if (key == "altro") // problemi con db o altro
                     document.getElementById("userMessage").insertAdjacentHTML( 'beforeend', "<p style='color: red'>"+err_array[key]+"</p>");
             }
-        }
+        
         
         <?php
             if ($error_flag) // se errore allora comunica all'utente ciò quando la pagina è ricaricata (funzione jquery)

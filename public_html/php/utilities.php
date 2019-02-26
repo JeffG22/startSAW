@@ -93,16 +93,19 @@
         echo "<div class=\"card-body\">";
         echo "<b>".$row['name']."</b><br>\n";
         echo "<i class=\"text-muted\">Inserito in data: ".$row['date_inserted'];
-        if ($show_name) {
+        
             $name = getUserName($con, $row['proposer_id']);
+            if (!empty($name)) {
             echo " da <div class=\"proposer-name\">".$name.
-                        "<div class=\"card profile-card mb-4 box-shadow profile-overlay profile-sidebar\">
+                        "<div class=\"card profile-card mb-4 box-shadow profile-overlay\">
                             <div class=\"profile-userpic\">
                                 <img class=\"userpic-inner\" src=\"\" alt=\"Immagine del profilo\">
                             </div>
-                            <div class=\"profile-usertitle-name\" id=\"hover-name\"></div>
-                            <div class=\"profile-usertitle-job\" id=\"hover-role\"></div>
-                            <div class=\"hover-desc\"></div>
+                            <div class=\"info-container\">
+                                <div class=\"profile-usertitle-name\" id=\"hover-name\"></div>
+                                <div class=\"profile-usertitle-job\" id=\"hover-role\"></div>
+                                <div class=\"hover-desc\"></div>
+                            </div>
                         </div>
                        </div>";
         }

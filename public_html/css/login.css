@@ -100,7 +100,7 @@ label {
   margin: 3vh;
 }
 
-#upload_picture {
+#upload_picture, #picture {
   display: block;
   margin: 5px 0 2vh 0;
 }

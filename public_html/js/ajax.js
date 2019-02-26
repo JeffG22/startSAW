@@ -23,9 +23,10 @@ $(".proposer-name").click(function(e) {
                 $($clicked).find(".profile-usertitle-name").text(response[0]);
                 $($clicked).find(".profile-usertitle-job").text(response[1]);
                 $($clicked).find(".hover-desc").text(response[3]);
+                $($clicked).find(".userpic-inner").attr('src', 'userpics/'+response[2]);
             }
         });           
-    $(this).find(".userpic-inner").attr('src', 'media/profile-placeholder.png');
+    //$(this).find(".userpic-inner").attr('src', 'media/profile-placeholder.png');
     $(this).children().show();
     }
 });

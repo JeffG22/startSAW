@@ -25,6 +25,11 @@
   margin-top: 20px;
 }
 
+.card-img-top {
+  max-width: 350px;
+  max-height: 350px;
+}
+
 #notice-account {
   flex-grow: 1;
   width: 100%;

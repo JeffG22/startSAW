@@ -20,7 +20,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <title>Error</title>
+  <title>Errore</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="css/error.css">

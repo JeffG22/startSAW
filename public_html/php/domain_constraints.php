@@ -71,7 +71,7 @@
     function checksOnAvailablePos($str) {
         $value = intval($str);
         $minAvailablePos = 1;
-        $maxAvailablePos = 2000;
+        $maxAvailablePos = 500;
         return $value >= $minAvailablePos && $value <= $maxAvailablePos;
     }
 

@@ -11,6 +11,7 @@
 
     $user_id = $_SESSION['userId'];
     $name = $_SESSION['name'];
+    $picture = $_SESSION['picture'];
 ?>
 
 <!DOCTYPE html>
@@ -115,7 +116,7 @@
                                         </p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
-                                              <a href="edit_profile.php">
+                                              <a href="edit_aboutme.php">
                                                 <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                               </a>
                                             </div>

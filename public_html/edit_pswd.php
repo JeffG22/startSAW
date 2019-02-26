@@ -149,7 +149,7 @@
     <!-- MODIFICA PASSWORD -->
 	<div id="FirstBox" class="container">
 	<div id="sigcon" class="form-group">
-        <legend>Modifica della Password</legend>
+        <legend>Modifica della password</legend>
         <form name="editPswd" id="editPswd" class="form-in" method="POST" action="edit_pswd.php">
             <!-- div to show error message -->                
             <div id="userMessage">

@@ -21,7 +21,7 @@
             $user_id = $_SESSION['userId'];
             
             if ($proposal_id <= 0)
-                throw new InvalidArgumentException("Si è verificato un errore imprevisto nel ritirare la proposta. Riprova.");
+                throw new InvalidArgumentException("Si è verificato un errore imprevisto nell'accettare la proposta. Riprova.");
 
             if (!($conn = dbConnect()))
                 throw new Exception("mysql ".mysqli_connect_error());
@@ -56,14 +56,18 @@
                        (acceptor_id, proposal_id)
                        VALUES (".$user_id.", ".$proposal_id.")";
 
-            if(!mysqli_query($conn, $query2))
-                throw new Exception("mysql ".mysqli_errno($conn));
+            if(!mysqli_query($conn, $query2)) {
+                if (mysqli_errno($conn) == 1062) {  // duplicate entry
+                    mysqli_rollback($conn);
+                    throw new Exception("Errore: hai già accettato questa proposta.");
+                } else
+                    throw new Exception("mysql ".mysqli_error($conn));
+            }
 
             if(mysqli_affected_rows($conn) == 1) {
                 $_SESSION['message'] = "Proposta accettata. Grazie del tuo aiuto!";
             } else {
-                $_SESSION['message'] = "Errore: hai già accettato questa proposta.";
-                mysqli_rollback($conn);
+                throw new Exception("mysql ".mysqli_error($conn));
             }
 
             if (!mysqli_commit($conn))
@@ -76,6 +80,7 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage(); 
+
         if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $_SESSION['message'] = "Errore nell'accettazione della proposta. Attendi qualche istante e riprova.";
         else

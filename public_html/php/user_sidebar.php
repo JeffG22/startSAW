@@ -7,7 +7,7 @@
     4. - The rest of the content should be in: 
         <div class="col-md-8">
             <div class="profile-content">
-                <main role="main">
+                <main>
                     <div class="album py-5 bg-light">
                         <div class="container">
                             <div class="row">
@@ -38,9 +38,9 @@
                     echo "<a href=\"edit_aboutme.php\"><img src=\"".$picture."\" class=\"img-responsive\" alt=\"Immagine di profilo\"></a>";
                 ?>
             </div>
-            <div class="btn-crc-container">
-                <a href="edit_aboutme.php"><button type="button" class="btn btn-info btn-circle"><i class="fas fa-pencil-alt"></i></button></a>
-            </div>
+            <form action="edit_aboutme.php" method="get" class="btn-crc-container">
+                <button type="submit" class="btn btn-info btn-circle" ><i class="fas fa-pencil-alt"></i></button>
+            </form>
         </div>
         <!-- END SIDEBAR USERPIC -->
         <!-- SIDEBAR USER TITLE -->
@@ -75,7 +75,7 @@
                     <i class="fas fa-user"></i>
                     Modifica dati</a>
                 </li>
-                <li id="side-setting">
+                <li id="side-about">
                     <a href="edit_pswd.php">
                     <i class="fas fa-key"></i>
                     Modifica password</a>

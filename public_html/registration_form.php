@@ -160,7 +160,7 @@
                 }
             }
             else {
-                $query2 = "INSERT INTO organization (id, name, province, sector, website, phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $query2 = "INSERT INTO organization (id, name, province, sector, website, phone) VALUES (?, ?, ?, ?, ?, ?)";
                     if (!($stmt = mysqli_prepare($conn, $query2))) {
                         mysqli_rollback($conn);
                         throw new Exception("mysql prepare ".$conn->error);
@@ -194,7 +194,7 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-        echo $error_message;
+        //echo $error_message;
         if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $error_message = "mysql";
     }
@@ -280,7 +280,7 @@
                 'settore' : 'Settore non valido.',
                 'sito' : 'Sito inserito non valido.',
                 'emailsql' : 'L\'email inserita è già registrata!',
-                'mysql' : 'Registrazione non riuscita, si prega di riprovare.'
+                'mysql' : 'Registrazione non riuscita, si prega di riprovare tra qualche minuto.'
         };
         <?php
             $tempError = ($error_flag) ? $error_message : "";

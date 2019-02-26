@@ -16,6 +16,7 @@
     $updated = false;
     try {
         // ----- recupero dati utente -----
+        print_r($_SESSION);
         $person = ($_SESSION["type"] == "person");
         $query1 = "SELECT * FROM ".$_SESSION['type']." WHERE id=".$_SESSION['userId'];
         if (!($conn = dbConnect()))
@@ -138,6 +139,7 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
+        echo $error_message;
         if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $error_message = "mysql";
     }

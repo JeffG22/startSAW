@@ -46,8 +46,8 @@
       if (mysqli_stmt_fetch($stmt)) {
           if(password_verify($_POST[$password], $pswd)) {
             // ----- 4 impostazione sessione ----
-            my_session_login($id, $person, $name, $picture);
-            navigateTo("profile.php");
+            my_session_login($id, ($type == "person"), $name, $picture);
+            //navigateTo("profile.php");
           } else
             throw new InvalidArgumentException("Username o password errati, riprovare per favore.");
       }

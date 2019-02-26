@@ -25,7 +25,7 @@
             echo " da <div class=\"proposer-name\">".$row['display_name'].
                         "<div class=\"card profile-card mb-4 box-shadow profile-overlay\">
                             <div class=\"profile-userpic-card\">
-                                <img class=\"userpic-inner\" src=\"\" alt=\"Immagine del profilo\">
+                                <img class=\"userpic-inner\" src=\"media/profile-placeholder.png\" alt=\"Immagine del profilo\">
                             </div>
                             <div class=\"info-container\">
                                 <div class=\"profile-usertitle-name\" id=\"hover-name\"></div>
@@ -83,6 +83,4 @@
         return (!empty($value)) ? filter_var(trim($value), FILTER_SANITIZE_EMAIL) : "";
     }
 
-        // Temporary hack to allow login
-        //session_start();
 ?>

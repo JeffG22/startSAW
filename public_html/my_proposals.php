@@ -120,5 +120,8 @@
       document.getElementById("side-proposal").classList.add('active');
     </script>
 
+    <!--Profiles-->
+    <script src="js/ajax.js"></script>
+
 </body>
 </html>

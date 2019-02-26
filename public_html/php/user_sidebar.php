@@ -32,9 +32,11 @@
 <div class="col-md-4">
     <div class="profile-sidebar">
         <!-- SIDEBAR USERPIC -->
-        <div class="profile-userpic">
+        <div class="profile-userpic-side">
             <div class="profile-userpic-inner">
-                <img src="<?php echo $picture ?>" class="img-responsive" alt="">
+                <?php
+                    echo "<a href=\"edit_aboutme.php\"><img src=\"".$picture."\" class=\"img-responsive\" alt=\"Immagine di profilo\"></a>";
+                ?>
             </div>
         </div>
         <!-- END SIDEBAR USERPIC -->
@@ -72,7 +74,7 @@
                 </li>
                 <li id="side-setting">
                     <a href="edit_pswd.php">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-key"></i>
                     Modifica password</a>
                 </li>
                 <li id="side-proposal">

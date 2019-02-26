@@ -1,7 +1,7 @@
 "use strict";
 //Shows/hides profiles
 $(document).click(function() { 
-        $('.proposer-name .profile-overlay').hide();      
+        $('.proposer-name .profile-overlay').fadeOut(200);      
 });
 $(".profile-overlay").click(function(e){
     e.stopPropagation();
@@ -32,6 +32,6 @@ $(".proposer-name").click(function(e) {
             }
         });           
     //$(this).find(".userpic-inner").attr('src', 'media/profile-placeholder.png');
-    $(this).children().show();
+    $(this).children().fadeTo(100, 1);
     }
 });

@@ -68,9 +68,6 @@ fieldset {
   display: inline;  
   padding: 5px;
   margin: 0vh 0vh 2vh 0vh;
-  border: none;
-  border-radius: 5px;
-  background: #eee;
   color: #333;
 }
 
@@ -103,11 +100,9 @@ label {
   margin: 3vh;
 }
 
-.upload-btn {
+#upload_picture {
   display: block;
-  width: 100%;
-  text-align: center;
-  margin: 10px 0;
+  margin: 5px 0 2vh 0;
 }
 
 #descrizione {

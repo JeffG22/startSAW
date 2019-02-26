@@ -250,7 +250,7 @@
 	<div id="FirstBox" class="container">
 	<div id="sigcon" class="form-group">
         <legend>Modifica Profilo</legend>
-        <form name="editUser" id="editUser" class="form-in" method="POST" action="edit_profile.php">
+        <form name="editUser" id="editUser" class="form-in" method="POST" action="edit_aboutme.php">
             <!-- div to show error message -->                
             <div id="userMessage">
                 <p>Aggiornare i campi che si intende modificare</p>

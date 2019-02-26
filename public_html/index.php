@@ -6,7 +6,7 @@
 <html lang="it">
 
 <head>
-  <title>Volontari per caso</title>
+  <title>Hand-Aid</title>
     
   <!--Bootstrap-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 

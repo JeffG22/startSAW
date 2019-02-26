@@ -23,8 +23,8 @@ Options -FollowSymLinks
 # To disable automatically generated directory listings
 Options -Indexes
 
-ErrorDocument 400 http://localhost/StartSaw/public_html/error.php?code=400
-ErrorDocument 401 http://localhost/StartSaw/public_html/error.php?code=401
-ErrorDocument 403 http://localhost/StartSaw/public_html/error.php?code=403
-ErrorDocument 404 http://localhost/StartSaw/public_html/error.php?code=404
-ErrorDocument 500 http://localhost/StartSaw/public_html/error.php?code=500
+ErrorDocument 400 https://webdev.dibris.unige.it/~S4328810/error.php?code=400
+ErrorDocument 401 https://webdev.dibris.unige.it/~S4328810/error.php?code=401
+ErrorDocument 403 https://webdev.dibris.unige.it/~S4328810/error.php?code=403
+ErrorDocument 404 https://webdev.dibris.unige.it/~S4328810/error.php?code=404
+ErrorDocument 500 https://webdev.dibris.unige.it/~S4328810/error.php?code=500

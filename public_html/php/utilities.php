@@ -22,18 +22,18 @@
         echo "<i class=\"text-muted\">Inserito in data: ".$row['date_inserted'];
         
         if (!empty($row['display_name'])) {
-        echo " da <div class=\"proposer-name\">".$row['display_name'].
-                    "<div class=\"card profile-card mb-4 box-shadow profile-overlay\">
-                        <div class=\"profile-userpic-card\">
-                            <img class=\"userpic-inner\" src=\"media/profile-placeholder.png\" alt=\"Immagine del profilo\">
+            echo " da <div class=\"proposer-name\">".$row['display_name'].
+                        "<div class=\"card profile-card mb-4 box-shadow profile-overlay\">
+                            <div class=\"profile-userpic-card\">
+                                <img class=\"userpic-inner\" src=\"media/profile-placeholder.png\" alt=\"Immagine del profilo\">
+                            </div>
+                            <div class=\"info-container\">
+                                <div class=\"profile-usertitle-name\" id=\"hover-name\"></div>
+                                <div class=\"profile-usertitle-job\" id=\"hover-role\"></div>
+                                <div class=\"hover-desc\"></div>
+                            </div>
                         </div>
-                        <div class=\"info-container\">
-                            <div class=\"profile-usertitle-name\" id=\"hover-name\"></div>
-                            <div class=\"profile-usertitle-job\" id=\"hover-role\"></div>
-                            <div class=\"hover-desc\"></div>
-                        </div>
-                    </div>
-                    </div>";
+                        </div>";
         }
         echo "</i><br>\n";
         echo "<p class=\"card-text\">";

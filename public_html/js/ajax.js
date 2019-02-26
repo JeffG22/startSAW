@@ -25,7 +25,7 @@ $(".proposer-name").click(function(e) {
                 $($clicked).find(".profile-usertitle-job").text($type);
                 $($clicked).find(".hover-desc").text(response['description']);
 
-                if (response['picture'] != "") {
+                if (response['picture'] != "" && response['picture'] != null) {
                     $($clicked).find(".userpic-inner").attr("src", response['picture']);
                 }
             }

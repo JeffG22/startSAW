@@ -79,7 +79,10 @@
 
             if (!mysqli_stmt_execute($stmt))
                 throw new InvalidArgumentException("mysql execute ".$stmt->error);
-            if (mysqli_stmt_affected_rows($stmt) != 1)
+            $cnt_r = mysqli_stmt_affected_rows($stmt);
+            if ($cnt_r == 0)
+                throw new InvalidArgumentException("not modified");
+            else if ($cnt_r != 1)
                 throw new InvalidArgumentException("mysql insert");
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
@@ -129,7 +132,10 @@
             // ----- comunicare errore -----
             if ($tempError == "mysql")
                 echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Non sono riuscito a caricare i dati del profilo, si prega di riprovare.</p>"';
-            else
+            else if ($tempError == "not modified") {
+                echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Non sono state modificate informazioni.</p>"';
+                $tempError = "mysql";
+            } else
                 echo 'document.getElementById("'.$description.'").value="'.$description_value.'";';
 
             if ($error_flag && $tempError != "mysql") {
@@ -183,12 +189,15 @@
                                 <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
                                 <input type="file" name="picture" id="picture" accept="image/png, image/jpeg, image/jpg, image/bmp"  onchange="checkPicture()">
                             </div>
-                            <div class="btn-container">
-                            <input type="submit" id="submit" class="btn btn-primary" value="Modifica!">
-                            <a href="profile.php"><button type="button" class="btn btn-danger" value="Indietro">Indietro</button></a>
-                            </div>
+                            
                     ';
                 }
+                echo '<div class="btn-container"> ';
+                if ($tempError != "mysql")
+                        echo '<input type="submit" id="submit" class="btn btn-primary" value="Modifica!">';
+                echo ' <a href="profile.php"><button type="button" class="btn btn-danger" value="Indietro">Indietro</button></a>
+                       </div>
+                     ';
             ?>
             </fieldset>    
         </form>

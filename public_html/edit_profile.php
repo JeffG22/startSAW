@@ -116,7 +116,10 @@
             }
             if (!mysqli_stmt_execute($stmt))
                 throw new InvalidArgumentException("mysql execute ".$stmt->error);
-            if (mysqli_stmt_affected_rows($stmt) != 1)
+            $cnt_r = mysqli_stmt_affected_rows($stmt);
+            if ($cnt_r == 0)
+                throw new InvalidArgumentException("not modified");
+            else if ($cnt_r != 1)
                 throw new InvalidArgumentException("mysql updated");
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
@@ -180,7 +183,10 @@
             // ----- caricare dati utente -----
             if ($tempError == "mysql")
                 echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Non sono riuscito a caricare/modificare i dati del profilo, si prega di riprovare.</p>"';
-            else {
+            else if ($tempError == "not modified") {
+                echo 'document.getElementById("userMessage").innerHTML = "<p style=\'color: red\'>Non è stato modificato alcun dato.</p>"';
+                $tempError = "mysql";
+            } else {
                 if ($_SESSION["type"] == "person") {
                     echo 'document.getElementById("'.$cognome.'").value="'.$surname_value.'";';
                     echo 'document.getElementById("'.$data.'").value="'.$birthdate_value.'";';
@@ -274,6 +280,7 @@
                         </div>
                         <div class="btn-container">
                         <input type="submit" id="submit" class="btn btn-primary" value="Modifica!">
+                        <a href="profile.php"><button type="button" class="btn btn-danger" value="Indietro">Indietro</button></a>
                         </div>
                     ';
                 }
@@ -315,6 +322,11 @@
                         <a href="profile.php"><button type="button" class="btn btn-danger" value="Indietro">Indietro</button></a>
                         </div>
                     ';
+                }
+                if ($tempError == "mysql") {
+                    echo '<div class="btn-container">
+                            <a href="profile.php"><button type="button" class="btn btn-danger" value="Indietro">Indietro</button></a>
+                          </div>';
                 }
             ?>
             </fieldset>    

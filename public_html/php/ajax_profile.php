@@ -1,9 +1,9 @@
 <?php
-    include("../../connection.php");
-    include("utilities.php");
+    require_once("../../connection.php");
+    require_once("utilities.php");
     $conn = dbConnect();    
     $id = sanitize_inputString($_POST['id']);
-    $query1 = "SELECT  user.user_id, user.type
+    $query1 = "SELECT user.user_id, user.type
                 FROM user, proposal
                 WHERE proposal.proposer_id = user.user_id 
                 AND proposal.id =".$id." GROUP BY user.user_id";

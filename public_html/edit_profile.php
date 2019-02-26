@@ -16,7 +16,7 @@
     $updated = false;
     try {
         // ----- recupero dati utente -----
-        $person = ($_SESSION["type"] == "person") ? true : false;
+        $person = ($_SESSION["type"] == "person");
         $query1 = "SELECT * FROM ".$_SESSION['type']." WHERE id=".$_SESSION['userId'];
         if (!($conn = dbConnect()))
             throw new Exception("mysql ".mysqli_connect_error());
@@ -107,18 +107,18 @@
             if (!($conn = dbConnect()))
                 throw new Exception("mysql ".mysqli_connect_error());
             if ($person) {
-                $query2 = "UPDATE person SET name=?, surname=?, gender=?, birthdate=?, province=?, phone=?, description=?, WHERE id=".$_SESSION['userId'];
+                $query2 = "UPDATE person SET name=?, surname=?, gender=?, birthdate=?, province=?, phone=?, description=? WHERE id=".$_SESSION['userId'];
                 if (!($stmt = mysqli_prepare($conn, $query2)))
                     throw new Exception("mysql ".$conn->error);
-                if (!mysqli_stmt_bind_param($stmt, 'ssssss', 
+                if (!mysqli_stmt_bind_param($stmt, 'sssssss', 
                         $_POST[$nome], $_POST[$cognome], $_POST[$sex], $_POST[$data], $_POST[$pr], $_POST[$tel], $_POST[$descrizione]))
                     throw new Exception("mysql bind param");
             }
             else {
-                $query2 = "UPDATE organization SET name=?, province=?, sector=?, website=?, phone=?, description=?, WHERE id=".$_SESSION['userId'];
+                $query2 = "UPDATE organization SET name=?, province=?, sector=?, website=?, phone=?, description=? WHERE id=".$_SESSION['userId'];
                     if (!($stmt = mysqli_prepare($conn, $query2)))
                         throw new Exception("mysql prepare ".$conn->error);
-                    if (!mysqli_stmt_bind_param($stmt, 'sssss', 
+                    if (!mysqli_stmt_bind_param($stmt, 'ssssss', 
                             $_POST[$nome], $_POST[$pr], $_POST[$sett], $_POST[$sito], $_POST[$tel], $_POST[$descrizione]))                           
                         throw new Exception("mysql param");
             }

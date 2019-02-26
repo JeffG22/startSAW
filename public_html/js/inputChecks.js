@@ -1,3 +1,4 @@
+"use strict";
 function checkPicture() {
     /** If supported by browser, checks file type and size.
         These checks are repeated server-side. */

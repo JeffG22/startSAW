@@ -94,9 +94,8 @@
         echo "<b>".$row['name']."</b><br>\n";
         echo "<i class=\"text-muted\">Inserito in data: ".$row['date_inserted'];
         
-            $name = getUserName($con, $row['proposer_id']);
-            if (!empty($name)) {
-            echo " da <div class=\"proposer-name\">".$name.
+            if (!empty($row['display_name'])) {
+            echo " da <div class=\"proposer-name\">".$row['display_name'].
                         "<div class=\"card profile-card mb-4 box-shadow profile-overlay\">
                             <div class=\"profile-userpic-card\">
                                 <img class=\"userpic-inner\" src=\"\" alt=\"Immagine del profilo\">

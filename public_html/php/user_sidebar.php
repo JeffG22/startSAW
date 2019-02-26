@@ -38,6 +38,9 @@
                     echo "<a href=\"edit_aboutme.php\"><img src=\"".$picture."\" class=\"img-responsive\" alt=\"Immagine di profilo\"></a>";
                 ?>
             </div>
+            <div class="btn-crc-container">
+                <a href="edit_aboutme.php"><button type="button" class="btn btn-info btn-circle"><i class="fas fa-pencil-alt"></i></button></a>
+            </div>
         </div>
         <!-- END SIDEBAR USERPIC -->
         <!-- SIDEBAR USER TITLE -->

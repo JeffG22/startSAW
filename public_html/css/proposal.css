@@ -38,6 +38,8 @@
 
 .proposer-name {
   color: #5b9bd1;
+  text-decoration: underline;
+  cursor: pointer !important;
 }
 
 .profile-overlay {

@@ -65,6 +65,30 @@
                 }
             ?>
             
+            <?php
+              if (($_SESSION['type'] == 'person')||($_SESSION['type'] == 'organization')){
+                $type = $_SESSION['type'];
+              } else {
+                //Shouldn't happen naturally.
+                throw new Exception("Errore nella connessione. Per favore, riconnettersi");
+                my_session_logout();
+              }
+
+              try {
+                  if(!($conn = dbConnect()))
+                      throw new Exception("sql ".mysqli_connect_error());
+                  $query = "SELECT user.description, ".$type.".phone FROM user, ".$type." WHERE user.user_id=".$user_id." AND user.user_id = ".$type.".id";
+                  if(!($result = mysqli_query($conn, $query))) 
+                      throw new Exception("sql ".mysqli_error($conn));
+                  if (!($row = mysqli_fetch_assoc($result)))
+                    throw new InvalidArgumentException("mysql");
+                  mysqli_close($conn);
+              } catch (Exception $ex) {
+                  $error_flag = true;
+                  $error_message = $ex->getMessage();
+              }
+            ?>
+
             <div class="col-md-8">
                 <div class="profile-content">
                     <main role="main">
@@ -76,31 +100,7 @@
                                       <div class="card-body">
                                         <h5 class="card-title">Descrizione</h5>
                                         <p class="card-text">
-                                          <?php
-                                            
-
-                                              if (($_SESSION['type'] == 'person')||($_SESSION['type'] == 'organization')){
-                                                $type = $_SESSION['type'];
-                                              } else {
-                                                //Shouldn't happen naturally.
-                                                throw new Exception("Errore nella connessione. Per favore, riconnettersi");
-                                                my_session_logout();
-                                              }
-
-                                              try {
-                                                  if(!($conn = dbConnect()))
-                                                      throw new Exception("sql ".mysqli_connect_error());
-                                                  $query = "SELECT description FROM user WHERE user_id=".$user_id;
-                                                  if(!($result = mysqli_query($conn, $query))) 
-                                                      throw new Exception("sql ".mysqli_error($conn));
-                                                  if (!($row = mysqli_fetch_assoc($result)))
-                                                    throw new InvalidArgumentException("mysql");
-                                                  mysqli_close($conn);
-                                              } catch (Exception $ex) {
-                                                  $error_flag = true;
-                                                  $error_message = $ex->getMessage();
-                                              }
-                                              
+                                          <?php   
                                               if (empty($row['description'])) // Empty result
                                                 echo "Sembra che tu non abbia ancora aggiunto una tua descrizione.";  
                                               else // Result not empty
@@ -117,6 +117,26 @@
                                       </div>
                                   </div>
                                 </div>
+                                <div class="card profile-card mb-4 box-shadow">
+                                      <div class="card-body">
+                                        <h5 class="card-title">Telefono</h5>
+                                        <p class="card-text">
+                                          <?php   
+                                              if (empty($row['phone'])) // Empty result
+                                                echo "Sembra che tu non abbia ancora aggiunto il tuo numero di telefono.";  
+                                              else // Result not empty
+                                                echo($row['phone']);                               
+                                          ?>
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                              <a href="edit_profile.php">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                              </a>
+                                            </div>
+                                        </div>
+                                      </div>
+                                  </div>
                             </div>
                         </div>
                     </main>

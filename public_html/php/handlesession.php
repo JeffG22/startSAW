@@ -72,12 +72,12 @@
         // ----- renewing the sid -----
         // It is a best practice when the user changes its privileges
         my_session_regenerate_id();
-        
+
         // ----- User session variables -----
         $_SESSION['userId'] = $idUtente;
         $_SESSION['type'] = ($person) ? "person" : "organization";
         $_SESSION['name'] = $name;
-        $_SESSION['picture'] = (!empty($picture)) ? "userpics/".$picture : "media/profile-placeholder.png";
+        $_SESSION['picture'] = (!empty($picture)) ? $picture : "media/profile-placeholder.png";
 
         // ----- Security session variables (agent and ip) -----
         $_SESSION['identity'] =  security_variables();        

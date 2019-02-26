@@ -48,7 +48,7 @@
             <div class="profile-usertitle-job">
                 <?php
                     if ($_SESSION['type'] == 'organization') {
-                        echo "Organizzazione";
+                        echo "Associazione";
                     } else {
                         echo "Volontario";
                     }

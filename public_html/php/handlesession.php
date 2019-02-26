@@ -67,7 +67,7 @@
         my_session_regenerate_id();
     }
 
-    function my_session_login($idUtente, $person, $name, $picture = "media/profile-placeholder.png") {
+    function my_session_login($idUtente, $person, $name, $picture) {
         safe_session_start();
         // ----- renewing the sid -----
         // It is a best practice when the user changes its privileges
@@ -77,11 +77,14 @@
         $_SESSION['userId'] = $idUtente;
         $_SESSION['type'] = ($person) ? "person" : "organization";
         $_SESSION['name'] = $name;
-        $_SESSION['picture'] = ($picture != "media/profile-placeholder.png") ? "userpics/".$picture : $picture;
-
+        $_SESSION['picture'] = (!empty($picture)) ? "userpics/".$picture : "media/profile-placeholder.png";
 
         // ----- Security session variables (agent and ip) -----
         $_SESSION['identity'] =  security_variables();        
+    }
+
+    function my_session_update_picture($picture) {
+        $_SESSION['picture'] = $picture;
     }
 
     // "go away" for protected area

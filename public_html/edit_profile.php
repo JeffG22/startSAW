@@ -168,9 +168,6 @@
 	<link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" type="text/css" href="css/login.css">
         
-    <!-- SCRIPT -->
-    <!-- Google ReCaptcha -->    
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- JS -->
     <script>
         "use strict"; //necessario per strict mode

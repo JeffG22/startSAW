@@ -1,6 +1,4 @@
 <?php
-    include("../../connection.php");
-    include("utilities.php");
     setlocale(LC_ALL, "it_IT"); // Required to print birth month in italian
 
     // Import PHPMailer classes into the global namespace
@@ -12,106 +10,73 @@
     require 'PHPMailer/src/PHPMailer.php';
     require 'PHPMailer/src/SMTP.php';
 
-    //Load Composer's autoloader
-    //require 'vendor/autoload.php';
+    $acceptor_id = $user_id;
 
-    if (isset($_SESSION['message'])) {
-        echo "<div>".$_SESSION['message']."</div>";
-        unset($_SESSION['message']);
-    }
-    
-    // TEMPORARY
-    if (!empty($_GET['proposal_id'])) {
-        $proposal_id = $_GET['proposal_id'];
+    $query = "SELECT *, proposal.name AS proposal_name, acceptor.description AS acceptor_descr, 
+                        acceptor.email AS acceptor_email, proposer.email AS proposer_email,
+                        acceptor.display_name AS acceptor_display_name, proposer.display_name AS proposer_display_name
+              FROM accepted, person, user AS acceptor, user AS proposer, proposal
+              WHERE accepted.proposal_id = proposal.id AND accepted.acceptor_id = acceptor.user_id AND
+                    acceptor.user_id = person.id AND proposal.proposer_id = proposer.user_id AND
+                    acceptor.user_id = ".$acceptor_id." AND proposal.id = ".$proposal_id;
+
+    if(!($result = mysqli_query($conn, $query)))
+        throw new Exception("mysql ".mysqli_errno($conn));  
+
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
     } else {
-        echo "No proposal_id specified (GET)";
-        exit();
+        throw new Exception("email");
     }
 
-    $con = dbConnect();
+    $mail = new PHPMailer(true); // Passing `true` enables exceptions
+        
+    include("../../mail_server_settings.php");
 
-    if (!$con) {
-        echo "Errore nella connessione al database. Potrebbero esserci troppi utenti connessi. 
-                Aspetta qualche istante e riprova.";
-        exit();
-    } 
+    $mail->SMTPDebug = 0;
 
-    $query = "SELECT *
-              FROM proposal, user
-              WHERE proposer_id = user_id AND id = ".$proposal_id;
+    $mail->CharSet = 'UTF-8';
 
-    $proposal_res = mysqli_query($con, $query);
+    //Sender
+    $mail->setFrom('federico.cassissa@libero.it', 'Hand-aid volontariato');
 
-    $query = "SELECT *
-              FROM accepted, person, user
-              WHERE person.id = acceptor_id AND acceptor_id = user_id";
+    //Recipient
+    $mail->addAddress($row['proposer_email'], $row['proposer_email']);     // Add a recipient
 
-    $acceptor_res = mysqli_query($con, $query);
+    //Content
+    $body = "Buone notizie, ".$row['proposer_display_name']."!!<br>
+            <b>".$row['acceptor_display_name']."</b> 
+            ha accettato la tua proposta di volontariato <b>".$row['proposal_name']."</b>.<br>
+            <br>
+            Ecco qualche altra informazione sul volontario che ha accettato la proposta:<br><br>";
 
-    if (mysqli_num_rows($proposal_res) == 1 && mysqli_num_rows($acceptor_res) == 1) {
-        $proposal = mysqli_fetch_assoc($proposal_res);
-        $acceptor = mysqli_fetch_assoc($acceptor_res);
+    $body = $body."Sesso";
+    if($row['gender'] == "-") {
+        $body = $body." non specificato<br>";
     } else {
-        echo "Proposta e/o utente non trovati";
-        exit();
+        $body = $body.": ".$row['gender']."<br>";
     }
+    $body = $body."Data di nascita: ".strftime("%e %b %Y", strtotime($row['birthdate']))."<br>";
+    $body = $body."Abita in questa provincia: ".$row['province']."<br>";
+    if(!empty($row['acceptor_descr'])) {
+        $body = $body."Il volontario si descrive così: ".$row['acceptor_descr']."<br>";
+    } else {
+        $body = $body."Il volontario non ha fornito una descrizione di sé.<br>";
+    }
+    $body = $body."Puoi contattare il volontario all'indirizzo email <b><a href=\"mailto:".$row['acceptor_email']."\">".$row['acceptor_email']."</a></b>";
+    if(!empty($row['phone'])) {
+        $body = $body." o al numero <b><a href=\"tel:".$row['phone']."\">".$row['phone']."</a></b>";
+    }
+    $body = $body.".<br>";
+    // strftime requires a timestamp, so we use strtotime to convert from string to a timestamp
+    // %e = 1-digit day of the month, %b = abridged month name, %Y = 4digits year
 
-        $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-        try {
-            include("../../mail_server_settings.php");
-    
-            $mail->CharSet = 'UTF-8';
+    echo $body;
+    $mail->isHTML(true); // Set email format to HTML
 
-            //Recipients
-            $mail->setFrom('federico.cassissa@libero.it', 'La tua piattaforma per il volontariato');
-            //$mail->addAddress($proposal['email'], $proposal['display_name']);     // Add a recipient
+    // Since subject is not rendered as HTML, I need to decode special characters such as accents
+    $mail->Subject = "Buone notizie, ".html_entity_decode($row['display_name'])."! La tua proposta è stata accettata!";
+    $mail->Body    = $body;
 
-            //Attachments
-            if(!empty($acceptor['picture'])) {
-                $mail->AddEmbeddedImage("../userpics/".$acceptor['picture'], 'profile_pic');
-            }
-                
-            //Content
-            $body = "Buone notizie, ".$proposal['display_name']."!!<br>
-                    <b>".$acceptor['name']." ".$acceptor['surname']."</b> 
-                    ha accettato la tua proposta di volontariato <b>".$proposal['name']."</b>.<br>
-                    <br>
-                    Ecco qualche altre informazione sul volontario che ha accettato la proposta:<br><br>";
-                
-            if(!empty($acceptor['picture'])) {
-                $body = $body."<img src=\"cid:profile_pic\" height=\"100px\"><br>"; // src content id defined before with addEmbeddedImage
-            }
-            $body = $body."Sesso";
-            if($acceptor['gender'] == "-") {
-                $body = $body." non specificato<br>";
-            } else {
-                $body = $body.": ".$acceptor['gender']."<br>";
-            }
-            $body = $body."Data di nascita: ".strftime("%e %b %Y", strtotime($acceptor['birthdate']))."<br>";
-            $body = $body."Abita a ".$acceptor['township']." (".$acceptor['province'].")<br>";
-            if(!empty($acceptor['description'])) {
-                $body = $body."Il volontario si descrive così: ".$acceptor['description']."<br>";
-            } else {
-                $body = $body."Il volontario non ha fornito una descrizione di sé.<br>";
-            }
-            $body = $body."Puoi contattare il volontario all'indirizzo email <b><a href=\"mailto:".$acceptor['email']."\">".$acceptor['email']."</a></b>";
-            if(!empty($acceptor['phone'])) {
-                $body = $body." o al numero <b><a href=\"tel:".$acceptor['phone']."\">".$acceptor['phone']."</a></b>";
-            }
-            $body = $body.".<br>";
-            // strftime requires a timestamp, so we use strtotime to convert from string to a timestamp
-            // %e = 1-digit day of the month, %b = abridged month name, %Y = 4digits year
-
-            echo $body;
-            $mail->isHTML(true);                                  // Set email format to HTML
-
-            // Since subject is not rendered as HTML, I need to decode special characters such as accents
-            $mail->Subject = "Buone notizie, ".html_entity_decode($proposal['display_name'])."! La tua proposta è stata accettata!";
-            $mail->Body    = $body;
-
-            $mail->send();
-            echo 'Message has been sent';
-        } catch (Exception $e) {
-            echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
-        }
+    $mail->send();
 ?>

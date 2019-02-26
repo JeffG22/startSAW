@@ -29,7 +29,7 @@
 	  		<div class="carousel-inner">
 	  			<!--First slide-->
   			  <div id="firstSlide" class="carousel-item active">
-    		  	<img class="d-block img-fluid" src="" alt="">
+    		  	<!--<img class="d-block img-fluid" src="" alt="">-->
     		  	<span class="sr-only">First slide</span>
     		    <div class="carousel-caption">
     					<h5>Cerca tra decine di proposte quella adatta a te!</h5>
@@ -49,7 +49,7 @@
     			<!--Second slide-->
     			<!--Third slide-->
     			<div id="thirdSlide" class="carousel-item">
-   			  	<img class="d-block img-fluid" src="" alt="">
+   			  	<!--<img class="d-block img-fluid" src="" alt="">-->
    			  	<span class="sr-only">Third slide</span>
    			  	<div class="carousel-caption">
     					<h5>Prendere riempie le mani, dare riempie il cuore.</h5>

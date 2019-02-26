@@ -18,7 +18,7 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <title>Proposte di volontariato</title>
     

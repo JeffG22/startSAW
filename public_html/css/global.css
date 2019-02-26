@@ -120,6 +120,14 @@ h4 {
 		opacity: 1;
 	}
 
+	.text-muted {
+		font-style: italic;
+	}
+
+	.text-muted * {
+		font-style: normal;
+	}
+
 /*Removes dotted outlines*/
 button:focus,
 a:focus, a:active,

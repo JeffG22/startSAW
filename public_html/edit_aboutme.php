@@ -188,16 +188,17 @@
                             <br/>
                             <div>
                             <!-- Upload picture -->
-                                <label class="upload-btn btn btn-sm btn-secondary" for="picture">Carica un\'immagine</label>
+                                <label for="picture">Carica la tua immagine di profilo:</label>
                                 <!-- This hidden field is used by php to avoid uploading large files.
                                 Files lager than 4MB are not blocked by this, but upload stops at 4M
                                 and the file is not sent, thus preventing user from waiting for a file
                                 that will be rejected server-side.-->
                                 <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
-                                <input type="file" name="picture" id="picture" class="form-control" accept="image/png, image/jpeg, image/jpg, image/bmp"  onchange="checkPicture()">
+                                <input type="file" name="picture" id="picture" accept="image/png, image/jpeg, image/jpg, image/bmp"  onchange="checkPicture()">
                             </div>
                             <div class="btn-container">
                             <input type="submit" id="submit" class="btn btn-primary" value="Modifica!">
+                            <a href="profile.php"><button type="button" class="btn btn-danger" value="Indietro">Indietro</button></a>
                             </div>
                     ';
                 }

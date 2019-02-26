@@ -87,12 +87,6 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-        echo $error_message;
-        //exit();
-        /*
-        if ($error_message == "proposal_id")
-            navigateTo("my_proposals.php");
-            */
         if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
             $error_message = "mysql";
     }

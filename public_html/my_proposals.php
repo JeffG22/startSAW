@@ -6,7 +6,7 @@
     my_session_start();
     // If a user is not logged in and lands on this page, redirect to login
     if (!my_session_is_valid())
-        header("Location: login.php");
+        navigateTo("login.php");
 
     $user_id = $_SESSION['userId'];
     $name = $_SESSION['name'];
@@ -98,7 +98,7 @@
                                                 echo "<form method='POST'>
                                                         <input type='hidden' name='proposal_id' value='".$row['id']."'>
                                                         <input class='btn btn-sm btn-outline-secondary' type='submit' value='Modifica proposta' formaction='edit_proposal.php'>
-                                                        <input class='btn btn-sm btn-outline-secondary' type='submit' value='Elimina proposta' formaction='delete_proposal.php'>
+                                                        <input class='btn btn-sm btn-outline-secondary' type='submit' value='Elimina proposta' formaction='php/delete_proposal.php'>
                                                         </form>
                                                         <br>";
                                                 echo "</div></div></div>";

@@ -100,6 +100,7 @@
                     $fields_value[5] = sanitize_inputString($_POST[$telefono]);
                 else
                     $fields_value[5] = null;
+                $fields_value[6] = 'profile-placeholder.png';
             }
             else {
             // organization: (name, headquarter, province, sector, website, phone)
@@ -114,6 +115,7 @@
                     $fields_value[4] = sanitize_inputString($_POST[$telefono]);
                 else
                     $fields_value[4] = null;
+                $fields_value[5] = 'profile-placeholder.png';
             }
         
         // 6 ----- inserimento nel DB se rispetta vincoli -----
@@ -147,27 +149,27 @@
             // ----- seconda query ------
             $insert2 = false;
             if ($person) {
-                $query2 = "INSERT INTO person (id, name, surname, gender, birthdate, province, phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $query2 = "INSERT INTO person (id, name, surname, gender, birthdate, province, phone, picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 if (!($stmt = mysqli_prepare($conn, $query2))) {
                     mysqli_rollback($conn);
                     throw new Exception("mysql prepare".$conn->error);
                 }
-                if (!mysqli_stmt_bind_param($stmt, 'issssss', 
+                if (!mysqli_stmt_bind_param($stmt, 'isssssss', 
                         $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], $fields_value[3], 
-                        $fields_value[4], $fields_value[5])) {
+                        $fields_value[4], $fields_value[5], $fields_value[6])) {
                     mysqli_rollback($conn);
                     throw new Exception("mysql bind param");
                 }
             }
             else {
-                $query2 = "INSERT INTO organization (id, name, province, sector, website, phone) VALUES (?, ?, ?, ?, ?, ?)";
+                $query2 = "INSERT INTO organization (id, name, province, sector, website, phone, picture) VALUES (?, ?, ?, ?, ?, ?, ?)";
                     if (!($stmt = mysqli_prepare($conn, $query2))) {
                         mysqli_rollback($conn);
                         throw new Exception("mysql prepare ".$conn->error);
                     }
-                    if (!mysqli_stmt_bind_param($stmt, 'isssss', 
+                    if (!mysqli_stmt_bind_param($stmt, 'issssss', 
                             $idUtente, $fields_value[0], $fields_value[1], $fields_value[2], 
-                            $fields_value[3], $fields_value[4])) {
+                            $fields_value[3], $fields_value[4], $fields_value[5])) {
                         mysqli_rollback($conn);                            
                         throw new Exception("mysql param");
                     }

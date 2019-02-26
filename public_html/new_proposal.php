@@ -7,8 +7,9 @@
     my_session_start();
     // If a user is not logged in and lands on this page, redirect to login
     if (!my_session_is_valid())
-        header("Location: login.php");
+        navigateTo("login.php");
 
+    $error_flag = false;
     try {
         if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)) {
             
@@ -16,7 +17,9 @@
             $description = "description";
             $available_pos = "available_positions";
             $address = "address";
+            $upload_picture = "upload_picture";
 
+            print_r($_FILES[$upload_picture]);
         // Checks on user input
             if (empty($_POST[$name]) || !checksOnProposalName($_POST[$name]))
                 throw new InvalidArgumentException($name);
@@ -24,8 +27,8 @@
                 throw new InvalidArgumentException($description);
             if (empty($_POST[$available_pos]) || !checksOnAvailablePos($_POST[$available_pos]))
                 throw new InvalidArgumentException($available_pos);
-            if (!empty($_FILES['upload_picture']) && !($file = uploadPicture('upload_picture')))
-                throw new InvalidArgumentException('upload_picture');
+            if (!empty($_FILES[$upload_picture]['tmp_name']) && !($file = uploadPicture($upload_picture)))
+                throw new InvalidArgumentException($upload_picture);
             if (!empty($_POST[$address]) && !checksOnAddress($_POST[$address]))
                 throw new InvalidArgumentException($address);
 
@@ -37,7 +40,7 @@
                 $address_value = NULL; 
                 $lat = NULL;
                 $long = NULL;
-            } else {    // Convert adress to coordinates using OpenStreetMap geocoding API
+            } else {    // Convert address to coordinates using OpenStreetMap geocoding API
                 $address_value = sanitize_inputString($_POST[$address]);
                 $request = "http://nominatim.openstreetmap.org/search.php?q=".urlencode($address_value)."&email=ktmdy@hi2.in&format=json";
                 $response = file_get_contents($request);
@@ -53,7 +56,7 @@
             $user_id = $_SESSION['userId'];
 
             if (!($conn = dbConnect()))
-                throw new Exception("sql ".mysqli_connect_error());
+                throw new Exception("mysql ".mysqli_connect_error());
             
             $query = "INSERT INTO proposal 
                     (name, description, picture, address, lat, lon, 
@@ -72,9 +75,9 @@
 
             if(mysqli_affected_rows($conn) == 1) {
                 $_SESSION['message'] = "Inserimento completato correttamente.";
-                header("Location: my_proposals.php");
+                navigateTo("my_proposals.php");
             } else {
-                throw new Exception("sql insert");
+                throw new Exception("mysql insert");
             }
             
             mysqli_stmt_close($stmt);
@@ -84,7 +87,9 @@
     } catch (Exception $ex) {
         $error_flag = true;
         $error_message = $ex->getMessage();
-        echo $ex->getMessage();
+        echo $error_message;
+        if (strlen($error_message) >= 5 && substr($error_message, 0, 5) == "mysql")
+            $error_message = "mysql";
     }
 ?>
 <!DOCTYPE html>
@@ -126,25 +131,48 @@
                 'available_pos' : 'Il numero di posizioni disponibili deve essere compreso tra 1 e 300.',
                 'upload_picture' : 'Errore nel caricamento dell\'immagine. Assicurati che il tipo di file sia supportato (JPG, PNG, BMP) e che le dimensioni non superino i 4MB',
                 'address' : 'Indirizzo non valido.',
-                'altro' : 'Inserimento non riuscito, si prega di riprovare'
+                'mysql' : 'Inserimento non riuscito, attendere qualche istante e riprovare.'
         };
 
-        for (var key in err_array) {
-                if (key == id_errore) {
-                    var field = document.getElementById(key);
-                    field.setCustomValidity(err_array[key]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
-                    field.setAttribute("onclick", "this.setCustomValidity('');");         
-                    field.style.color = "red";
-                    field.style.border = "2px solid red";
-                    field.style.borderRadius = "4px";
-                    document.getElementById("submit").click(); // show the validity dialog                   
-                    break;
-                }
-                if (key == "altro") // problemi con db o altro
-                    document.getElementById("userMessage").insertAdjacentHTML( 'beforeend', "<p style='color: red'>"+err_array[key]+"</p>");
-            }
-        }
+        <?php
+            $tempError = ($error_flag) ? $error_message : "";
+            echo 'var id_errore = "'.$tempError.'";';
+        ?>
         
+        /** ----- operazione di recupero dati se non validi ----- */
+        function loadPostData( jQuery ) {
+            // ----- ricaricare dati inviati non validi -----
+            <?php
+                if ($error_flag) {
+                    if (!empty($_POST[$name])) {
+                        echo 'document.getElementById("'.$name.'").value="'.sanitize_inputString($_POST[$name]).'";';
+                    }
+                    if (!empty($_POST[$description])) {
+                        echo 'document.getElementById("'.$description.'").value="'.sanitize_inputString($_POST[$description]).'";';
+                    }
+                    if (!empty($_POST[$available_pos])) {
+                        echo 'document.getElementById("'.$available_pos.'").value="'.intval($_POST[$available_pos]).'";';
+                    }
+                    if (!empty($_POST[$address])) {
+                        echo 'document.getElementById("'.$address.'").value="'.sanitize_inputString($_POST[$address]).'";';
+                    }
+                }
+            ?>
+
+            
+            if (id_errore == "mysql") {
+                var field = document.getElementById("userMessage");      
+                field.insertAdjacentHTML( 'beforeend', "<p style='color: red'>"+err_array[id_errore]+"</p>");   
+            } else if (id_errore != "") {
+                var field = document.getElementById(id_errore);
+                field.setCustomValidity(err_array[id_errore]); // fa apparire la finestrella di html 5 con la scritta che comunica errore
+                field.setAttribute("onclick", "this.setCustomValidity('');");         
+                field.setAttribute("onchange", "this.setCustomValidity('');  this.style.border='';");         
+                field.style.border = "2px solid red";
+                field.style.borderRadius = "4px";
+                document.getElementById("submit").click(); // show the validity dialog                   
+            }        
+        }
         <?php
             if ($error_flag) // se errore allora comunica all'utente ciò quando la pagina è ricaricata (funzione jquery)
                 echo '$(document).ready(loadPostData);'
@@ -179,7 +207,7 @@
 
                 <!-- Description -->
                 <label for="description">Descrizione: </label>&emsp;
-                <textarea name="description" rows="6" class="form-control" 
+                <textarea name="description" id="description" rows="6" class="form-control" 
                     minlength="10" maxlength="50000" required></textarea>
 
                 <!-- Upload picture -->
@@ -197,12 +225,12 @@
 
                 <!-- Number of available positions-->
                 <label for="available_positions">Numero volontari richiesti: </label>&emsp;
-                <input type="number" name="available_positions"  id="available_positions" class="form-control"
+                <input type="number" name="available_positions" id="available_positions" class="form-control"
                     min="1" max="3000" required>
                 
                 <!-- Submit -->
                 <div class="btn-container">
-                    <button type="submit" class="btn btn-primary">Crea la proposta</button>
+                    <button type="submit" class="btn btn-primary" id="submit">Crea la proposta</button>
                 </div>
             </form>
         </div>

@@ -2,7 +2,7 @@
     include("../../connection.php");
     include("utilities.php");
 
-    $prev_location = "view_my_proposals.php";
+    $prev_location = "../my_proposals.php";
 
     if (empty($_POST) || empty($_POST['proposal_id'])) {
         $_SESSION['message'] = "Si è verificato un errore imprevisto nel ritirare la proposta. Riprova.";

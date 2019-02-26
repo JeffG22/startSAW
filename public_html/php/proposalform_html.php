@@ -46,11 +46,23 @@
                 <!-- Number of available positions-->
                 <label for="available_positions">Numero volontari richiesti: </label>&emsp;
                 <input type="number" name="available_positions"  id="available_positions" class="form-control input-in"
-                    min="1" max="3000" required>
-                
+                    min="1" max="500" required>
+            <?php
+                if ($editing) {
+                    echo "<input type='hidden' name='proposal_id' value='".$proposal_id."'>";
+                    echo "<input type='hidden' name='edited' value='true'>";
+                }
+            ?>
                 <!-- Submit -->
                 <div class="btn-container">
-                    <button type="submit" class="btn btn-primary" id="submit">Crea la proposta</button>
+                    <button type="submit" class="btn btn-primary" id="submit">
+                    <?php
+                    if ($editing) 
+                        echo "Modifica proposta";
+                    else 
+                        echo "Crea proposta";
+                    ?>
+                    </button>
                 </div>
             </form>
         </div>

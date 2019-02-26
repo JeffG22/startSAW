@@ -176,4 +176,7 @@
     box-sizing: border-box; 
   }
 
-  
+  .caps {
+    display: inline;
+    text-transform: uppercase;
+  }

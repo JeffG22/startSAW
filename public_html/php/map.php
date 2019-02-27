@@ -15,10 +15,10 @@
                 print('"geometry": { "type": "Point", "coordinates": ['.$row["lon"].','.$row["lat"].'] },');
                 print('"properties":');
                 print('{');
-                print('"location": "<div id=\'fontMap\'><b>What</b>: '.$row["name"].'",');
-                print('"info": "<b>How</b>: '.$row["description"].'",');
-                print('"street": "<b>Where</b>: '.$row["address"].'",');
-                print('"city": "<b>Who</b>: '.$row["available_positions"].' volontari</div>"');
+                print('"location": "<div id=\'fontMap\'><b>Cosa</b>: '.$row["name"].'",');
+                print('"info": "<b>Come</b>: '.$row["description"].'",');
+                print('"street": "<b>Dove</b>: '.$row["address"].'",');
+                print('"city": "<b>Chi</b>: '.$row["available_positions"].' volontari</div>"');
                 print('}');
                 print('},');
             }

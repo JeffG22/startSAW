@@ -173,6 +173,11 @@ section h3.section-subheading {
 	padding: 10px;
 }
 
+.row {
+	margin-right: 0;
+	margin-left: 0;
+}
+
 @media (min-width: 768px) {
   section {
     padding: 5vh 0;

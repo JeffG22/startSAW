@@ -27,11 +27,13 @@
 </head>
 
 <body>
-	<!--Header/Navbar-->
-			<?php include("php/navbar.php"); ?>
-			<!--Header/Navbar-->
-	<!--First view-->
-	<div id="firstView">
+	<div>
+		<!--Header/Navbar-->
+		<?php include("php/navbar.php"); ?>
+		<!--Header/Navbar-->
+
+		<!--First view-->
+		<div id="firstView">
 			<!--Carousel-->
 			<div id="carouselTop" class="carousel slide" data-ride="carousel">
 	  		<div class="carousel-inner">
@@ -47,7 +49,7 @@
     			<!--First slide-->
     			<!--Second slide-->
     			<div id="secondSlide" class="carousel-item">
-    		  	<img class="d-block img-fluid" src="" alt="">
+    		  	<!--<img class="d-block img-fluid" src="" alt="">-->
     		  	<span class="sr-only">Second slide</span>
     		  	<div class="carousel-caption">
 							<h5>Ciò che abbiamo fatto solo per noi stessi muore con noi. Ciò che abbiamo fatto per gli altri e per il mondo resta ed è immortale.</h5>
@@ -88,11 +90,10 @@
 		</div>
 			<!Continue button-->
 	</div>
-</div>
 		<!--First view-->
 	
 		<!--Second view-->
-		<section id="services">
+	<section id="services">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -150,7 +151,7 @@
 					<div class="testimonial">
 						<!--Avatar-->
 						<div class="avatar mx-auto">
-							<img src="media/person1.png" class="rounded-circle z-depth-1 img-fluid">
+							<img src="media/person1.png" class="rounded-circle z-depth-1 img-fluid" alt="Testimonial 1">
 						</div>
 						<!--Content-->
 						<h4 class="font-weight-bold dark-grey-text mt-2">Anna Parodi</h4>
@@ -168,7 +169,7 @@
 					<div class="testimonial">
 						<!--Avatar-->
 						<div class="avatar mx-auto">
-							<img src="media/person2.png" class="rounded-circle z-depth-1 img-fluid">
+							<img src="media/person2.png" class="rounded-circle z-depth-1 img-fluid" alt="Testimonial 2">
 						</div>
 						<!--Content-->
 						<h4 class="font-weight-bold dark-grey-text mt-2">Mario Rossi</h4>
@@ -186,7 +187,7 @@
 					<div class="testimonial">
 						<!--Avatar-->
 						<div class="avatar mx-auto">
-							<img src="media/person3.jpeg" class="rounded-circle z-depth-1 img-fluid">
+							<img src="media/person3.jpeg" class="rounded-circle z-depth-1 img-fluid" alt="Testimonial 3">
 						</div>
 						<!--Content-->
 						<h4 class="font-weight-bold dark-grey-text mt-2">Rosa Ferrari</h4>
@@ -203,12 +204,12 @@
 			</section>
 			<!--Testimonials-->	
 		<!--Third view--> 
-		
+	</div>		
 		<!--Fourth view-->
     	<!--Map-->
     	<div id="mapContainer" class="contain">
-			<h4 id="preMap">Scopri sulla <span style="inline: block; color: cornflowerblue">mappa</span> le proposte di volontariato!<h4>
-			<!--<h6 id="preMap"><i>Se non ce ne sono, guarda che tempo fa con un click.</i></h6>-->
+			<h4 class="preMap">Scopri sulla <span style="color: cornflowerblue">mappa</span> le proposte di volontariato!</h4>
+			<h6 class="preMap"><i>Mentre guardi in giro, clicca per scoprire l'ora locale e la temperatura.</i></h6>
 			<!-- a questo id viene associata la mappa -->
 			<div id="mapid"></div>
 			</div>
@@ -239,7 +240,6 @@
 				mymap.on('click', onMapClick);
 				mymap.on('popupopen', onMapOpen);
     </script>
-		</div>	
     <!--Fourth view-->
 	
 		<!--Third view-->

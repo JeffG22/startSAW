@@ -28,8 +28,8 @@
                                 <img class=\"userpic-inner\" src=\"media/profile-placeholder.png\" alt=\"Immagine del profilo\">
                             </div>
                             <div class=\"info-container\">
-                                <div class=\"profile-usertitle-name\" id=\"hover-name\"></div>
-                                <div class=\"profile-usertitle-job\" id=\"hover-role\"></div>
+                                <div class=\"profile-usertitle-name\ hover-name\"></div>
+                                <div class=\"profile-usertitle-job\ hover-role\"></div>
                                 <div class=\"hover-desc\"></div>
                             </div>
                         </div>

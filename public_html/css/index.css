@@ -118,7 +118,7 @@ body {
 	
 #mapid {
 	margin: auto;
-	width: 720px;
+	width: 95vw;
 	height: 480px;
 	margin-top: 20px;
 	margin-bottom: 50px;
@@ -177,4 +177,8 @@ section h3.section-subheading {
   section {
     padding: 5vh 0;
   }
+
+  #mapid {
+	width: 70vw;
+	}
 }

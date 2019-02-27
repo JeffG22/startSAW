@@ -33,12 +33,6 @@
                                 <div class=\"hover-desc\"></div>
                             </div>
                         </div>
-                        <div class=\"info-container\">
-                            <div class=\"profile-usertitle-name hover-name\"></div>
-                            <div class=\"profile-usertitle-job\ hover-role\"></div>
-                            <div class=\"hover-desc\"></div>
-                        </div>
-                    </div>
                     </div>";
         }
         echo "</div><br>\n";

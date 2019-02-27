@@ -6,12 +6,14 @@
       <!--Grid row-->
       
       <div class="row">
-      
+
+        <hr class="clearfix w-100 d-md-none pb-3">
+
         <!--Grid column-->
-        <div class="col-md-6 mt-md-0 mt-3">
+        <div class="col-md-6 mt-md-0 mt-3 ml-3">
 
           <!-- Content -->
-          <h5 class="text-uppercase" style="color: white;"><strong>HAND-AID</strong></h5>
+          <h5 class="text-uppercase" id="footer-name"><strong>HAND-AID</strong></h5>
           <p>Volontariato per la vita, vita per il volontariato!</p>
         
         </div>

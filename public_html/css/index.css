@@ -122,14 +122,13 @@ body {
 	height: 480px;
 	margin-top: 20px;
 	margin-bottom: 50px;
-	z-index: -2;
 }
 
 #fontMap{
 	font: Tahoma,Arial,sans-serif;	
 }
 
-#preMap{
+.preMap{
 	text-align: center;
 	margin-top: 0px;
 }

@@ -325,7 +325,7 @@
                 }
                 if ($tempError == "mysql") {
                     echo '<div class="btn-container">
-                            <a href="profile.php"><button type="button" class="btn btn-danger" value="Indietro">Indietro</button></a>
+                            <button type="button" class="btn btn-danger" value="Indietro"><a href="profile.php"  style="color:white;">Indietro</a></button>
                           </div>';
                 }
             ?>

@@ -69,12 +69,7 @@
 
 <head>
   <title>Log In</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
-	<?php
-        require("php/head_common.php");
-  ?>
+	<?php require("php/head_common.php"); ?>
   
   <link rel="stylesheet" type="text/css" href="css/login.css">
 
@@ -127,7 +122,7 @@
   <div class="container">
       <div id="logcon" class="form-group">
           <form name="login" id="login" class="form-in" method="post" action="login.php">
-              <legend>Log In</legend>
+              <span><legend>Log In</legend></span>
               <!-- div to show error message -->
               <div id="userMessage">
               </div>

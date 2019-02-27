@@ -15,8 +15,10 @@ function ajaxSuccess(data, textStatus, jqXHR) {
     //alert(textStatus);
     var payload = JSON.parse(jqXHR.responseText);
     popup
-        .setContent("Location "+payload["location"]["name"]+
-                    "<br>Temperatura "+payload["current"]["temp_c"]
+        .setContent(payload["location"]["localtime"]+
+                    "<br>Località: <b>"+payload["location"]["name"]+
+                    "<br></b>Temperatura: "+payload["current"]["temp_c"]+" °C"+
+                    "<br>Percepita: "+payload["current"]["feelslike_c"]+" °C"
                 )
         .openOn(mymap);
 }

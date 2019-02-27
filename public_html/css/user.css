@@ -64,10 +64,10 @@
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 10px;
-      width: 50%;
-      max-width: 120px;
-      height: 50%;
-      max-height: 120px;
+      width: 120px;
+
+      height: 120px;
+      
       -webkit-border-radius: 50% !important;
       -webkit-border-radius: 50% !important;
       -moz-border-radius: 50% !important;

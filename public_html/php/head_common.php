@@ -21,3 +21,6 @@
 <!--Bootstrap-->
         
 <link rel="stylesheet" href="css/global.css">
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="media/logo.png">

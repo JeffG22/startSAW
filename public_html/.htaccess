@@ -6,10 +6,16 @@
 
 # Extra Security Headers
 <IfModule mod_headers.c>
+	# Prevent cross-site scripting
 	Header set X-XSS-Protection "1; mode=block"
+
+	# Same origin policy for iframes
 	Header always append X-Frame-Options SAMEORIGIN
+
+	# Prevent content sniffing
 	Header set X-Content-Type-Options nosniff
-    Header set X-Frame-Options DENY
+
+	# Do not send info about server software
     Header unset X-Powered-By
 </IfModule>
 

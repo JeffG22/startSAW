@@ -2,7 +2,7 @@
 	<!--Logo-->
 	<a class="navbar-brand" href="index.php">
 		<!--TODO CAMBIARE (fare in modo che il logo si raggiunga globalmente-->
-		<img src="media/Ph.png" width="40" height="40" alt="Logo">
+		<img src="media/logo.png" width="40" height="40" alt="Logo">
     Hand-Aid
   </a>
   <!--Logo-->

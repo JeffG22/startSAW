@@ -154,7 +154,7 @@
 							<img src="media/person1.png" class="rounded-circle z-depth-1 img-fluid">
 						</div>
 						<!--Content-->
-						<h4 class="font-weight-bold dark-grey-text mt-2">Anna Deynah</h4>
+						<h4 class="font-weight-bold dark-grey-text mt-2">Anna Parodi</h4>
 						<p class="font-weight-normal avatar-text dark-grey-text">
 							<i class="fas fa-quote-left pr-2"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod
 							eos id officiis hic tenetur quae quaerat ad velit ab hic tenetur. <i class="fas fa-quote-right pr-2"></i></p>
@@ -172,7 +172,7 @@
 							<img src="media/person2.png" class="rounded-circle z-depth-1 img-fluid">
 						</div>
 						<!--Content-->
-						<h4 class="font-weight-bold dark-grey-text mt-2">John Doe</h4>
+						<h4 class="font-weight-bold dark-grey-text mt-2">Mario Rossi</h4>
 						<p class="font-weight-normal avatar-text dark-grey-text">
 							<i class="fas fa-quote-left pr-2"></i>Ut enim ad minima veniam, quis nostrum exercitationem ullam
 							corporis suscipit laboriosam, nisi ut aliquid commodi. <i class="fas fa-quote-right pr-2"></i></p>
@@ -190,7 +190,7 @@
 							<img src="media/person3.jpeg" class="rounded-circle z-depth-1 img-fluid">
 						</div>
 						<!--Content-->
-						<h4 class="font-weight-bold dark-grey-text mt-2">Maria Kate</h4>
+						<h4 class="font-weight-bold dark-grey-text mt-2">Rosa Ferrari</h4>
 						<p class="font-weight-normal avatar-text dark-grey-text">
 							<i class="fas fa-quote-left pr-2"></i>At vero eos et accusamus et iusto odio dignissimos ducimus qui
 							blanditiis praesentium voluptatum deleniti atque corrupti. <i class="fas fa-quote-right pr-2"></i></p>
@@ -225,7 +225,7 @@
 				}).addTo(mymap);
 
 				var heartIcon = L.icon({
-						iconUrl: 'media/heart.png',
+						iconUrl: 'media/logo-border.png',
 						iconSize: [30, 30],
 						iconAnchor: [16, 25],
 						popupAnchor: [0, -28]

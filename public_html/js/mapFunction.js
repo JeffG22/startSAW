@@ -41,7 +41,7 @@ function onMapClick(e) {
     var coords = LatLng.substring(begin+1,end).replace(" ","");
 
     $.ajax({
-        url: "http://api.apixu.com/v1/current.json?key=b79bfc73cf2f4f08854173333181611&q="+coords,
+        url: "https://api.apixu.com/v1/current.json?key=b79bfc73cf2f4f08854173333181611&q="+coords,
         success: ajaxSuccess,
         error: ajaxError,
         async: true

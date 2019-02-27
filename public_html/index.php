@@ -27,12 +27,11 @@
 </head>
 
 <body>
-	
-	<!--First view-->
-	<div id="firstView">
-			<!--Header/Navbar-->
+	<!--Header/Navbar-->
 			<?php include("php/navbar.php"); ?>
 			<!--Header/Navbar-->
+	<!--First view-->
+	<div id="firstView">
 			<!--Carousel-->
 			<div id="carouselTop" class="carousel slide" data-ride="carousel">
 	  		<div class="carousel-inner">

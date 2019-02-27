@@ -122,6 +122,7 @@ body {
 	height: 480px;
 	margin-top: 20px;
 	margin-bottom: 50px;
+	z-index: -2;
 }
 
 #fontMap{

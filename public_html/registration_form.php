@@ -339,121 +339,122 @@
     <!-- REGISTRAZIONE -->
 	<div id="FirstBox" class="container">
 	<div id="sigcon" class="form-group">
-            <legend>Registrazione</legend>
-            <form name="registration" id="registration" class="form-in" method="POST" action="registration_form.php">
-                <!-- div to show error message -->                
-                <div id="userMessage">
-                </div>
-                <div>
-                    <!-- tipo utente -->
-                    <p>Registrati come:</p>
-                        <label class="radio-inline" for="persona">Persona
-                            <input type="radio" id="persona" class="form-control input-in" name="tipoUtente" value="person" onchange="showSecondBox();" checked required>
-                        </label>
-                        <label class="radio-inline" for="associazione">Associazione
-                            <input type="radio" id="associazione" class="form-control input-in" name="tipoUtente" value="organization" onchange="showSecondBox();">
-                        </label>
-                </div>
-                <div id="campiUser">
-                    <!-- email -->
-                    <div>
-                        <label for="email">Email: </label>&emsp;
-                        <input type="email" id="email" class="form-control input-in" name="email" minlength="6"  maxlength="254" placeholder="name@domain.net" autocomplete="on" required>
-                    </div>
-                    <!-- password -->
-                    <div>
-                        <label for="password">Password: </label>&emsp;
-                        <input type="password" id="password" class="form-control input-in" name="password" minlength="6" maxlength="31" placeholder="6 characters minimum" autocomplete="on" required>
-                    </div>
-                    <!-- telefono -->
-                    <div>
-                        <label for="telefono">Telefono: </label><i>facoltativo</i>&emsp;
-                        <input type="tel" id="telefono" class="form-control input-in" name="telefono" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
-                    </div>
-                </div>
-                <br/>
-                <fieldset class="box" id="SecondBox">
-                <legend id="legendaTipoInput">Dati volontario</legend> <!-- OR Dati Associazione !-->
-                <!-- i campi di associazione non hanno attributo required in static time !-->
-                <!-- Registrazione Volontario !-->
-                    <div id="campiPerson">
-                        <!-- nomeV -->
-                        <div>
-                            <label for="nomeV">Nome: </label>&emsp;
-                            <input type="text" id="nomeV" name="nomeV" class="campiV form-control input-in" minlength="3" maxlength="50" required>
-                        </div>
-                        <!-- cognome -->
-                        <div>
-                            <label for="cognome">Cognome: </label>&emsp;
-                            <input type="text" id="cognome" name="cognome" class="campiV form-control input-in" maxlength="50" required>
-                        </div>
-                        <!-- data di nascita -->
-                        <div>
-                            <label for="data">Data di nascita: </label>&emsp;
-                            <input type="date" id="data" name="data" class="campiV form-control input-in" min="1900-01-01" max="2006-12-31" required>
-                        </div>
-                        <!-- Sesso -->
-                        <div>
-                            <label for="genere">Sesso: </label>&emsp;
-                            <select id="genere" name="genere" class="campiV form-control input-in" required>
-                                <option value="" selected>Selezionare</option>
-                                <option value="-">Non specificato</option>
-                                <option value="F">F</option>
-                                <option value="M">M</option>
-                            </select>
-                        </div>
-                        <div>
-                        <!-- Provincia --> 
-                            <label for="provinciaV">Provincia: </label>&emsp;
-                            <select id="provinciaV" name="provinciaV" class="campiV form-control input-in" required>
-                            <option value="" selected>--</option>
-                            <?php show_province(); ?>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- Registrazione Associazione !-->
-                    <div id="campiOrganization" style="display: none;">
-                        <!-- nomeA -->
-                        <div>
-                            <label for="nomeA">Nome: </label>&emsp;
-                            <input type="text" id="nomeA" class="campiA form-control input-in" name="nomeA" minlength="3" maxlength="50">
-                        </div>
-                        <div>
-                        <!-- Provincia --> 
-                            <label for="provinciaA">Provincia delle sede: </label>&emsp;
-                            <select id="provinciaA" name="provinciaA" class="campiA form-control input-in">
-                            <option value="" selected>--</option>
-                            <?php show_province(); ?>
-                            </select>
-                        </div>
-                        <!-- settore -->
-                        <div>
-                            <label for="settore">Settore in cui opera: </label>&emsp;
-                            <input type="text" id="settore" name="settore" class="campiA form-control input-in" maxlength="35">
-                        </div>
-                        <!-- sito, non è required -->
-                        <div>
-                            <label for="sito">Sito web: </label><i>facoltativo</i>&emsp;
-                            <input type="url" id="sito" class="form-control input-in" name="sito" maxlength="63">
-                        </div>
-                    </div>
-                </fieldset>    
-                <br/>
-                <!-- CONTROLLI PRIVACY e CAPTCHA -->
-                <div id="controlli">
-                    
-                    <label id="privacy-label" class="container" for="privacy">
-                        <input type="checkbox" id="privacy" name="privacy" value="Y" required>
-                        <div id="blurb">Do il consenso al trattamento dei dati nelle modalità conformi al D. Lgs. 30 giugno 2003, n. 196 e successivi aggiornamenti.</div>
+        <span><legend>Registrazione</legend></span>
+        <form name="registration" id="registration" class="form-in" method="POST" action="registration_form.php">
+            <!-- div to show error message -->                
+            <div id="userMessage">
+            </div>
+            <div>
+                <!-- tipo utente -->
+                <p>Registrati come:</p>
+                    <label class="radio-inline" for="persona">Persona
+                        <input type="radio" id="persona" class="form-control input-in" name="tipoUtente" value="person" onchange="showSecondBox();" checked required>
                     </label>
-                    <div class="captcha-box" id="captcha">
-                        <div class="g-recaptcha" role="captcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
+                    <label class="radio-inline" for="associazione">Associazione
+                        <input type="radio" id="associazione" class="form-control input-in" name="tipoUtente" value="organization" onchange="showSecondBox();">
+                    </label>
+            </div>
+            <div id="campiUser">
+                <!-- email -->
+                <div>
+                    <label for="email">Email: </label>&emsp;
+                    <input type="email" id="email" class="form-control input-in" name="email" minlength="6"  maxlength="254" placeholder="name@domain.net" autocomplete="on" required>
+                </div>
+                <!-- password -->
+                <div>
+                    <label for="password">Password: </label>&emsp;
+                    <input type="password" id="password" class="form-control input-in" name="password" minlength="6" maxlength="31" placeholder="6 characters minimum" autocomplete="on" required>
+                </div>
+            </div>
+            <br/>
+            <fieldset class="box" id="SecondBox">
+            <legend id="legendaTipoInput">Dati volontario</legend> <!-- OR Dati Associazione !-->
+            <!-- i campi di associazione non hanno attributo required in static time !-->
+            <!-- Registrazione Volontario !-->
+                <div id="campiPerson">
+                    <!-- nomeV -->
+                    <div>
+                        <label for="nomeV">Nome: </label>&emsp;
+                        <input type="text" id="nomeV" name="nomeV" class="campiV form-control input-in" minlength="3" maxlength="50" required>
+                    </div>
+                    <!-- cognome -->
+                    <div>
+                        <label for="cognome">Cognome: </label>&emsp;
+                        <input type="text" id="cognome" name="cognome" class="campiV form-control input-in" maxlength="50" required>
+                    </div>
+                    <!-- data di nascita -->
+                    <div>
+                        <label for="data">Data di nascita: </label>&emsp;
+                        <input type="date" id="data" name="data" class="campiV form-control input-in" min="1900-01-01" max="2006-12-31" required>
+                    </div>
+                    <!-- Sesso -->
+                    <div>
+                        <label for="genere">Sesso: </label>&emsp;
+                        <select id="genere" name="genere" class="campiV form-control input-in" required>
+                            <option value="" selected>Selezionare</option>
+                            <option value="-">Non specificato</option>
+                            <option value="F">F</option>
+                            <option value="M">M</option>
+                        </select>
+                    </div>
+                    <div>
+                    <!-- Provincia --> 
+                        <label for="provinciaV">Provincia: </label>&emsp;
+                        <select id="provinciaV" name="provinciaV" class="campiV form-control input-in" required>
+                        <option value="" selected>--</option>
+                        <?php show_province(); ?>
+                        </select>
                     </div>
                 </div>
-                <div class="btn-container">
-                    <input type="submit" id="submit" class="btn btn-primary" value="Registrami">
+                <!-- Registrazione Associazione !-->
+                <div id="campiOrganization" style="display: none;">
+                    <!-- nomeA -->
+                    <div>
+                        <label for="nomeA">Nome: </label>&emsp;
+                        <input type="text" id="nomeA" class="campiA form-control input-in" name="nomeA" minlength="3" maxlength="50">
+                    </div>
+                    <div>
+                    <!-- Provincia --> 
+                        <label for="provinciaA">Provincia delle sede: </label>&emsp;
+                        <select id="provinciaA" name="provinciaA" class="campiA form-control input-in">
+                        <option value="" selected>--</option>
+                        <?php show_province(); ?>
+                        </select>
+                    </div>
+                    <!-- settore -->
+                    <div>
+                        <label for="settore">Settore in cui opera: </label>&emsp;
+                        <input type="text" id="settore" name="settore" class="campiA form-control input-in" maxlength="35">
+                    </div>
+                    <!-- sito, non è required -->
+                    <div>
+                        <label for="sito">Sito web: </label><i>facoltativo</i>&emsp;
+                        <input type="url" id="sito" class="form-control input-in" name="sito" maxlength="63">
+                    </div>
                 </div>
-            </form>
-    </fieldset>
+                <!-- telefono -->
+                <div>
+                    <label for="telefono">Telefono: </label><i>facoltativo</i>&emsp;
+                    <input type="tel" id="telefono" class="form-control input-in" name="telefono" pattern="[0-9]{3,15}" maxlength="15" minlength="3">
+                </div>
+            </fieldset>    
+            <br/>
+            <!-- CONTROLLI PRIVACY e CAPTCHA -->
+            <div id="controlli">
+                
+                <label id="privacy-label" class="container" for="privacy">
+                    <input type="checkbox" id="privacy" name="privacy" value="Y" required>
+                    <span id="blurb">Do il consenso al trattamento dei dati nelle modalità conformi al D. Lgs. 30 giugno 2003, n. 196 e successivi aggiornamenti.</span>
+                </label>
+                <div class="captcha-box" id="captcha">
+                    <div class="g-recaptcha" role="captcha" data-sitekey="6LdTc5AUAAAAAAJBUM9xlw-zpEf9o__oypShRBCv"></div>
+                </div>
+            </div>
+            <div class="btn-container">
+                <input type="submit" id="submit" class="btn btn-primary" value="Registrami">
+            </div>
+        </form>
+    </div>
+    </div>
 </body>
 </html>

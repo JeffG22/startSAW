@@ -236,7 +236,7 @@
 						onEachFeature: onEachFeature}).addTo(mymap);
 				
 				var popup = L.popup();
-				//mymap.on('click', onMapClick);
+				mymap.on('click', onMapClick);
 				mymap.on('popupopen', onMapOpen);
     </script>
 		</div>	

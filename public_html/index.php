@@ -209,7 +209,7 @@
     	<!--Map-->
     	<div id="mapContainer" class="contain">
 			<h4 id="preMap">Scopri sulla <span style="inline: block; color: cornflowerblue">mappa</span> le proposte di volontariato!<h4>
-			<h6 id="preMap"><i>Se non ce ne sono, guarda che tempo fa con un click.</i></h6>
+			<!--<h6 id="preMap"><i>Se non ce ne sono, guarda che tempo fa con un click.</i></h6>-->
 			<!-- a questo id viene associata la mappa -->
 			<div id="mapid"></div>
 			</div>
@@ -237,7 +237,7 @@
 						onEachFeature: onEachFeature}).addTo(mymap);
 				
 				var popup = L.popup();
-				mymap.on('click', onMapClick);
+				//mymap.on('click', onMapClick);
 				mymap.on('popupopen', onMapOpen);
     </script>
 		</div>	
